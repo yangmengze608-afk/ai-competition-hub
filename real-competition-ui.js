@@ -50,6 +50,20 @@
     });
   }
 
+  function updatePlanButton() {
+    const plan = document.querySelector('[data-plan]');
+    if (!plan || plan.dataset.realPlanAdjusted === 'true') return;
+
+    const replacement = plan.cloneNode(true);
+    replacement.removeAttribute('data-plan');
+    replacement.dataset.realPlanAdjusted = 'true';
+    replacement.textContent = '参赛方案整理中';
+    replacement.addEventListener('click', () => {
+      alert('该比赛的参赛方案正在整理中。你仍可先查看官方页面和比赛要求。');
+    });
+    plan.replaceWith(replacement);
+  }
+
   function updateDetail() {
     const path = currentPath();
     if (!path.startsWith('/competitions/')) return;
@@ -59,6 +73,8 @@
 
     const dataLabel = document.querySelector('.detail-status-row span:not(.status-badge)');
     if (dataLabel) dataLabel.textContent = '真实赛事';
+
+    updatePlanButton();
 
     const actions = document.querySelector('.detail-actions');
     if (actions && competition.sourceUrl && !actions.querySelector('[data-official-competition-link]')) {
