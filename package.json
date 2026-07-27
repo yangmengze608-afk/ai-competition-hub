@@ -1,0 +1,13 @@
+{
+  "name": "ai-competition-hub",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:competitions": "node collector/run.mjs",
+    "check:collector": "node --check collector/run.mjs && node --check collector/sources/mlh.mjs && node --check collector/sources/kaggle.mjs"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "csv-parse": "^5.5.6"
+  }
+}
