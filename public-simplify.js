@@ -1,10 +1,4 @@
 (() => {
-  const usageText = new Map([
-    ['可作为事实来源', '官方信息'],
-    ['逐场核验后使用', '逐场核验'],
-    ['仅发现线索，必须回溯官方页', '仅作线索'],
-  ]);
-
   const dimensionText = {
     权威性: '主办方、规则和评审是否可信。',
     履历价值: '对升学、求职或专业发展是否有帮助。',
@@ -22,9 +16,15 @@
   };
 
   let queued = false;
+  let observer = null;
 
   function path() {
     return location.hash.slice(1).split('?')[0] || '/';
+  }
+
+  function observe() {
+    if (!observer) observer = new MutationObserver(schedule);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
   }
 
   function schedule() {
@@ -32,33 +32,35 @@
     queued = true;
     requestAnimationFrame(() => {
       queued = false;
+      observer?.disconnect();
       simplify();
+      observe();
     });
   }
 
   function simplifyNavigation() {
     const nav = document.querySelector('[data-research-nav]');
-    if (nav) nav.textContent = '赛事来源';
+    if (nav && nav.textContent !== '赛事来源') nav.textContent = '赛事来源';
 
     const mobileSource = document.querySelector('[data-research-mobile]');
-    if (mobileSource) mobileSource.textContent = '赛事来源';
+    if (mobileSource && mobileSource.textContent !== '赛事来源') mobileSource.textContent = '赛事来源';
 
     const mobileQuality = document.querySelector('[data-research-quality-mobile]');
-    if (mobileQuality) mobileQuality.textContent = '评级说明';
+    if (mobileQuality && mobileQuality.textContent !== '评级说明') mobileQuality.textContent = '评级说明';
 
     const footer = document.querySelector('[data-research-footer]');
     if (footer) {
       const strong = footer.querySelector('strong');
-      if (strong) strong.textContent = '赛事';
+      if (strong && strong.textContent !== '赛事') strong.textContent = '赛事';
       const links = footer.querySelectorAll('a');
-      if (links[0]) links[0].textContent = '来源';
-      if (links[1]) links[1].textContent = '评级说明';
+      if (links[0] && links[0].textContent !== '来源') links[0].textContent = '来源';
+      if (links[1] && links[1].textContent !== '评级说明') links[1].textContent = '评级说明';
       footer.querySelectorAll('span').forEach((node) => node.remove());
     }
 
     const tabs = document.querySelectorAll('.research-tabs a');
-    if (tabs[0]) tabs[0].textContent = '赛事来源';
-    if (tabs[1]) tabs[1].textContent = '评级说明';
+    if (tabs[0] && tabs[0].textContent !== '赛事来源') tabs[0].textContent = '赛事来源';
+    if (tabs[1] && tabs[1].textContent !== '评级说明') tabs[1].textContent = '评级说明';
   }
 
   function simplifyHero(title, description) {
@@ -68,8 +70,27 @@
     hero.querySelector('.research-alert')?.remove();
     const heading = hero.querySelector('h1');
     const paragraph = hero.querySelector(':scope > p');
-    if (heading) heading.textContent = title;
-    if (paragraph) paragraph.textContent = description;
+    if (heading && heading.textContent !== title) heading.textContent = title;
+    if (paragraph && paragraph.textContent !== description) paragraph.textContent = description;
+  }
+
+  function simplifyResultHead() {
+    const resultHead = document.querySelector('.source-results-head');
+    const count = resultHead?.querySelector('[data-source-count]');
+    if (!resultHead || !count) return;
+
+    [...resultHead.childNodes].forEach((node) => {
+      if (node === count) return;
+      if (node.nodeType === Node.TEXT_NODE || !node.matches?.('[data-source-count-label]')) node.remove();
+    });
+
+    let label = resultHead.querySelector('[data-source-count-label]');
+    if (!label) {
+      label = document.createElement('span');
+      label.dataset.sourceCountLabel = '';
+      resultHead.appendChild(label);
+    }
+    label.textContent = '个来源';
   }
 
   function simplifySources() {
@@ -90,30 +111,16 @@
     const search = document.querySelector('[data-source-search]');
     if (search) search.placeholder = '网站、国家或方向';
 
-    const resultHead = document.querySelector('.source-results-head');
-    const count = resultHead?.querySelector('[data-source-count]');
-    if (resultHead && count) {
-      [...resultHead.children].forEach((child) => {
-        if (child !== count) child.remove();
-      });
-      resultHead.append(' 个来源');
-    }
+    simplifyResultHead();
 
     document.querySelectorAll('.source-card').forEach((card) => {
       card.classList.add('source-card-compact');
       card.querySelector('.source-priority')?.remove();
       card.querySelector('.source-note')?.remove();
-
-      const usage = card.querySelector('.source-usage');
-      if (usage) {
-        const span = usage.querySelector('span');
-        const next = usageText.get(span?.textContent.trim());
-        usage.querySelector('strong')?.remove();
-        if (span && next) span.textContent = next;
-      }
+      card.querySelector('.source-usage')?.remove();
 
       const link = card.querySelector('.source-card-footer a');
-      if (link) link.textContent = '访问网站 ↗';
+      if (link && link.textContent !== '访问网站 ↗') link.textContent = '访问网站 ↗';
     });
   }
 
@@ -124,7 +131,9 @@
       card.classList.add('quality-dimension-compact');
       const title = card.querySelector('h2')?.textContent.trim();
       const paragraph = card.querySelector('p');
-      if (paragraph && dimensionText[title]) paragraph.textContent = dimensionText[title];
+      if (paragraph && dimensionText[title] && paragraph.textContent !== dimensionText[title]) {
+        paragraph.textContent = dimensionText[title];
+      }
       card.querySelector('ul')?.remove();
     });
 
@@ -155,7 +164,9 @@
       card.classList.add('grade-card-compact');
       const grade = card.querySelector(':scope > strong')?.textContent.trim();
       const paragraph = card.querySelector('p');
-      if (paragraph && gradeText[grade]) paragraph.textContent = gradeText[grade];
+      if (paragraph && gradeText[grade] && paragraph.textContent !== gradeText[grade]) {
+        paragraph.textContent = gradeText[grade];
+      }
     });
 
     document.querySelector('.quality-cta')?.remove();
@@ -167,9 +178,7 @@
     if (path() === '/quality') simplifyQuality();
   }
 
-  const observer = new MutationObserver(schedule);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-
+  observe();
   window.addEventListener('DOMContentLoaded', schedule);
   window.addEventListener('hashchange', schedule);
 })();
