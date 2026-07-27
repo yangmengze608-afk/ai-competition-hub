@@ -30,13 +30,24 @@
 }
 
 .source-card-compact {
-  min-height: 190px;
+  min-height: 226px;
   padding: 18px;
   box-shadow: none;
 }
 
 .source-card-compact h2 {
   margin-top: 18px;
+}
+
+.source-card-compact .source-note-summary {
+  display: -webkit-box;
+  margin: 14px 0 0;
+  overflow: hidden;
+  color: #666d78;
+  font-size: 13px;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .source-card-compact .source-usage {
@@ -92,6 +103,10 @@
 
   .source-stats strong {
     font-size: 25px;
+  }
+
+  .source-card-compact {
+    min-height: 0;
   }
 
   .quality-dimension-compact {
