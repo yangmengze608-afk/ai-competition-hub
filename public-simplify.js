@@ -93,6 +93,43 @@
     label.textContent = '个来源';
   }
 
+  function sourcePurpose(card, direction) {
+    const tier = card.dataset.tier;
+    if (tier === 'O1') {
+      return `可查看${direction}比赛的通知、规则、报名、赛程与结果。`;
+    }
+    if (tier === 'O2') {
+      return `可浏览平台承载的${direction}比赛，具体主办方、规则与时间需按单场确认。`;
+    }
+    if (tier === 'A2' || tier === 'A3') {
+      return `适合发现${direction}机会，报名条件和赛程请以赛事主办方页面为准。`;
+    }
+    return `可作为${direction}比赛的补充入口，重要信息需要进一步确认。`;
+  }
+
+  function enrichSourceSummary(card) {
+    const note = card.querySelector('.source-note');
+    if (!note || note.dataset.enrichedSummary === 'true') return;
+
+    const original = note.textContent.trim().replace(/[。；;]+$/u, '');
+    const typeText = card.querySelector('.source-type')?.textContent.trim() || '';
+    const direction = typeText.split('·').pop()?.trim() || '相关';
+    const parts = [];
+
+    if (original) parts.push(`${original}。`);
+    parts.push(sourcePurpose(card, direction));
+
+    if (card.dataset.status === 'needs_recheck') {
+      parts.push('当前入口或当届信息仍需复核。');
+    } else if (card.dataset.status === 'candidate') {
+      parts.push('目前仅作为候选来源展示。');
+    }
+
+    note.textContent = parts.join('');
+    note.dataset.enrichedSummary = 'true';
+    note.classList.add('source-note-summary');
+  }
+
   function simplifySources() {
     simplifyHero('赛事来源', '国内外大学生比赛入口。');
 
@@ -117,9 +154,7 @@
       card.classList.add('source-card-compact');
       card.querySelector('.source-priority')?.remove();
       card.querySelector('.source-usage')?.remove();
-
-      const note = card.querySelector('.source-note');
-      note?.classList.add('source-note-summary');
+      enrichSourceSummary(card);
 
       const link = card.querySelector('.source-card-footer a');
       if (link && link.textContent !== '访问网站 ↗') link.textContent = '访问网站 ↗';
