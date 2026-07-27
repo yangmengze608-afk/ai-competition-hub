@@ -1,0 +1,59 @@
+name: Sync real competitions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 1,13 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: competition-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          python -m pip install --upgrade pip kaggle
+
+      - name: Sync competitions
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+        run: npm run sync:competitions
+
+      - name: Validate generated files
+        run: |
+          npm run check:collector
+          python -m json.tool data/competitions.generated.json >/dev/null
+          python -m json.tool data/competition-sync-report.json >/dev/null
+
+      - name: Commit updated snapshot
+        run: |
+          if git diff --quiet -- data/competitions.generated.json data/competitions.generated.js data/competition-sync-report.json; then
+            echo 'No competition changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/competitions.generated.json data/competitions.generated.js data/competition-sync-report.json
+          git commit -m 'data: sync real competitions'
+          git push
