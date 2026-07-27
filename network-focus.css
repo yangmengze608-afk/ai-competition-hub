@@ -1,8 +1,9 @@
 /*
  * 首页焦点比赛动画
- * 旧版节点仍由 app.js 生成，但在此隐藏，避免整组节点同步换字。
+ * 旧版节点和所有连接线在此隐藏，只保留独立浮现的比赛标签。
  */
-[data-network-node] {
+[data-network-node],
+.network-lines {
   display: none !important;
 }
 
@@ -74,14 +75,6 @@
 .focus-competition-node.node-pink {
   color: #9d7181;
   background: rgba(255, 240, 246, 0.9);
-}
-
-/* 当前比赛所在锚点附近的线轻微亮起，但不出现批量闪切。 */
-.network-lines line.focus-active {
-  stroke: #aab4c5;
-  stroke-width: 0.14;
-  stroke-dasharray: none;
-  opacity: 0.9;
 }
 
 @media (max-width: 720px) {
