@@ -116,8 +116,10 @@
     document.querySelectorAll('.source-card').forEach((card) => {
       card.classList.add('source-card-compact');
       card.querySelector('.source-priority')?.remove();
-      card.querySelector('.source-note')?.remove();
       card.querySelector('.source-usage')?.remove();
+
+      const note = card.querySelector('.source-note');
+      note?.classList.add('source-note-summary');
 
       const link = card.querySelector('.source-card-footer a');
       if (link && link.textContent !== '访问网站 ↗') link.textContent = '访问网站 ↗';
