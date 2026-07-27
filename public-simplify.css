@@ -1,0 +1,100 @@
+/* Keep public pages concise; detailed methodology remains in repository docs. */
+.research-hero {
+  padding-bottom: 34px;
+}
+
+.research-hero h1 {
+  margin-top: 0;
+  font-size: clamp(38px, 5vw, 62px);
+}
+
+.research-hero > p {
+  max-width: 520px;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.research-content {
+  padding-top: 34px;
+}
+
+.source-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.source-stats > div {
+  min-height: 88px;
+  padding: 18px;
+  box-shadow: none;
+}
+
+.source-card-compact {
+  min-height: 190px;
+  padding: 18px;
+  box-shadow: none;
+}
+
+.source-card-compact h2 {
+  margin-top: 18px;
+}
+
+.source-card-compact .source-usage {
+  margin-top: 14px;
+  padding: 9px 11px;
+}
+
+.source-card-compact .source-usage span {
+  margin-top: 0;
+}
+
+.source-card-compact .source-card-footer {
+  padding-top: 14px;
+}
+
+.quality-dimension-compact {
+  min-height: 190px;
+  padding: 20px;
+  box-shadow: none;
+}
+
+.quality-dimension-compact h2 {
+  margin-top: 20px;
+}
+
+.quality-section {
+  margin-top: 52px;
+}
+
+.quality-heading h2 {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.grade-card-compact {
+  min-height: 108px;
+  padding: 18px;
+}
+
+.risk-grid span {
+  min-height: 62px;
+}
+
+@media (max-width: 720px) {
+  .source-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .source-stats > div {
+    min-height: 76px;
+    padding: 14px;
+  }
+
+  .source-stats strong {
+    font-size: 25px;
+  }
+
+  .quality-dimension-compact {
+    min-height: 0;
+  }
+}
