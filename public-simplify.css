@@ -30,7 +30,7 @@
 }
 
 .source-card-compact {
-  min-height: 226px;
+  min-height: 272px;
   padding: 18px;
   box-shadow: none;
 }
@@ -43,24 +43,15 @@
   display: -webkit-box;
   margin: 14px 0 0;
   overflow: hidden;
-  color: #666d78;
+  color: #606773;
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.7;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.source-card-compact .source-usage {
-  margin-top: 14px;
-  padding: 9px 11px;
-}
-
-.source-card-compact .source-usage span {
-  margin-top: 0;
+  -webkit-line-clamp: 4;
 }
 
 .source-card-compact .source-card-footer {
-  padding-top: 14px;
+  padding-top: 16px;
 }
 
 .quality-dimension-compact {
