@@ -1,0 +1,40 @@
+name: Apply event audit batch
+
+on:
+  push:
+    branches:
+      - feature/event-audit-batch-2
+    paths:
+      - 'research/audit-batches/event-audit-batch-2.json'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout audit branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/event-audit-batch-2
+          fetch-depth: 0
+
+      - name: Apply audit metadata
+        run: |
+          node scripts/apply-event-audit-batch.cjs research/audit-batches/event-audit-batch-2.json
+          node scripts/generate-competition-data.cjs
+          node scripts/data-audit.cjs
+
+      - name: Commit canonical data update
+        run: |
+          if git diff --quiet -- data/competitions-v1.json competition-data.generated.js; then
+            echo 'No data changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/competitions-v1.json competition-data.generated.js
+          git commit -m 'data: apply event audit batch 2'
+          git push origin HEAD:feature/event-audit-batch-2
