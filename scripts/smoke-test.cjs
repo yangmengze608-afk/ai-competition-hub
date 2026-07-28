@@ -34,11 +34,18 @@ const noopElement = () => ({
   hasAttribute() { return false; },
   addEventListener() {},
   querySelector() { return null; },
-  querySelectorAll() { return []; }
+  querySelectorAll() { return []; },
+  matches() { return false; }
 });
 
 global.window = global;
-global.location = { hash: '#/' };
+global.location = { hash: '', pathname: '/ai-competition-hub/', search: '' };
+global.history = {
+  replaceState(_state, _title, url) {
+    const index = String(url).indexOf('#');
+    location.hash = index >= 0 ? String(url).slice(index) : '';
+  }
+};
 global.document = {
   documentElement: noopElement(),
   body: noopElement(),
@@ -50,19 +57,16 @@ global.document = {
 global.localStorage = { getItem() { return null; }, setItem() {} };
 global.navigator = { clipboard: { async writeText() {} } };
 global.matchMedia = () => ({ matches: true });
-global.alert = () => {};
 global.requestAnimationFrame = (callback) => callback();
 global.cancelAnimationFrame = () => {};
 global.scrollTo = () => {};
 global.window.scrollTo = () => {};
 global.window.addEventListener = on;
 global.window.removeEventListener = () => {};
-global.MutationObserver = class {
-  observe() {}
-  disconnect() {}
-};
+global.FormData = class { get() { return ''; } };
 
 const scripts = [
+  'route-bootstrap.js',
   'data.js',
   'real-competitions.js',
   'expanded-competitions-1.js',
@@ -71,8 +75,7 @@ const scripts = [
   'expanded-competitions-4.js',
   'expanded-competitions-devpost-v5.js',
   'real-competition-config.js',
-  'competition-pagination.js',
-  'app.js'
+  'commercial-app.js'
 ];
 
 for (const file of scripts) {
@@ -80,26 +83,47 @@ for (const file of scripts) {
   vm.runInThisContext(source, { filename: file });
 }
 
+if (location.hash !== '#/') throw new Error(`Bare route was not normalized: ${location.hash}`);
 emit('DOMContentLoaded');
 
 if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) {
   throw new Error(`Expected at least 150 competitions, received ${window.AI_DATA?.competitions?.length ?? 0}`);
 }
 
-if (!app.innerHTML.includes('AI 赛场')) {
-  throw new Error('Homepage failed to render');
+if (!app.innerHTML.includes('只参加真正值得的')) {
+  throw new Error('Commercial homepage failed to render');
 }
+if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) {
+  throw new Error('Public homepage still contains prototype copy');
+}
+
+const current = window.AI_DATA.competitions
+  .filter((item) => item.collection !== 'practice' && item.collection !== 'archive' && item.status !== 'ended')
+  .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
 
 location.hash = '#/competitions';
 emit('hashchange');
 
-const cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
+let cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
 if (cardCount === 0) throw new Error('Competition library rendered no cards');
-if (cardCount > 24) throw new Error(`Competition library rendered ${cardCount} cards instead of a paginated first page`);
-
-const pagination = window.AI_DATA.competitionPagination;
-if (!pagination || pagination.filteredTotal < 150 || pagination.shown > 24) {
-  throw new Error(`Pagination state invalid: ${JSON.stringify(pagination)}`);
+if (cardCount > 24) throw new Error(`First page rendered ${cardCount} cards instead of at most 24`);
+if (app.innerHTML.includes('status-ended')) throw new Error('Default current opportunities include ended events');
+if (current[0] && !app.innerHTML.includes(current[0].title)) {
+  throw new Error('Global deadline sorting did not place the earliest current opportunity on the first page');
 }
 
-console.log(`Smoke test passed: ${window.AI_DATA.competitions.length} total competitions, ${cardCount} cards on first page.`);
+location.hash = '#/competitions?page=2';
+emit('hashchange');
+cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
+if (cardCount <= 24 || cardCount > 48) throw new Error(`Second page cumulative render is invalid: ${cardCount}`);
+
+const detail = current.find((item) => item.sourceUrl);
+if (!detail) throw new Error('No current competition with an official source URL');
+location.hash = `#/competitions/${encodeURIComponent(detail.id)}`;
+emit('hashchange');
+if (!app.innerHTML.includes('查看官方页面')) throw new Error('Competition detail is missing the official-page action');
+if (app.innerHTML.includes('参赛方案整理中') || app.innerHTML.includes('接入真实比赛数据后开放')) {
+  throw new Error('Competition detail still contains unfinished public actions');
+}
+
+console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${current.length} current opportunities.`);
