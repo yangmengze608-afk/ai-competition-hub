@@ -26,6 +26,11 @@ jobs:
       - name: Validate JavaScript syntax
         run: find . -maxdepth 1 -name '*.js' -print0 | xargs -0 -n1 node --check
 
+      - name: Verify unified competition data
+        run: |
+          node scripts/generate-competition-data.cjs
+          git diff --exit-code -- data/competitions-v1.json competition-data.generated.js
+
       - name: Audit competition data
         run: node scripts/data-audit.cjs
 
