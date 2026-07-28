@@ -14,9 +14,9 @@
     const daysLeft = Number.isFinite(deadline) ? Math.ceil((deadline - now) / day) : Infinity;
     const current = item.collection === 'current' && item.status !== 'ended' && item.entryStatus !== 'closed';
     const reviewed = item.verificationStatus === 'reviewed';
-    const actionable = current && item.entryStatus !== 'restricted';
+    const actionable = current && daysLeft >= 0 && item.entryStatus !== 'restricted';
 
-    if (actionable && daysLeft >= 0 && daysLeft <= 7) addTag(item, '本周截止');
+    if (actionable && daysLeft <= 7) addTag(item, '本周截止');
     if (actionable && reviewed && item.difficulty === '入门') addTag(item, '零基础友好');
     if (actionable && reviewed && ['S', 'A'].includes(item.grade)) addTag(item, '高价值精选');
   }
