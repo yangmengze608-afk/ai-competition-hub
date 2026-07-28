@@ -16,7 +16,7 @@
   }
 
   function page(title, kicker, intro, sections) {
-    return `<div class="trust-page"><section class="trust-hero"><span>${kicker}</span><h1>${title}</h1><p>${intro}</p><small>当前版本：Commercial Beta · 生效日期 ${EFFECTIVE_DATE}</small></section><section class="trust-content">${sections.map((section) => `<article class="trust-block"><h2>${section.title}</h2>${section.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')}${section.items ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join('')}</ul>` : ''}</article>`).join('')}</section></div>`;
+    return `<div class="trust-page"><section class="trust-hero"><span>${kicker}</span><h1>${title}</h1><p>${intro}</p><small>当前版本：Commercial Beta · 生效日期 ${EFFECTIVE_DATE}</small></section><section class="trust-content">${sections.map((section) => `<article class="trust-block"><h2>${section.title}</h2>${(section.paragraphs || []).map((paragraph) => `<p>${paragraph}</p>`).join('')}${section.items ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join('')}</ul>` : ''}</article>`).join('')}</section></div>`;
   }
 
   function renderAbout(main) {
@@ -75,5 +75,7 @@
     else if (!path.startsWith('/playbooks') && path !== '/sources' && path !== '/quality' && path !== '/participate') document.title = DEFAULT_TITLE;
   }
 
-  window.addEventListener('ai:base-rendered', renderRoute);
+  function scheduleRender() { setTimeout(renderRoute, 0); }
+  window.addEventListener('DOMContentLoaded', scheduleRender);
+  window.addEventListener('hashchange', scheduleRender);
 })();
