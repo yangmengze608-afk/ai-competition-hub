@@ -10,49 +10,23 @@ function on(event, handler) {
   items.push(handler);
   listeners.set(event, items);
 }
+function emit(event) { for (const handler of listeners.get(event) || []) handler(); }
 
-function emit(event) {
-  for (const handler of listeners.get(event) || []) handler();
-}
-
-const app = {
-  innerHTML: '',
-  querySelector() { return null; },
-  querySelectorAll() { return []; },
-};
-
+const app = { innerHTML: '', querySelector() { return null; }, querySelectorAll() { return []; } };
 const noopElement = () => ({
-  innerHTML: '',
-  textContent: '',
-  dataset: {},
-  style: {},
+  innerHTML: '', textContent: '', dataset: {}, style: {},
   classList: { add() {}, remove() {}, toggle() {} },
-  appendChild() {},
-  remove() {},
-  setAttribute() {},
-  removeAttribute() {},
-  hasAttribute() { return false; },
-  addEventListener() {},
-  querySelector() { return null; },
-  querySelectorAll() { return []; },
-  matches() { return false; },
+  appendChild() {}, remove() {}, setAttribute() {}, removeAttribute() {}, hasAttribute() { return false; },
+  addEventListener() {}, querySelector() { return null; }, querySelectorAll() { return []; }, matches() { return false; },
 });
 
 global.window = global;
 global.location = { hash: '', pathname: '/ai-competition-hub/', search: '' };
-global.history = {
-  replaceState(_state, _title, url) {
-    const index = String(url).indexOf('#');
-    location.hash = index >= 0 ? String(url).slice(index) : '';
-  },
-};
+global.history = { replaceState(_state, _title, url) { const index = String(url).indexOf('#'); location.hash = index >= 0 ? String(url).slice(index) : ''; } };
 global.document = {
-  documentElement: noopElement(),
-  body: noopElement(),
+  documentElement: noopElement(), body: noopElement(),
   getElementById(id) { return id === 'app' ? app : null; },
-  querySelector() { return null; },
-  querySelectorAll() { return []; },
-  createElement: noopElement,
+  querySelector() { return null; }, querySelectorAll() { return []; }, createElement: noopElement,
 };
 global.localStorage = { getItem() { return null; }, setItem() {} };
 global.navigator = { clipboard: { async writeText() {} } };
@@ -65,16 +39,8 @@ global.window.addEventListener = on;
 global.window.removeEventListener = () => {};
 global.FormData = class { get() { return ''; } };
 
-const scripts = [
-  'route-bootstrap.js',
-  'data.js',
-  'competition-data.generated.js',
-  'commercial-app.js',
-];
-
-for (const file of scripts) {
-  const source = fs.readFileSync(path.join(root, file), 'utf8');
-  vm.runInThisContext(source, { filename: file });
+for (const file of ['route-bootstrap.js', 'data.js', 'competition-data.generated.js', 'commercial-app-v2.js']) {
+  vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
 }
 
 if (location.hash !== '#/') throw new Error(`Bare route was not normalized: ${location.hash}`);
@@ -87,13 +53,9 @@ if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) {
 if (window.AI_DATA.competitions.length !== payload.count) {
   throw new Error(`Runtime bundle count ${window.AI_DATA.competitions.length} does not match JSON count ${payload.count}`);
 }
-
-if (!app.innerHTML.includes('只参加真正值得的')) {
-  throw new Error('Commercial homepage failed to render');
-}
-if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) {
-  throw new Error('Public homepage still contains prototype copy');
-}
+if (!app.innerHTML.includes('只参加真正值得的')) throw new Error('Commercial homepage failed to render');
+if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) throw new Error('Public homepage still contains prototype copy');
+if (!app.innerHTML.includes('推荐规则公开')) throw new Error('Homepage does not explain transparent recommendation sorting');
 
 const current = window.AI_DATA.competitions
   .filter((item) => item.collection === 'current' && item.status !== 'ended')
@@ -101,14 +63,29 @@ const current = window.AI_DATA.competitions
 
 location.hash = '#/competitions';
 emit('hashchange');
-
 let cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
 if (cardCount === 0) throw new Error('Competition library rendered no cards');
 if (cardCount > 24) throw new Error(`First page rendered ${cardCount} cards instead of at most 24`);
-if (app.innerHTML.includes('status-ended')) throw new Error('Default current opportunities include ended events');
+if (!app.innerHTML.includes('推荐（规则排序）') || !app.innerHTML.includes('按透明推荐规则排序')) {
+  throw new Error('Recommended sort is missing or not explained');
+}
+if (!app.innerHTML.includes('U · 待核验')) throw new Error('Unreviewed competitions are not visibly marked U');
+
+location.hash = '#/competitions?sort=deadline';
+emit('hashchange');
 if (current[0] && !app.innerHTML.includes(current[0].title)) {
   throw new Error('Global deadline sorting did not place the earliest current opportunity on the first page');
 }
+
+location.hash = '#/competitions?region=CN';
+emit('hashchange');
+if (!app.innerHTML.includes('data-region="CN"')) throw new Error('Domestic filter rendered no domestic competitions');
+if (app.innerHTML.includes('data-region="INTL"')) throw new Error('Domestic filter leaked international competitions');
+
+location.hash = '#/competitions?region=INTL';
+emit('hashchange');
+if (!app.innerHTML.includes('data-region="INTL"')) throw new Error('International filter rendered no international competitions');
+if (app.innerHTML.includes('data-region="CN"')) throw new Error('International filter leaked domestic competitions');
 
 location.hash = '#/competitions?page=2';
 emit('hashchange');
@@ -120,8 +97,8 @@ if (!detail) throw new Error('No current competition with an official source URL
 location.hash = `#/competitions/${encodeURIComponent(detail.id)}`;
 emit('hashchange');
 if (!app.innerHTML.includes('查看官方页面')) throw new Error('Competition detail is missing the official-page action');
-if (app.innerHTML.includes('参赛方案整理中') || app.innerHTML.includes('接入真实比赛数据后开放')) {
-  throw new Error('Competition detail still contains unfinished public actions');
+if (!app.innerHTML.includes('赛事等级') || !app.innerHTML.includes('证据置信度')) {
+  throw new Error('Competition detail is missing grade or confidence information');
 }
 
-console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${current.length} current opportunities.`);
+console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${current.length} current opportunities, region filters enabled.`);

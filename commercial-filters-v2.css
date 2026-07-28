@@ -1,0 +1,66 @@
+.competition-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.region-badge,
+.grade-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.region-badge {
+  color: #4f617c;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.grade-badge {
+  color: #6b6478;
+  background: #f6f3fa;
+  border: 1px solid #e8e1f0;
+}
+
+.grade-badge.grade-s,
+.grade-badge.grade-a {
+  color: #66520f;
+  background: #fff8d9;
+  border-color: #f2df8d;
+}
+
+.grade-badge.grade-b {
+  color: #285f51;
+  background: #ecf8f3;
+  border-color: #c9e8dc;
+}
+
+.grade-badge.grade-r {
+  color: #8b2e2e;
+  background: #fff0f0;
+  border-color: #f2caca;
+}
+
+.detail-status-row .grade-badge,
+.detail-status-row .region-badge {
+  min-height: 28px;
+}
+
+@media (max-width: 720px) {
+  .competition-card-badges {
+    gap: 5px;
+  }
+
+  .region-badge,
+  .grade-badge {
+    padding: 0 8px;
+    font-size: 10px;
+  }
+}
