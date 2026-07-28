@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generatedAt": "2026-07-27T16:20:00.000Z",
-  "latestVerifiedAt": "2026-07-28T05:55:00Z",
+  "latestVerifiedAt": "2026-07-28T06:20:00.000Z",
   "count": 156,
   "sourceFiles": [
     "data.js",
@@ -61,7 +61,8 @@
       "evidenceUrls": [
         "https://challenge.xfyun.cn/xinghuo",
         "https://challenge.xfyun.cn/h5/home"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "spacemind-agent-2026",
@@ -109,7 +110,8 @@
       "evidenceUrls": [
         "https://challenge.xfyun.cn/h5/home",
         "https://challenge.xfyun.cn/competition"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "iflytek-office-skill-2026",
@@ -157,7 +159,8 @@
       "evidenceUrls": [
         "https://challenge.xfyun.cn/competition",
         "https://challenge.xfyun.cn/h5/home"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "tianchi-aftershock-2026",
@@ -206,7 +209,8 @@
       "evidenceUrls": [
         "https://tianchi.aliyun.com/competition/entrance/532460",
         "https://tianchi.aliyun.com/forum/post/1044600"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "ncccu-2026",
@@ -256,7 +260,8 @@
       "evidenceUrls": [
         "https://www.ncccu.org.cn/",
         "https://www.ncccu.org.cn/index/Paper/case4.html?way=1"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "simcm-2026",
@@ -306,7 +311,8 @@
       "evidenceUrls": [
         "https://www.simcm.org.cn/",
         "https://www.simcm.org.cn/article_detail.php?id=194"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "kaggle-pokemon-tcg-ai-2026",
@@ -354,7 +360,8 @@
       "auditSummary": "由 The Pokémon Company 团队在 Kaggle 举办的 Featured Simulation Competition，参与规模大、强化学习与博弈价值高。模拟赛道本身无现金奖金，奖金需结合 Hackathon 赛道报告评审。",
       "evidenceUrls": [
         "https://www.kaggle.com/competitions/pokemon-tcg-ai-battle/overview/description"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "kaggle-solar-filament-2026",
@@ -404,7 +411,8 @@
       "evidenceUrls": [
         "https://www.kaggle.com/competitions/filament-segmentation-2026/overview/prizes",
         "https://www.kaggle.com/competitions/filament-segmentation-2026/overview/sponsor"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "drivendata-trace-the-ace-2026",
@@ -452,7 +460,8 @@
       "auditSummary": "DrivenData 当前奖金赛，围绕 K-12 智能辅导成效预测，奖金 5 万美元并具有明确社会影响场景。基础事实已由官方比赛列表确认，完整许可和团队规则仍应在报名时逐条核对。",
       "evidenceUrls": [
         "https://www.drivendata.org/competitions/"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "aicrowd-arc-white-box-2026",
@@ -503,7 +512,8 @@
         "https://www.aicrowd.com/challenges/arc-white-box-estimation-challenge-2026",
         "https://discourse.aicrowd.com/t/phase-1-launch-deeper-models-and-increased-prizes/18026",
         "https://discourse.aicrowd.com/t/algorithmic-contribution-prize-guidelines-how-arc-judges-these-prizes-discretion-technical-writeups-llm-usage/18041"
-      ]
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "datahub-agent-hackathon-2026",
@@ -526,15 +536,36 @@
         "开源"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://datahub.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only",
+        "required-platform-stack",
+        "public-demo-and-documentation"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "达到居住地法定成年年龄的个人、团队或组织；受制裁地区除外",
+      "fee": "免费",
+      "deadlineTimezone": "EDT（UTC-4）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "devpostManagement": "administered",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "DataHub 官方主办、Devpost 管理的全球智能体黑客松，奖金 20,500 美元。需要使用 DataHub 开源平台并至少接入 MCP Server、Agent Context Kit、Skills 或 Analytics Agent 之一，适合数据工程与 Agent 产品作品。",
+      "evidenceUrls": [
+        "https://datahub.devpost.com/rules",
+        "https://datahub.devpost.com/"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "arm-ai-optimization-2026",
@@ -542,7 +573,7 @@
       "organizer": "Arm / Devpost",
       "track": "AI 编程",
       "status": "ongoing",
-      "deadline": "2026-08-14T23:59:59Z",
+      "deadline": "2026-08-14T23:00:00Z",
       "format": "个人/团队",
       "difficulty": "进阶",
       "hasPrize": true,
@@ -557,15 +588,36 @@
         "奖金赛事"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://arm-ai-optimization-challenge.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only",
+        "arm-platform-required",
+        "public-open-source-repository"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "达到居住地法定成年年龄的个人、团队或组织；标准受限地区除外",
+      "fee": "免费",
+      "deadlineTimezone": "PDT（UTC-7）",
+      "sourceLevel": "official",
+      "entryStatus": "open",
+      "devpostManagement": "platform-only",
+      "authorityScore": 5,
+      "resumeValue": 5,
+      "growthValue": 5,
+      "auditSummary": "Arm 官方主办和管理的全球 AI 优化挑战，覆盖 Physical AI、Cloud AI 与 Edge AI。需要在 Arm 架构上完成迁移、优化或部署，并提交公开且含 MIT 或 Apache 2.0 许可证的代码仓库。",
+      "evidenceUrls": [
+        "https://arm-ai-optimization-challenge.devpost.com/rules",
+        "https://arm-ai-optimization-challenge.devpost.com/"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "gemini-xprize-2026",
@@ -573,7 +625,7 @@
       "organizer": "Google / XPRIZE / Devpost",
       "track": "大模型应用",
       "status": "ongoing",
-      "deadline": "2026-08-17T23:59:59Z",
+      "deadline": "2026-08-17T20:00:00Z",
       "format": "个人/团队",
       "difficulty": "进阶",
       "hasPrize": true,
@@ -588,15 +640,38 @@
         "奖金赛事"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://xprize.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only-for-prizes",
+        "new-project-after-start-date",
+        "google-cloud-required",
+        "gemini-api-required",
+        "business-evidence-may-be-requested"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "达到居住地法定成年年龄的个人、团队或少于 25 名员工的组织；受限地区除外",
+      "fee": "免费；Google Cloud 使用可能产生超出免费额度的费用",
+      "deadlineTimezone": "PDT（UTC-7）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "devpostManagement": "administered",
+      "authorityScore": 5,
+      "resumeValue": 5,
+      "growthValue": 5,
+      "auditSummary": "XPRIZE 主办、Devpost 管理的全球 AI 商业产品挑战，奖金池 200 万美元。必须建立 2026 年 5 月 19 日之后的新业务，使用至少一个 Google Cloud 产品，并在部署应用中至少调用一次 Gemini API。",
+      "evidenceUrls": [
+        "https://xprize.devpost.com/rules",
+        "https://xprize.devpost.com/details/faq"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "cockroachdb-agent-memory-2026",
@@ -604,7 +679,7 @@
       "organizer": "Cockroach Labs / AWS / Devpost",
       "track": "AI Agent",
       "status": "ongoing",
-      "deadline": "2026-08-18T23:59:59Z",
+      "deadline": "2026-08-18T21:00:00Z",
       "format": "个人/团队",
       "difficulty": "进阶",
       "hasPrize": true,
@@ -619,15 +694,38 @@
         "数据库"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://cockroachdb-ai.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only",
+        "cockroachdb-required",
+        "aws-required",
+        "public-open-source-repository",
+        "functional-demo-required",
+        "public-video-required"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "年满 18 岁或达到居住地法定成年年龄的个人、最多 5 人团队或组织",
+      "fee": "免费；CockroachDB Cloud 与 AWS 超出免费额度后可能收费",
+      "deadlineTimezone": "EDT（UTC-4）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "devpostManagement": "administered",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "Cockroach Labs 主办、Devpost 管理的 Agentic Memory 黑客松。作品必须使用 CockroachDB 作为持久记忆层并部署在 AWS，提交公开开源仓库、可运行 Demo 和三分钟以内公开视频，适合生产型 Agent 项目。",
+      "evidenceUrls": [
+        "https://cockroachdb-ai.devpost.com/rules"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "open-atlas-ai-social-good-2026",
@@ -650,15 +748,38 @@
         "奖金赛事"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://oa-ai-for-social-good.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only",
+        "us-presence-required-for-finalists",
+        "in-person-final-required",
+        "travel-cost-unclear",
+        "sensitive-data-prohibited"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "18 岁以上；最终入围者必须能合法进入美国并到加州 Milpitas 现场答辩",
+      "fee": "免费；现场差旅是否报销未明确",
+      "deadlineTimezone": "PDT（UTC-7）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "restricted",
+      "devpostManagement": "platform-only",
+      "authorityScore": 3,
+      "resumeValue": 3,
+      "growthValue": 4,
+      "auditSummary": "面向社会公益问题的产品型 AI 黑客松，线上可提交，但入围决赛必须于 8 月 21 日赴美国加州现场答辩。对无法合法入境美国或承担现场成本的参赛者不构成可执行机会。",
+      "evidenceUrls": [
+        "https://oa-ai-for-social-good.devpost.com/rules",
+        "https://oa-ai-for-social-good.devpost.com/"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "africa-deep-tech-2026",
@@ -666,7 +787,7 @@
       "organizer": "Africa Deep Tech Challenge / Devpost",
       "track": "大模型应用",
       "status": "ongoing",
-      "deadline": "2026-08-25T23:59:59Z",
+      "deadline": "2026-08-25T06:45:00Z",
       "format": "个人/团队",
       "difficulty": "进阶",
       "hasPrize": true,
@@ -681,15 +802,38 @@
         "奖金赛事"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://adtc-2026.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "africa-residents-only",
+        "adult-only",
+        "early-stage-only",
+        "funding-cap",
+        "public-open-source-repository",
+        "hardware-constraint"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "仅限规则列明的非洲国家居民，且达到当地法定成年年龄；团队最多 3 人",
+      "fee": "免费",
+      "deadlineTimezone": "PDT（UTC-7）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "restricted",
+      "devpostManagement": "platform-only",
+      "authorityScore": 3,
+      "resumeValue": 3,
+      "growthValue": 5,
+      "auditSummary": "聚焦普通 8GB 笔记本端侧大模型的非洲区域挑战，任务与评测指标明确，奖金和技术成长价值较高。但赛事严格仅限指定非洲国家居民，中国普通参赛者不具备资格。",
+      "evidenceUrls": [
+        "https://adtc-2026.devpost.com/rules"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "ai-builders-hackathon-2026",
@@ -712,15 +856,36 @@
         "个人参赛"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://ai-builders-hackathon-2026.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "C",
+      "confidence": "medium",
+      "riskFlags": [
+        "organizer-depth-limited",
+        "timezone-needs-recheck",
+        "prize-details-need-recheck"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "页面称全球开发者均可参与；奖金资格、年龄和受限地区仍需在报名时复核",
+      "fee": "未发现报名费",
+      "deadlineTimezone": "官方页面未明确统一时区",
+      "sourceLevel": "platform-listing",
+      "entryStatus": "open",
+      "devpostManagement": "platform-only",
+      "authorityScore": 2,
+      "resumeValue": 2,
+      "growthValue": 3,
+      "auditSummary": "面向 AI 产品快速构建的开放黑客松，适合入门和形成作品集，但主办方权威性、奖金细则和统一时区信息不如企业官方赛事完整，因此评级保持 C、置信度为中。",
+      "evidenceUrls": [
+        "https://ai-builders-hackathon-2026.devpost.com/",
+        "https://ai-builders-hackathon-2026.devpost.com/rules"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "reverie-hacks-2026",
@@ -790,7 +955,7 @@
       "organizer": "Backblaze / Devpost",
       "track": "AI 视频与短剧",
       "status": "closing",
-      "deadline": "2026-08-04T03:59:59Z",
+      "deadline": "2026-08-03T21:00:00Z",
       "format": "个人/团队",
       "difficulty": "进阶",
       "hasPrize": true,
@@ -805,15 +970,37 @@
         "奖金赛事"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://backblaze-generative-media.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "adult-only",
+        "backblaze-b2-required",
+        "genblaze-required",
+        "public-project-materials"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "达到居住地法定成年年龄的个人、团队或符合规则的组织；受限地区除外",
+      "fee": "免费；云服务超出赠送或免费额度后可能收费",
+      "deadlineTimezone": "EDT（UTC-4）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "closing",
+      "devpostManagement": "administered",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 4,
+      "auditSummary": "Backblaze 官方生成式媒体黑客松，奖金 1 万美元，要求把 Backblaze B2 与 Genblaze 实质接入图像、视频、音频或多模态应用。截止时间较近，只有已具备原型能力的参赛者值得立即投入。",
+      "evidenceUrls": [
+        "https://backblaze-generative-media.devpost.com/",
+        "https://backblaze-generative-media.devpost.com/rules"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "includai-2026",
@@ -821,7 +1008,7 @@
       "organizer": "IncludAI / Stanford NNEA / Devpost",
       "track": "AI 教育",
       "status": "ongoing",
-      "deadline": "2026-08-09T23:59:59Z",
+      "deadline": "2026-08-09T06:59:00Z",
       "format": "个人/团队",
       "difficulty": "入门",
       "hasPrize": true,
@@ -836,15 +1023,37 @@
         "公益"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://includai-2026.devpost.com/",
       "sourceName": "Devpost",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "student-focused",
+        "adult-only-for-prizes",
+        "public-github-required",
+        "real-user-design-testing-required"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "主要面向学生；奖金资格需达到居住地法定成年年龄并满足地区规则",
+      "fee": "免费",
+      "deadlineTimezone": "PDT（UTC-7）",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "devpostManagement": "platform-only",
+      "authorityScore": 3,
+      "resumeValue": 3,
+      "growthValue": 5,
+      "auditSummary": "与 Stanford NNEA 合作的神经多样性教育黑客松，强调让真实神经多样性用户参与设计或测试。对 HCI、心理学、教育科技与 AI 跨学科团队成长价值高，但不能只做未经用户验证的概念 Demo。",
+      "evidenceUrls": [
+        "https://includai-2026.devpost.com/",
+        "https://includai-2026.devpost.com/rules"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "drivendata-dat-parkinsons-2026",
@@ -852,7 +1061,7 @@
       "organizer": "DrivenData / 赛事合作机构",
       "track": "数据科学",
       "status": "ongoing",
-      "deadline": "2026-09-16T23:59:59Z",
+      "deadline": "2026-09-16T23:59:00Z",
       "deadlineText": "2026年9月16日",
       "format": "个人/团队",
       "difficulty": "进阶",
@@ -868,15 +1077,37 @@
         "国际"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:55:00Z",
+      "updatedAt": "2026-07-28T06:20:00Z",
       "sourceUrl": "https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/",
       "sourceName": "DrivenData",
-      "lastVerifiedAt": "2026-07-27T15:55:00Z",
+      "lastVerifiedAt": "2026-07-28T06:20:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "sensitive-health-data",
+        "do-not-upload-data-to-cloud-ai",
+        "data-deletion-required",
+        "containerized-code-submission",
+        "winner-mit-open-source-required"
+      ],
+      "region": "INTL",
+      "language": "英文",
+      "eligibility": "达到 18 岁及居住地法定成年年龄的自然人；受制裁地区与相关人员除外",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 5,
+      "resumeValue": 5,
+      "growthValue": 5,
+      "auditSummary": "法国核医学学会联合 Health Data Hub、GaelO 与 DrivenData 举办的医学影像挑战，奖金 2.5 万欧元。科研和履历价值高，但竞赛数据禁止上传至会存储数据的 ChatGPT、Codex 等云端工具，参赛者必须在合规本地环境处理。",
+      "evidenceUrls": [
+        "https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/page/987/",
+        "https://www.drivendata.org/competitions/311/dat-parkinsons-challenge/page/989/"
+      ],
+      "auditVersion": "1.0.0"
     },
     {
       "id": "drivendata-snomed-benchmark",
@@ -5174,6 +5405,6 @@
       "riskFlags": []
     }
   ],
-  "auditVersion": "1.0.0",
-  "auditedCount": 10
+  "auditVersion": "event-audits-v1.json:1.0.0,event-audits-v2.json:1.0.0",
+  "auditedCount": 20
 }
