@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generatedAt": "2026-07-27T16:20:00.000Z",
-  "latestVerifiedAt": "2026-07-27T16:20:00.000Z",
+  "latestVerifiedAt": "2026-07-28T05:55:00Z",
   "count": 156,
   "sourceFiles": [
     "data.js",
@@ -35,15 +35,33 @@
         "奖金赛事"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://challenge.xfyun.cn/",
       "sourceName": "2026 iFLYTEK AI 开发者大赛",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "platform-specific-build",
+        "team-details-lock-after-deadline"
+      ],
+      "region": "domestic",
+      "language": "中文",
+      "eligibility": "面向全球高校大学生；需按官方指引完成实名、报名与团队确认",
+      "fee": "免费",
+      "deadlineTimezone": "UTC+8",
+      "sourceLevel": "official",
+      "entryStatus": "open",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "科大讯飞官方赛事，面向高校，要求基于讯飞星辰 Agent 平台完成并发布智能体作品。赛事规模、赛程和奖项均有官方页面支撑，适合作为产品型 AI 作品与比赛履历。",
+      "evidenceUrls": [
+        "https://challenge.xfyun.cn/xinghuo",
+        "https://challenge.xfyun.cn/h5/home"
+      ]
     },
     {
       "id": "spacemind-agent-2026",
@@ -66,15 +84,32 @@
         "应用创新"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://challenge.xfyun.cn/",
       "sourceName": "2026 iFLYTEK AI 开发者大赛",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "medium",
+      "riskFlags": [
+        "detail-rules-require-login"
+      ],
+      "region": "domestic",
+      "language": "中文",
+      "eligibility": "高校学生、开发者及个人创作者；具体年龄与材料要求以赛题页为准",
+      "fee": "未发现报名费",
+      "deadlineTimezone": "UTC+8",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 3,
+      "resumeValue": 3,
+      "growthValue": 4,
+      "auditSummary": "赛事名称、举办方、奖金与报名截止时间由 2026 iFLYTEK AI 开发者大赛官方平台公开确认。适合智能体应用实践，但赛事级详细规则公开可见度低于星火杯。",
+      "evidenceUrls": [
+        "https://challenge.xfyun.cn/h5/home",
+        "https://challenge.xfyun.cn/competition"
+      ]
     },
     {
       "id": "iflytek-office-skill-2026",
@@ -97,15 +132,32 @@
         "AI Agent"
       ],
       "hasPlaybook": true,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://challenge.xfyun.cn/",
       "sourceName": "2026 iFLYTEK AI 开发者大赛",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "platform-specific-build"
+      ],
+      "region": "domestic",
+      "language": "中文",
+      "eligibility": "开发者及团队均可报名；具体实名和团队规则以官方赛题页为准",
+      "fee": "未发现报名费",
+      "deadlineTimezone": "UTC+8",
+      "sourceLevel": "official",
+      "entryStatus": "open",
+      "authorityScore": 3,
+      "resumeValue": 3,
+      "growthValue": 4,
+      "auditSummary": "科大讯飞官方 Skill 开发赛题，围绕会议、文档、日程和流程审批等办公协同场景，任务明确、适合快速形成可演示的 Agent Skill 作品。",
+      "evidenceUrls": [
+        "https://challenge.xfyun.cn/competition",
+        "https://challenge.xfyun.cn/h5/home"
+      ]
     },
     {
       "id": "tianchi-aftershock-2026",
@@ -128,15 +180,33 @@
         "奖金赛事"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://tianchi.aliyun.com/competition/entrance/532460",
       "sourceName": "阿里云天池",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "qualification-stage-closed",
+        "continuous-submission-required"
+      ],
+      "region": "domestic",
+      "language": "中英文",
+      "eligibility": "面向全球公众，个人或团队可参加；排名赛原则上面向已完成资格赛的队伍",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official",
+      "entryStatus": "restricted",
+      "authorityScore": 5,
+      "resumeValue": 5,
+      "growthValue": 5,
+      "auditSummary": "阿里云天池承载的国际科研型赛事，奖金 3 万美元，排名赛持续至 11 月 30 日。当前比赛仍在进行，但新用户应先确认是否具备资格赛晋级资格，不能仅按最终截止日判断可报名。",
+      "evidenceUrls": [
+        "https://tianchi.aliyun.com/competition/entrance/532460",
+        "https://tianchi.aliyun.com/forum/post/1044600"
+      ]
     },
     {
       "id": "ncccu-2026",
@@ -159,15 +229,34 @@
         "人工智能"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.ncccu.org.cn/",
       "sourceName": "全国高校计算机能力挑战赛官网",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "B",
+      "confidence": "high",
+      "riskFlags": [
+        "paid-entry",
+        "electronic-certificate-only",
+        "recognition-varies-by-school"
+      ],
+      "region": "domestic",
+      "language": "中文",
+      "eligibility": "高校所有专业在校生；本科、研究生与高职组分别评奖",
+      "fee": "个人赛 80 元/科；团队赛 200 元/队；国赛不另收费",
+      "deadlineTimezone": "UTC+8",
+      "sourceLevel": "official",
+      "entryStatus": "open",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 3,
+      "auditSummary": "由全国高等学校计算机教育研究会主办，覆盖程序设计、人工智能、大数据、Office 和数字媒体。具备全国性与高校覆盖度，但不同学校对竞赛级别和加分认定可能不同，报名前应查询本校目录。",
+      "evidenceUrls": [
+        "https://www.ncccu.org.cn/",
+        "https://www.ncccu.org.cn/index/Paper/case4.html?way=1"
+      ]
     },
     {
       "id": "simcm-2026",
@@ -190,15 +279,34 @@
         "入门"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.simcm.org.cn/",
       "sourceName": "科创杯官网",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "C",
+      "confidence": "high",
+      "riskFlags": [
+        "commercial-organizer",
+        "paid-entry",
+        "recognition-varies-by-school"
+      ],
+      "region": "domestic",
+      "language": "中文",
+      "eligibility": "高校学生；不同赛道和阶段的组队及报名要求需分别查看",
+      "fee": "存在付费报名可能，金额需在具体赛道报名页确认",
+      "deadlineTimezone": "UTC+8",
+      "sourceLevel": "official-commercial",
+      "entryStatus": "open",
+      "authorityScore": 2,
+      "resumeValue": 2,
+      "growthValue": 3,
+      "auditSummary": "赛事由商业机构主办并获得若干机构学术支持，适合数模训练和论文实践，但不能与教育主管部门或全国性学会主办的高层级赛事等同。是否计入校内竞赛认定必须单独核实。",
+      "evidenceUrls": [
+        "https://www.simcm.org.cn/",
+        "https://www.simcm.org.cn/article_detail.php?id=194"
+      ]
     },
     {
       "id": "kaggle-pokemon-tcg-ai-2026",
@@ -221,15 +329,32 @@
         "博弈"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.kaggle.com/competitions/pokemon-tcg-ai-battle",
       "sourceName": "Kaggle",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "entry-deadline-before-final",
+        "no-cash-prize-in-simulation-track"
+      ],
+      "region": "international",
+      "language": "英文",
+      "eligibility": "按 Kaggle 规则参赛；8 月 9 日前完成规则接受与组队合并",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "由 The Pokémon Company 团队在 Kaggle 举办的 Featured Simulation Competition，参与规模大、强化学习与博弈价值高。模拟赛道本身无现金奖金，奖金需结合 Hackathon 赛道报告评审。",
+      "evidenceUrls": [
+        "https://www.kaggle.com/competitions/pokemon-tcg-ai-battle/overview/description"
+      ]
     },
     {
       "id": "kaggle-solar-filament-2026",
@@ -252,15 +377,34 @@
         "Kaggle"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.kaggle.com/competitions/filament-segmentation-2026",
       "sourceName": "Kaggle",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "public-code-required",
+        "technical-report-required",
+        "banking-requirement-for-prize"
+      ],
+      "region": "international",
+      "language": "英文",
+      "eligibility": "个人或团队按 Kaggle 规则参赛；最终评审需要公开代码仓库与技术报告",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "IEEE BigData Cup 相关科研竞赛，由美国国家太阳天文台相关机构支持，任务、评测、代码开放和报告要求明确。更适合计算机视觉与科研型参赛者。",
+      "evidenceUrls": [
+        "https://www.kaggle.com/competitions/filament-segmentation-2026/overview/prizes",
+        "https://www.kaggle.com/competitions/filament-segmentation-2026/overview/sponsor"
+      ]
     },
     {
       "id": "drivendata-trace-the-ace-2026",
@@ -283,15 +427,32 @@
         "奖金赛事"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.drivendata.org/competitions/",
       "sourceName": "DrivenData",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "medium",
+      "riskFlags": [
+        "eligibility-territory-restrictions",
+        "solution-documentation-required"
+      ],
+      "region": "international",
+      "language": "英文",
+      "eligibility": "按 DrivenData 官方规则参赛；资格与奖金地区限制须在规则页确认",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 4,
+      "resumeValue": 4,
+      "growthValue": 5,
+      "auditSummary": "DrivenData 当前奖金赛，围绕 K-12 智能辅导成效预测，奖金 5 万美元并具有明确社会影响场景。基础事实已由官方比赛列表确认，完整许可和团队规则仍应在报名时逐条核对。",
+      "evidenceUrls": [
+        "https://www.drivendata.org/competitions/"
+      ]
     },
     {
       "id": "aicrowd-arc-white-box-2026",
@@ -314,15 +475,35 @@
         "奖金赛事"
       ],
       "hasPlaybook": false,
-      "updatedAt": "2026-07-27T15:10:00Z",
+      "updatedAt": "2026-07-28T05:55:00Z",
       "sourceUrl": "https://www.aicrowd.com/challenges/arc-white-box-estimation-challenge-2026",
       "sourceName": "AIcrowd",
-      "lastVerifiedAt": "2026-07-27T15:10:00Z",
+      "lastVerifiedAt": "2026-07-28T05:55:00Z",
       "collection": "current",
-      "verificationStatus": "unreviewed",
-      "grade": "U",
-      "confidence": "low",
-      "riskFlags": []
+      "verificationStatus": "reviewed",
+      "grade": "A",
+      "confidence": "high",
+      "riskFlags": [
+        "advanced-research-only",
+        "open-source-license-required",
+        "phase-specific-rules"
+      ],
+      "region": "international",
+      "language": "英文",
+      "eligibility": "面向具备算法与机制可解释性研究能力的参赛者；具体地区和团队限制以规则为准",
+      "fee": "免费",
+      "deadlineTimezone": "UTC",
+      "sourceLevel": "official-platform",
+      "entryStatus": "open",
+      "authorityScore": 5,
+      "resumeValue": 5,
+      "growthValue": 5,
+      "auditSummary": "Alignment Research Center 与 AIcrowd 的高难度机制估计挑战，奖金池已提升至 15 万美元以上。技术和履历价值高，但不适合普通入门参赛者，且获奖需要按要求开源代码并披露方法。",
+      "evidenceUrls": [
+        "https://www.aicrowd.com/challenges/arc-white-box-estimation-challenge-2026",
+        "https://discourse.aicrowd.com/t/phase-1-launch-deeper-models-and-increased-prizes/18026",
+        "https://discourse.aicrowd.com/t/algorithmic-contribution-prize-guidelines-how-arc-judges-these-prizes-discretion-technical-writeups-llm-usage/18041"
+      ]
     },
     {
       "id": "datahub-agent-hackathon-2026",
@@ -4992,5 +5173,7 @@
       "confidence": "low",
       "riskFlags": []
     }
-  ]
+  ],
+  "auditVersion": "1.0.0",
+  "auditedCount": 10
 }
