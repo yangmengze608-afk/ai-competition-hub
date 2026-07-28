@@ -3,13 +3,18 @@
   const competitions = Array.isArray(data.competitions) ? data.competitions : [];
   const now = Date.now();
   const day = 86400000;
+  const systemTags = new Set(['本周截止', '零基础友好', '高价值精选']);
+
+  function resetSystemTags(item) {
+    item.tags = (Array.isArray(item.tags) ? item.tags : []).filter((tag) => !systemTags.has(tag));
+  }
 
   function addTag(item, tag) {
-    item.tags = Array.isArray(item.tags) ? item.tags : [];
     if (!item.tags.includes(tag)) item.tags.push(tag);
   }
 
   for (const item of competitions) {
+    resetSystemTags(item);
     const deadline = new Date(item.deadline).getTime();
     const daysLeft = Number.isFinite(deadline) ? Math.ceil((deadline - now) / day) : Infinity;
     const current = item.collection === 'current' && item.status !== 'ended' && item.entryStatus !== 'closed';
