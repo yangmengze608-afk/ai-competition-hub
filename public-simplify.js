@@ -79,18 +79,17 @@
     const count = resultHead?.querySelector('[data-source-count]');
     if (!resultHead || !count) return;
 
-    [...resultHead.childNodes].forEach((node) => {
-      if (node === count) return;
-      if (node.nodeType === Node.TEXT_NODE || !node.matches?.('[data-source-count-label]')) node.remove();
-    });
-
     let label = resultHead.querySelector('[data-source-count-label]');
     if (!label) {
       label = document.createElement('span');
       label.dataset.sourceCountLabel = '';
-      resultHead.appendChild(label);
     }
-    label.textContent = '个来源';
+    if (label.textContent !== '个来源') label.textContent = '个来源';
+
+    const alreadyNormalized = resultHead.childNodes.length === 2
+      && resultHead.childNodes[0] === count
+      && resultHead.childNodes[1] === label;
+    if (!alreadyNormalized) resultHead.replaceChildren(count, label);
   }
 
   function sourcePurpose(card, direction) {
