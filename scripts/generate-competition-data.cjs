@@ -45,11 +45,11 @@ const verifiedDates = normalized
   .filter(Number.isFinite);
 const latestVerifiedAt = verifiedDates.length
   ? new Date(Math.max(...verifiedDates)).toISOString()
-  : new Date().toISOString();
+  : '1970-01-01T00:00:00.000Z';
 
 const payload = {
   version: '1.0.0',
-  generatedAt: new Date().toISOString(),
+  generatedAt: latestVerifiedAt,
   latestVerifiedAt,
   count: normalized.length,
   sourceFiles,
