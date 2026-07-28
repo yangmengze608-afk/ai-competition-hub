@@ -59,9 +59,23 @@ for (const text of ['按你现在最需要的方式找比赛', '已审核的高�
   if (!ui.includes(text)) failures.push(`Launch UI missing copy: ${text}`);
 }
 
-if (failures.length) {
-  failures.forEach((failure) => console.error(`- ${failure}`));
-  process.exit(1);
-}
+const report = {
+  generatedAt: new Date(now).toISOString(),
+  counts: {
+    competitions: competitions.length,
+    highValue: highValue.length,
+    beginner: beginner.length,
+    week: week.length,
+  },
+  ids: {
+    highValue: highValue.map((item) => item.id),
+    beginner: beginner.map((item) => item.id),
+    week: week.map((item) => item.id),
+  },
+  failures,
+};
+fs.writeFileSync(path.join(root, 'launch-segments-report.json'), `${JSON.stringify(report, null, 2)}\n`);
+console.log(JSON.stringify(report, null, 2));
 
+if (failures.length) process.exit(1);
 console.log(`Launch segments audit passed: ${highValue.length} high-value, ${beginner.length} beginner, ${week.length} weekly.`);
