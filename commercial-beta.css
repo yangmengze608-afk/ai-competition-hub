@@ -1,0 +1,119 @@
+/* Commercial Beta: keep the public product focused on real competitions and decision support. */
+[data-research-nav],
+[data-research-mobile],
+[data-research-quality-mobile] {
+  display: none !important;
+}
+
+.competition-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.collection-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #f3f5f8;
+  color: #687184;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.competition-card[data-collection="practice"] {
+  border-style: dashed;
+}
+
+.competition-card[data-collection="archive"] {
+  opacity: 0.84;
+}
+
+.collection-tabs {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 24px;
+  padding: 5px;
+  border: 1px solid var(--border, #e7e9ee);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.collection-tabs a {
+  padding: 9px 15px;
+  border-radius: 999px;
+  color: #687184;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.collection-tabs a:hover,
+.collection-tabs a.active {
+  color: #fff;
+  background: #202530;
+}
+
+.home-competition-section {
+  background: #fff;
+}
+
+.commercial-section-heading {
+  max-width: 760px;
+}
+
+.section-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+
+.competition-load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 34px 0 4px;
+}
+
+.competition-load-more span {
+  color: #8a91a0;
+  font-size: 12px;
+}
+
+.detail-actions a.primary-button {
+  text-decoration: none;
+}
+
+.official-note strong {
+  color: inherit;
+}
+
+@media (max-width: 720px) {
+  .collection-tabs {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 16px;
+  }
+
+  .collection-tabs a {
+    flex: 1 0 auto;
+    text-align: center;
+  }
+
+  .section-action {
+    align-items: stretch;
+  }
+
+  .section-action a {
+    width: 100%;
+    justify-content: center;
+  }
+}
