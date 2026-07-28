@@ -27,6 +27,9 @@ jobs:
       - name: Validate JavaScript syntax
         run: find . -maxdepth 1 -name '*.js' -print0 | xargs -0 -n1 node --check
 
+      - name: Smoke test competition library
+        run: node scripts/smoke-test.cjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
