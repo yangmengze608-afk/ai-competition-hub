@@ -75,7 +75,7 @@
     else if (!path.startsWith('/playbooks') && path !== '/sources' && path !== '/quality' && path !== '/participate') document.title = DEFAULT_TITLE;
   }
 
-  function scheduleRender() { setTimeout(renderRoute, 0); }
+  function scheduleRender() { queueMicrotask(renderRoute); }
   window.addEventListener('DOMContentLoaded', scheduleRender);
   window.addEventListener('hashchange', scheduleRender);
 })();
