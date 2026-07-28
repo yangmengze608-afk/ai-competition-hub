@@ -26,6 +26,9 @@ jobs:
       - name: Validate JavaScript syntax
         run: find . -maxdepth 1 -name '*.js' -print0 | xargs -0 -n1 node --check
 
+      - name: Verify focused launch segments
+        run: node scripts/launch-segments-audit.cjs
+
       - name: Verify unified competition data
         run: |
           node scripts/generate-competition-data.cjs
@@ -51,9 +54,6 @@ jobs:
 
       - name: Verify production domain SEO
         run: node scripts/seo-audit.cjs
-
-      - name: Verify focused launch segments
-        run: node scripts/launch-segments-audit.cjs
 
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
