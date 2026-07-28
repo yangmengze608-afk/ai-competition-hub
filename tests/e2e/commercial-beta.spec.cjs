@@ -79,15 +79,11 @@ test('reviewed competition answers fit, non-fit and next action in one decision 
 
 test('unreviewed competition does not pretend to be a recommendation', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/#/competitions');
-  await expectCards(page);
-
-  const unreviewed = page.locator('.competition-card:has(.grade-u)').first();
-  await expect(unreviewed).toBeVisible();
-  await unreviewed.locator('.competition-title').click();
+  await page.goto('/#/competitions/devpost-buuniex-hackathon');
 
   const panel = page.locator('[data-detail-decision]');
   await expect(panel).toBeVisible();
+  await expect(page.locator('.grade-badge')).toContainText('U · 待核验');
   await expect(panel.getByRole('heading', { name: '先核验再决定' })).toBeVisible();
   await expect(panel.getByText(/尚不足以支持高含金量或高投入建议/)).toBeVisible();
   await expect(panel.getByRole('heading', { name: '建议重点考虑' })).toHaveCount(0);

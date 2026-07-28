@@ -1,0 +1,54 @@
+name: Apply event audit batch
+
+on:
+  push:
+    branches:
+      - feature/event-audit-batch-2
+    paths:
+      - 'research/audit-batches/event-audit-batch-2.json'
+      - 'scripts/apply-event-audit-batch.cjs'
+      - '.github/workflows/apply-event-audit-batch.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'research/audit-batches/event-audit-batch-2.json'
+      - 'scripts/apply-event-audit-batch.cjs'
+      - '.github/workflows/apply-event-audit-batch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - name: Checkout audit branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+
+      - name: Apply audit metadata
+        run: node scripts/apply-event-audit-batch.cjs research/audit-batches/event-audit-batch-2.json
+
+      - name: Generate browser competition data
+        run: node scripts/generate-competition-data.cjs
+
+      - name: Audit merged competition data
+        run: node scripts/data-audit.cjs
+
+      - name: Commit canonical data update
+        run: |
+          if git diff --quiet -- data/competitions-v1.json competition-data.generated.js; then
+            echo 'No data changes to commit.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/competitions-v1.json competition-data.generated.js
+          git commit -m 'data: apply event audit batch 2'
+          git push origin HEAD:"${TARGET_BRANCH}"

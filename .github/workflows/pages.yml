@@ -67,7 +67,18 @@ jobs:
         run: node scripts/seo-audit.cjs
 
       - name: Smoke test competition library
-        run: node scripts/smoke-test.cjs
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/smoke-test.cjs 2>&1 | tee smoke-test.log
+
+      - name: Upload smoke test diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-diagnostics
+          path: smoke-test.log
+          if-no-files-found: error
 
       - name: Set up Node for browser tests
         uses: actions/setup-node@v4
