@@ -6,6 +6,8 @@ on:
       - feature/event-audit-batch-2
     paths:
       - 'research/audit-batches/event-audit-batch-2.json'
+      - 'scripts/apply-event-audit-batch.cjs'
+      - '.github/workflows/apply-event-audit-batch.yml'
   pull_request:
     branches:
       - main
@@ -31,10 +33,13 @@ jobs:
           fetch-depth: 0
 
       - name: Apply audit metadata
-        run: |
-          node scripts/apply-event-audit-batch.cjs research/audit-batches/event-audit-batch-2.json
-          node scripts/generate-competition-data.cjs
-          node scripts/data-audit.cjs
+        run: node scripts/apply-event-audit-batch.cjs research/audit-batches/event-audit-batch-2.json
+
+      - name: Generate browser competition data
+        run: node scripts/generate-competition-data.cjs
+
+      - name: Audit merged competition data
+        run: node scripts/data-audit.cjs
 
       - name: Commit canonical data update
         run: |
