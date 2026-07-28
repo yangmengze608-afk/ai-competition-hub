@@ -34,7 +34,7 @@ global.window.addEventListener = on;
 global.window.removeEventListener = () => {};
 global.FormData = class { get() { return ''; } };
 
-for (const file of ['route-bootstrap.js', 'data.js', 'competition-data.generated.js', 'commercial-app-v3.js']) {
+for (const file of ['route-bootstrap.js', 'data.js', 'competition-data.generated.js', 'playbook-data.generated.js', 'commercial-app-v3.js']) {
   vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
 }
 
@@ -42,13 +42,19 @@ if (location.hash !== '#/') throw new Error(`Bare route was not normalized: ${lo
 emit('DOMContentLoaded');
 
 const payload = JSON.parse(fs.readFileSync(path.join(root, 'data/competitions-v1.json'), 'utf8'));
+const playbookPayload = JSON.parse(fs.readFileSync(path.join(root, 'data/playbooks-v1.json'), 'utf8'));
 if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) throw new Error(`Expected at least 150 competitions, received ${window.AI_DATA?.competitions?.length ?? 0}`);
 if (window.AI_DATA.competitions.length !== payload.count) throw new Error(`Runtime bundle count ${window.AI_DATA.competitions.length} does not match JSON count ${payload.count}`);
+if (!Array.isArray(window.AI_DATA.playbooks) || window.AI_DATA.playbooks.length !== playbookPayload.count) throw new Error('Playbook runtime failed to load or does not match JSON count');
 
 const reviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus === 'reviewed');
 const unreviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus !== 'reviewed');
 if (reviewed.length < 20) throw new Error(`Expected at least 20 reviewed competitions, received ${reviewed.length}`);
 if (!unreviewed.length) throw new Error('Expected unreviewed competitions to remain visibly differentiated');
+for (const playbook of window.AI_DATA.playbooks) {
+  const competition = window.AI_DATA.competitions.find((item) => item.id === playbook.competitionId);
+  if (!competition || competition.verificationStatus !== 'reviewed') throw new Error(`${playbook.id} does not point to a reviewed competition`);
+}
 
 if (!app.innerHTML.includes('只参加真正值得的')) throw new Error('Commercial homepage failed to render');
 if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) throw new Error('Public homepage still contains prototype copy');
@@ -105,4 +111,4 @@ location.hash = `#/competitions/${encodeURIComponent(pendingDetail.id)}`;
 emit('hashchange');
 if (!app.innerHTML.includes('U · 待核验') || !app.innerHTML.includes('不代表高含金量推荐')) throw new Error('Unreviewed detail does not preserve pending-review disclosure');
 
-console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${reviewed.length} reviewed, ${current.length} current opportunities.`);
+console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${reviewed.length} reviewed, ${window.AI_DATA.playbooks.length} playbooks, ${current.length} current opportunities.`);
