@@ -1,0 +1,238 @@
+.detail-decision-panel {
+  overflow: hidden;
+  border: 1px solid #dfe3e8;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 20px 54px rgba(31, 37, 48, .07);
+}
+
+.detail-decision-panel::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 5px;
+  background: #7d8796;
+}
+
+.detail-decision-panel.decision-go::before { background: #377a55; }
+.detail-decision-panel.decision-consider::before { background: #3d638b; }
+.detail-decision-panel.decision-practice::before { background: #8b754a; }
+.detail-decision-panel.decision-verify::before { background: #bd7a2d; }
+.detail-decision-panel.decision-stop::before { background: #a94a4a; }
+
+.detail-decision-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(220px, .75fr);
+  gap: 34px;
+  padding: 30px 32px 26px;
+}
+
+.detail-decision-kicker {
+  color: #7e8794;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: .14em;
+}
+
+.detail-decision-top h2 {
+  margin: 10px 0 12px;
+  color: #202530;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -.035em;
+}
+
+.detail-decision-top p {
+  max-width: 690px;
+  margin: 0;
+  color: #65707d;
+  font-size: 15px;
+  line-height: 1.78;
+}
+
+.detail-decision-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  align-content: start;
+}
+
+.detail-decision-meta span {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border: 1px solid #e5e8ec;
+  border-radius: 13px;
+  color: #596371;
+  background: #f8f9fa;
+  font-size: 12px;
+  font-weight: 680;
+  text-align: center;
+}
+
+.detail-decision-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #eaecf0;
+  border-bottom: 1px solid #eaecf0;
+}
+
+.detail-decision-grid article {
+  min-height: 220px;
+  padding: 26px 30px;
+}
+
+.detail-decision-grid article + article {
+  border-left: 1px solid #eaecf0;
+}
+
+.detail-decision-grid article > span,
+.decision-start > div > span {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #38404b;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.detail-decision-grid ul,
+.decision-start ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detail-decision-grid li {
+  position: relative;
+  padding: 10px 0 10px 28px;
+  color: #606a77;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.detail-decision-grid li::before {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.decision-fit li::before {
+  content: "✓";
+  color: #2f7850;
+  background: #eaf5ee;
+}
+
+.decision-not-fit li::before {
+  content: "×";
+  color: #a14b4b;
+  background: #f9eded;
+}
+
+.decision-start {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 30px;
+  align-items: end;
+  padding: 28px 32px 32px;
+  background: #f8f9fa;
+}
+
+.decision-start ol {
+  display: grid;
+  gap: 9px;
+  counter-reset: decision-step;
+}
+
+.decision-start li {
+  position: relative;
+  padding-left: 34px;
+  color: #5d6673;
+  font-size: 14px;
+  line-height: 1.6;
+  counter-increment: decision-step;
+}
+
+.decision-start li::before {
+  content: counter(decision-step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  color: #fff;
+  background: #323843;
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.decision-start-actions {
+  min-width: 190px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.decision-start-actions a {
+  width: 100%;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .detail-decision-top,
+  .decision-start {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-start-actions {
+    min-width: 0;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-decision-panel {
+    border-radius: 18px;
+  }
+
+  .detail-decision-top {
+    padding: 24px 20px 20px;
+  }
+
+  .detail-decision-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .detail-decision-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-decision-grid article {
+    min-height: 0;
+    padding: 22px 20px;
+  }
+
+  .detail-decision-grid article + article {
+    border-top: 1px solid #eaecf0;
+    border-left: 0;
+  }
+
+  .decision-start {
+    padding: 24px 20px;
+  }
+
+  .decision-start-actions {
+    flex-direction: column;
+  }
+}
