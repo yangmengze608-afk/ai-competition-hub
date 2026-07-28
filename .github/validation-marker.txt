@@ -1,0 +1,1 @@
+Validate the 156-competition build with syntax checks, runtime smoke tests, and first-page pagination.
