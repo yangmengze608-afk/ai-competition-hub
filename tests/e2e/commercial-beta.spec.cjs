@@ -22,9 +22,9 @@ test('homepage exposes focused, actionable launch entrypoints', async ({ page })
 
   await expect(page.getByRole('heading', { name: /只参加真正值得的/ })).toBeVisible();
   await expect(page.locator('.launch-segment-card')).toHaveCount(3);
-  await expect(page.getByRole('link', { name: /高价值精选/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /零基础友好/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /本周截止/ })).toBeVisible();
+  await expect(page.locator('.launch-segment-high-value')).toBeVisible();
+  await expect(page.locator('.launch-segment-beginner')).toBeVisible();
+  await expect(page.locator('.launch-segment-week')).toBeVisible();
   await expect(page.locator('.competition-card')).toHaveCount(6);
   expect(errors).toEqual([]);
 });
