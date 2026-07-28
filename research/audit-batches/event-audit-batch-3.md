@@ -2,6 +2,8 @@
 
 Verified: 2026-07-29
 
+Canonical application: completed. The branch now contains the updated `data/competitions-v1.json` and synchronized browser runtime bundle.
+
 This batch raises the canonical reviewed-event count from 30 to 40. Every rating was based on the event's own public page and rules. Platform presence and advertised prize value were not treated as proof of authority.
 
 ## Reviewed events
