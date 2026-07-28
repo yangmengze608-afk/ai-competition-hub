@@ -4,7 +4,7 @@ on:
   push:
     branches: ["feature/top-20-event-audit"]
     paths:
-      - "data/event-audits-v1.json"
+      - "data/event-audits-v*.json"
       - "scripts/apply-event-audits.cjs"
       - ".github/workflows/apply-event-audits.yml"
   workflow_dispatch:
@@ -42,5 +42,5 @@ jobs:
             echo "Audited data is already current."
             exit 0
           fi
-          git commit -m "data: apply first event-level audits"
+          git commit -m "data: apply event-level audits"
           git push origin HEAD:feature/top-20-event-audit
