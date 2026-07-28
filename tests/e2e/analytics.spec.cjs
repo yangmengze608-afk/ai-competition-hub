@@ -7,7 +7,8 @@ test('analytics removes free-text queries and stays off before provider activati
   });
 
   await page.goto('/#/competitions?q=secret%40example.com&region=CN&difficulty=%E5%85%A5%E9%97%A8');
-  await expect(page.locator('.competition-card').first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: '找到现在值得参加的比赛' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '暂时没有匹配结果' })).toBeVisible();
 
   const analytics = await page.evaluate(() => ({
     status: window.AIAnalytics.status(),
