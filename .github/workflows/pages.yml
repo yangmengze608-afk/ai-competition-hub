@@ -51,6 +51,9 @@ jobs:
           git diff --exit-code -- playbook-data.generated.js
           node scripts/playbook-audit.cjs
 
+      - name: Verify competition decision experience
+        run: node scripts/detail-decision-audit.cjs
+
       - name: Verify public conversion entrypoints
         run: node scripts/conversion-audit.cjs
 

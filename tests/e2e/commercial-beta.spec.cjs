@@ -57,6 +57,43 @@ test('high-value landing only shows reviewed S or A competitions', async ({ page
   expect(errors).toEqual([]);
 });
 
+test('reviewed competition answers fit, non-fit and next action in one decision panel', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/#/competitions/iflytek-spark-cup-2026');
+
+  const panel = page.locator('[data-detail-decision]');
+  await expect(panel).toBeVisible();
+  await expect(panel.getByText('30 SECOND DECISION')).toBeVisible();
+  await expect(panel.getByRole('heading', { name: '建议重点考虑' })).toBeVisible();
+  await expect(panel.getByText('适合你，如果', { exact: true })).toBeVisible();
+  await expect(panel.getByText('不适合你，如果', { exact: true })).toBeVisible();
+  await expect(panel.getByText('现在怎么开始', { exact: true })).toBeVisible();
+  await expect(panel.locator('.detail-decision-meta span')).toHaveCount(4);
+  await expect(panel.getByRole('link', { name: /开始执行路线/ })).toBeVisible();
+
+  await panel.getByRole('link', { name: /开始执行路线/ }).click();
+  await expect(page).toHaveURL(/#\/playbooks\/spark-cup-agent-12-day/);
+  await expect(page.locator('.playbook-detail h1')).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('unreviewed competition does not pretend to be a recommendation', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/#/competitions');
+  await expectCards(page);
+
+  const unreviewed = page.locator('.competition-card:has(.grade-u)').first();
+  await expect(unreviewed).toBeVisible();
+  await unreviewed.locator('.competition-title').click();
+
+  const panel = page.locator('[data-detail-decision]');
+  await expect(panel).toBeVisible();
+  await expect(panel.getByRole('heading', { name: '先核验再决定' })).toBeVisible();
+  await expect(panel.getByText(/尚不足以支持高含金量或高投入建议/)).toBeVisible();
+  await expect(panel.getByRole('heading', { name: '建议重点考虑' })).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
 test('competition filters update the complete result set', async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto('/#/competitions');
