@@ -37,6 +37,7 @@ if (reviewedCount < Number(batch.expectedReviewedCount || 0)) {
   throw new Error(`Reviewed count ${reviewedCount} is below expected ${batch.expectedReviewedCount}`);
 }
 
+canonical.auditedCount = reviewedCount;
 canonical.latestVerifiedAt = batch.verifiedAt;
 canonical.version = batch.targetVersion || canonical.version;
 fs.writeFileSync(canonicalPath, `${JSON.stringify(canonical, null, 2)}\n`);
