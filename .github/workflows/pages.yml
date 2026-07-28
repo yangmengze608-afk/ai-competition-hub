@@ -29,6 +29,14 @@ jobs:
       - name: Verify focused launch segments
         run: node scripts/launch-segments-audit.cjs
 
+      - name: Upload launch segment report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: launch-segments-report
+          path: launch-segments-report.json
+          if-no-files-found: error
+
       - name: Verify unified competition data
         run: |
           node scripts/generate-competition-data.cjs
