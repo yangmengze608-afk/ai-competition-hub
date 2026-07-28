@@ -1,0 +1,70 @@
+name: 加入 AI 赛场内测
+description: 告诉我们你正在找什么比赛，以及最需要哪种帮助
+title: "[内测申请] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢加入 AI 赛场 Commercial Beta。此表单提交后会公开显示，请不要填写手机号、邮箱、身份证号、学校学号或其他敏感信息。我们将通过你的 GitHub 账号在本条 Issue 中回复。
+  - type: dropdown
+    id: role
+    attributes:
+      label: 你目前的身份
+      options:
+        - 本科生
+        - 研究生
+        - 高职高专学生
+        - 中学生
+        - 已毕业求职者
+        - 教师或竞赛指导者
+        - 其他
+    validations:
+      required: true
+  - type: dropdown
+    id: goal
+    attributes:
+      label: 你参加比赛最主要的目标
+      options:
+        - 保研、升学或奖学金
+        - 求职与作品集
+        - 技术与产品能力
+        - 创业与项目孵化
+        - 奖金
+        - 第一次体验比赛
+        - 还不确定
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你现在找比赛时最麻烦的事情
+      description: 例如不知道比赛含金量、总是错过截止时间、找不到适合自己的题目。
+      placeholder: 请用一两句话描述真实问题。
+    validations:
+      required: true
+  - type: dropdown
+    id: capability
+    attributes:
+      label: 你最希望 AI 赛场优先做好什么
+      options:
+        - 更全面、更及时的真实比赛库
+        - 含金量、权威性与风险判断
+        - 根据我的情况推荐比赛
+        - 从选题到提交的参赛路线
+        - 截止时间提醒
+        - 材料与作品检查
+        - 组队与队友匹配
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: 有具体比赛或场景可以举例吗
+      description: 可选。不要填写个人敏感信息。
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 公开信息确认
+      options:
+        - label: 我确认本条内容可以公开，并且没有包含手机号、邮箱、身份证号、住址、学号等敏感信息。
+          required: true
