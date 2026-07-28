@@ -2,6 +2,8 @@
 
 Verified: 2026-07-29
 
+Canonical application: completed. The branch now contains the updated `data/competitions-v1.json` and synchronized browser runtime bundle.
+
 This batch raises the canonical reviewed-event count from 40 to 50. It completes the Commercial Beta's first reviewed-event target.
 
 ## Reviewed events
