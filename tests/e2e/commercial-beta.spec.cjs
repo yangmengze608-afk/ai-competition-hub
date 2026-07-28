@@ -16,16 +16,26 @@ async function expectCards(page) {
   return cards;
 }
 
-test('homepage exposes focused, actionable launch entrypoints', async ({ page }) => {
+test('homepage explains the product and turns a goal into a filtered list', async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto('/#/');
 
-  await expect(page.getByRole('heading', { name: /只参加真正值得的/ })).toBeVisible();
-  await expect(page.locator('.launch-segment-card')).toHaveCount(3);
-  await expect(page.locator('.launch-segment-high-value')).toBeVisible();
-  await expect(page.locator('.launch-segment-beginner')).toBeVisible();
-  await expect(page.locator('.launch-segment-week')).toBeVisible();
-  await expect(page.locator('.competition-card')).toHaveCount(6);
+  await expect(page.getByRole('heading', { name: /先排除不值得的/ })).toBeVisible();
+  await expect(page.getByText('AI 赛场不只是收集比赛。')).toBeVisible();
+  await expect(page.locator('.decision-metric')).toHaveCount(4);
+  await expect(page.locator('.decision-segment-card')).toHaveCount(3);
+  expect(await page.locator('.decision-deadline-card').count()).toBeGreaterThan(0);
+
+  const matcher = page.locator('[data-fit-form]');
+  await expect(matcher).toBeVisible();
+  await matcher.locator('select[name="goal"]').selectOption('零基础友好');
+  await matcher.locator('select[name="difficulty"]').selectOption('入门');
+  await matcher.getByRole('button', { name: /生成我的比赛列表/ }).click();
+
+  await expect(page).toHaveURL(/q=%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%8F%8B%E5%A5%BD/);
+  await expect(page).toHaveURL(/difficulty=%E5%85%A5%E9%97%A8/);
+  await expect(page.getByRole('heading', { name: '零基础也能开始的比赛' })).toBeVisible();
+  await expectCards(page);
   expect(errors).toEqual([]);
 });
 
