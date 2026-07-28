@@ -52,6 +52,9 @@ jobs:
       - name: Verify production domain SEO
         run: node scripts/seo-audit.cjs
 
+      - name: Verify focused launch segments
+        run: node scripts/launch-segments-audit.cjs
+
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
 
