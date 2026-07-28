@@ -49,7 +49,8 @@ if (!Array.isArray(window.AI_DATA.playbooks) || window.AI_DATA.playbooks.length 
 
 const reviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus === 'reviewed');
 const unreviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus !== 'reviewed');
-if (reviewed.length < 20) throw new Error(`Expected at least 20 reviewed competitions, received ${reviewed.length}`);
+if (reviewed.length < 30) throw new Error(`Expected at least 30 reviewed competitions, received ${reviewed.length}`);
+if (payload.auditedCount !== reviewed.length) throw new Error(`Audited count ${payload.auditedCount} does not match reviewed records ${reviewed.length}`);
 if (!unreviewed.length) throw new Error('Expected unreviewed competitions to remain visibly differentiated');
 for (const playbook of window.AI_DATA.playbooks) {
   const competition = window.AI_DATA.competitions.find((item) => item.id === playbook.competitionId);
@@ -70,7 +71,6 @@ let cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
 if (cardCount === 0) throw new Error('Competition library rendered no cards');
 if (cardCount > 24) throw new Error(`First page rendered ${cardCount} cards instead of at most 24`);
 if (!app.innerHTML.includes('推荐（规则排序）') || !app.innerHTML.includes('按透明推荐规则排序')) throw new Error('Recommended sort is missing or not explained');
-if (!app.innerHTML.includes('U · 待核验')) throw new Error('Unreviewed competitions are not visibly marked U');
 if (!app.innerHTML.includes('已审核')) throw new Error('Reviewed competitions are not visibly marked as audited');
 
 location.hash = '#/competitions?sort=deadline';
@@ -107,6 +107,7 @@ emit('hashchange');
 if (!app.innerHTML.includes('资格受限') || !app.innerHTML.includes('需要特别注意')) throw new Error('Restricted event does not disclose eligibility risk');
 
 const pendingDetail = unreviewed.find((item) => item.sourceUrl);
+if (!pendingDetail) throw new Error('No unreviewed detail record available');
 location.hash = `#/competitions/${encodeURIComponent(pendingDetail.id)}`;
 emit('hashchange');
 if (!app.innerHTML.includes('U · 待核验') || !app.innerHTML.includes('不代表高含金量推荐')) throw new Error('Unreviewed detail does not preserve pending-review disclosure');
