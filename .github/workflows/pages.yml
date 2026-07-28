@@ -49,6 +49,9 @@ jobs:
       - name: Prevent duplicated source labels
         run: node scripts/source-page-regression.cjs
 
+      - name: Verify production domain SEO
+        run: node scripts/seo-audit.cjs
+
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
 
