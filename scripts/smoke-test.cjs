@@ -4,12 +4,7 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 const listeners = new Map();
-
-function on(event, handler) {
-  const items = listeners.get(event) || [];
-  items.push(handler);
-  listeners.set(event, items);
-}
+function on(event, handler) { const items = listeners.get(event) || []; items.push(handler); listeners.set(event, items); }
 function emit(event) { for (const handler of listeners.get(event) || []) handler(); }
 
 const app = { innerHTML: '', querySelector() { return null; }, querySelectorAll() { return []; } };
@@ -39,7 +34,7 @@ global.window.addEventListener = on;
 global.window.removeEventListener = () => {};
 global.FormData = class { get() { return ''; } };
 
-for (const file of ['route-bootstrap.js', 'data.js', 'competition-data.generated.js', 'commercial-app-v2.js']) {
+for (const file of ['route-bootstrap.js', 'data.js', 'competition-data.generated.js', 'commercial-app-v3.js']) {
   vm.runInThisContext(fs.readFileSync(path.join(root, file), 'utf8'), { filename: file });
 }
 
@@ -47,15 +42,17 @@ if (location.hash !== '#/') throw new Error(`Bare route was not normalized: ${lo
 emit('DOMContentLoaded');
 
 const payload = JSON.parse(fs.readFileSync(path.join(root, 'data/competitions-v1.json'), 'utf8'));
-if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) {
-  throw new Error(`Expected at least 150 competitions, received ${window.AI_DATA?.competitions?.length ?? 0}`);
-}
-if (window.AI_DATA.competitions.length !== payload.count) {
-  throw new Error(`Runtime bundle count ${window.AI_DATA.competitions.length} does not match JSON count ${payload.count}`);
-}
+if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) throw new Error(`Expected at least 150 competitions, received ${window.AI_DATA?.competitions?.length ?? 0}`);
+if (window.AI_DATA.competitions.length !== payload.count) throw new Error(`Runtime bundle count ${window.AI_DATA.competitions.length} does not match JSON count ${payload.count}`);
+
+const reviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus === 'reviewed');
+const unreviewed = window.AI_DATA.competitions.filter((item) => item.verificationStatus !== 'reviewed');
+if (reviewed.length < 20) throw new Error(`Expected at least 20 reviewed competitions, received ${reviewed.length}`);
+if (!unreviewed.length) throw new Error('Expected unreviewed competitions to remain visibly differentiated');
+
 if (!app.innerHTML.includes('只参加真正值得的')) throw new Error('Commercial homepage failed to render');
 if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) throw new Error('Public homepage still contains prototype copy');
-if (!app.innerHTML.includes('推荐规则公开')) throw new Error('Homepage does not explain transparent recommendation sorting');
+if (!app.innerHTML.includes(`${reviewed.length} 场完成赛事级审核`)) throw new Error('Homepage does not report audited event count');
 
 const current = window.AI_DATA.competitions
   .filter((item) => item.collection === 'current' && item.status !== 'ended')
@@ -66,16 +63,13 @@ emit('hashchange');
 let cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
 if (cardCount === 0) throw new Error('Competition library rendered no cards');
 if (cardCount > 24) throw new Error(`First page rendered ${cardCount} cards instead of at most 24`);
-if (!app.innerHTML.includes('推荐（规则排序）') || !app.innerHTML.includes('按透明推荐规则排序')) {
-  throw new Error('Recommended sort is missing or not explained');
-}
+if (!app.innerHTML.includes('推荐（规则排序）') || !app.innerHTML.includes('按透明推荐规则排序')) throw new Error('Recommended sort is missing or not explained');
 if (!app.innerHTML.includes('U · 待核验')) throw new Error('Unreviewed competitions are not visibly marked U');
+if (!app.innerHTML.includes('已审核')) throw new Error('Reviewed competitions are not visibly marked as audited');
 
 location.hash = '#/competitions?sort=deadline';
 emit('hashchange');
-if (current[0] && !app.innerHTML.includes(current[0].title)) {
-  throw new Error('Global deadline sorting did not place the earliest current opportunity on the first page');
-}
+if (current[0] && !app.innerHTML.includes(current[0].title)) throw new Error('Global deadline sorting did not place the earliest current opportunity on the first page');
 
 location.hash = '#/competitions?region=CN';
 emit('hashchange');
@@ -92,13 +86,23 @@ emit('hashchange');
 cardCount = (app.innerHTML.match(/class="competition-card"/g) || []).length;
 if (cardCount <= 24 || cardCount > 48) throw new Error(`Second page cumulative render is invalid: ${cardCount}`);
 
-const detail = current.find((item) => item.sourceUrl);
-if (!detail) throw new Error('No current competition with an official source URL');
-location.hash = `#/competitions/${encodeURIComponent(detail.id)}`;
+const auditedDetail = reviewed.find((item) => item.sourceUrl && item.auditSummary && item.eligibility && item.fee);
+if (!auditedDetail) throw new Error('No fully audited detail record available');
+location.hash = `#/competitions/${encodeURIComponent(auditedDetail.id)}`;
 emit('hashchange');
-if (!app.innerHTML.includes('查看官方页面')) throw new Error('Competition detail is missing the official-page action');
-if (!app.innerHTML.includes('赛事等级') || !app.innerHTML.includes('证据置信度')) {
-  throw new Error('Competition detail is missing grade or confidence information');
+for (const expected of ['查看官方页面', '赛事价值判断', '参赛前确认', '报名资格', '费用', '截止时区', '核验依据', '权威性', '履历价值', '成长价值']) {
+  if (!app.innerHTML.includes(expected)) throw new Error(`Audited detail is missing: ${expected}`);
 }
 
-console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${current.length} current opportunities, region filters enabled.`);
+const restricted = reviewed.find((item) => item.entryStatus === 'restricted');
+if (!restricted) throw new Error('No restricted audited event found');
+location.hash = `#/competitions/${encodeURIComponent(restricted.id)}`;
+emit('hashchange');
+if (!app.innerHTML.includes('资格受限') || !app.innerHTML.includes('需要特别注意')) throw new Error('Restricted event does not disclose eligibility risk');
+
+const pendingDetail = unreviewed.find((item) => item.sourceUrl);
+location.hash = `#/competitions/${encodeURIComponent(pendingDetail.id)}`;
+emit('hashchange');
+if (!app.innerHTML.includes('U · 待核验') || !app.innerHTML.includes('不代表高含金量推荐')) throw new Error('Unreviewed detail does not preserve pending-review disclosure');
+
+console.log(`Commercial smoke test passed: ${window.AI_DATA.competitions.length} competitions, ${reviewed.length} reviewed, ${current.length} current opportunities.`);
