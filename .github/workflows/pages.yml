@@ -43,6 +43,12 @@ jobs:
       - name: Verify public conversion entrypoints
         run: node scripts/conversion-audit.cjs
 
+      - name: Verify public trust pages
+        run: node scripts/trust-pages-audit.cjs
+
+      - name: Prevent duplicated source labels
+        run: node scripts/source-page-regression.cjs
+
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
 
