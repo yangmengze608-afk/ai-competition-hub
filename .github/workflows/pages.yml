@@ -34,6 +34,12 @@ jobs:
       - name: Audit competition data
         run: node scripts/data-audit.cjs
 
+      - name: Verify playbook data
+        run: |
+          node scripts/generate-playbook-data.cjs
+          git diff --exit-code -- playbook-data.generated.js
+          node scripts/playbook-audit.cjs
+
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
 
@@ -50,8 +56,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
