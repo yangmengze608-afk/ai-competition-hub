@@ -40,6 +40,9 @@ jobs:
           git diff --exit-code -- playbook-data.generated.js
           node scripts/playbook-audit.cjs
 
+      - name: Verify public conversion entrypoints
+        run: node scripts/conversion-audit.cjs
+
       - name: Smoke test competition library
         run: node scripts/smoke-test.cjs
 
