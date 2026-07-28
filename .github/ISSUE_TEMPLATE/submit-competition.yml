@@ -1,0 +1,72 @@
+name: 提交一场比赛
+description: 推荐尚未收录或需要重新核验的真实赛事
+title: "[比赛提交] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        只提交有公开来源的真实赛事。聚合平台可以作为线索，但请尽量提供主办方官网、正式通知或官方规则页。此表单公开显示，请勿填写个人敏感信息。
+  - type: input
+    id: title
+    attributes:
+      label: 比赛名称
+      placeholder: 请填写完整正式名称
+    validations:
+      required: true
+  - type: input
+    id: organizer
+    attributes:
+      label: 主办方
+      placeholder: 政府、高校、学会、企业或正式组委会名称
+    validations:
+      required: true
+  - type: input
+    id: official_url
+    attributes:
+      label: 官方页面或正式规则链接
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: 报名或提交截止时间
+      description: 请同时写明日期、时间和时区；不确定时写“待核验”。
+      placeholder: 2026-08-31 23:59 UTC+8
+    validations:
+      required: true
+  - type: dropdown
+    id: region
+    attributes:
+      label: 地区
+      options:
+        - 国内
+        - 国际
+        - 全球赛事，由国内平台承载
+        - 不确定
+    validations:
+      required: true
+  - type: textarea
+    id: qualification
+    attributes:
+      label: 已知资格、费用和限制
+      description: 例如仅限在校生、需要报名费、只限特定国家、必须线下决赛。
+      placeholder: 没有确认的信息请写“待核验”，不要猜测。
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 为什么值得收录
+      description: 说明它对学生的履历、成长、作品集或实践价值。
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我没有把培训广告、证书售卖或无法回溯来源的宣传页当作官方赛事。
+          required: true
+        - label: 我确认没有填写个人敏感信息。
+          required: true
