@@ -79,7 +79,7 @@ test('reviewed competition answers fit, non-fit and next action in one decision 
 
 test('unreviewed competition does not pretend to be a recommendation', async ({ page }) => {
   const errors = watchErrors(page);
-  await page.goto('/#/competitions/devpost-pixel-forge-ai-hackathon-08');
+  await page.goto('/#/competitions/devpost-syntax-summit');
 
   const panel = page.locator('[data-detail-decision]');
   await expect(panel).toBeVisible();
