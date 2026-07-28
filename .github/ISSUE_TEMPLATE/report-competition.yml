@@ -1,0 +1,60 @@
+name: 反馈赛事信息错误
+description: 报告截止时间、资格、费用、链接、评级证据或赛事状态问题
+title: "[信息纠错] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢帮助我们修正比赛库。请优先提供主办方官网、官方规则或正式通知。此表单公开显示，请不要填写个人敏感信息。
+  - type: input
+    id: competition
+    attributes:
+      label: 涉及的比赛
+      placeholder: 比赛名称或 AI 赛场详情页地址
+    validations:
+      required: true
+  - type: dropdown
+    id: error_type
+    attributes:
+      label: 问题类型
+      options:
+        - 报名或提交已截止
+        - 截止时间或时区错误
+        - 参赛资格错误
+        - 报名费用错误
+        - 主办方或承载关系错误
+        - 官方链接失效
+        - 奖金或权益错误
+        - 赛事等级或证据需要复核
+        - 疑似风险赛事
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: current_info
+    attributes:
+      label: 网站当前显示了什么
+      placeholder: 请简要描述当前错误信息。
+    validations:
+      required: true
+  - type: textarea
+    id: correct_info
+    attributes:
+      label: 正确或更新后的信息
+      placeholder: 请说明应改为什么，以及为什么。
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: 官方证据链接
+      placeholder: https://
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我提供的是公开可核验信息，不包含手机号、邮箱、身份证号、住址或学号等敏感信息。
+          required: true
