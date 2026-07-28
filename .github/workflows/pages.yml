@@ -60,6 +60,9 @@ jobs:
       - name: Verify public trust pages
         run: node scripts/trust-pages-audit.cjs
 
+      - name: Verify privacy analytics boundaries
+        run: node scripts/analytics-audit.cjs
+
       - name: Prevent duplicated source labels
         run: node scripts/source-page-regression.cjs
 

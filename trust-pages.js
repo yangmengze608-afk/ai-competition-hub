@@ -1,9 +1,18 @@
 (() => {
   const DEFAULT_TITLE = 'AI 赛场｜只参加真正值得的比赛';
-  const EFFECTIVE_DATE = '2026 年 7 月 28 日';
+  const EFFECTIVE_DATE = '2026 年 7 月 29 日';
 
   function currentPath() {
     return location.hash.slice(1).split('?')[0] || '/';
+  }
+
+  function analyticsDisclosure() {
+    const config = window.AI_ANALYTICS_CONFIG || {};
+    const active = config.enabled === true && typeof config.siteCode === 'string' && config.siteCode.trim();
+    if (!active) {
+      return '隐私友好的访问统计模块已经完成技术准备，但当前配置仍为关闭状态，因此本站不会主动发送页面访问或转化事件。正式启用前会配置公开统计站点并保持本政策同步。';
+    }
+    return '本站使用 GoatCounter 进行不依赖 Cookie 的聚合访问统计。记录内容只包括经过归类的页面路径和预定义转化事件，例如打开赛事详情、进入参赛路线、点击官方页面或提交反馈。不会发送搜索词、表单内容、邮箱、手机号、GitHub 用户名、完整外链或浏览器本地收藏。';
   }
 
   function injectFooter() {
@@ -45,8 +54,9 @@
     main.innerHTML = page('隐私政策', 'PRIVACY POLICY', '当前 Beta 坚持最少收集原则：没有必要的数据，不主动收集。', [
       { title: '本站前端当前保存什么', paragraphs: ['收藏功能仅在你的浏览器 localStorage 中保存赛事编号，不会由本站上传到独立数据库。清除浏览器数据后，本地收藏可能消失。'] },
       { title: '公开表单', paragraphs: ['加入内测、提交比赛和纠错目前跳转到 GitHub Issue Forms。提交内容会公开显示，并由 GitHub 处理账号及技术数据。请不要填写手机号、私人邮箱、身份证号、住址、学号、支付信息或其他敏感信息。'] },
-      { title: '账号、支付与分析', paragraphs: ['当前版本没有本站账号系统、支付功能或独立用户画像系统。若未来新增分析、登录、提醒或支付，我们会在启用前更新本政策并在产品中明确说明。'] },
-      { title: '托管服务', paragraphs: ['网站托管在 GitHub Pages。托管商、DNS 服务商和浏览器可能按照各自政策处理必要的访问日志、IP 地址、Cookie 或安全信息，本站无法替代这些第三方政策。'] },
+      { title: '访问统计', paragraphs: [analyticsDisclosure(), '统计模块只允许在 aisaichang.cn 正式域名运行，并尊重 Global Privacy Control 与 Do Not Track。开发环境、自动化测试和未配置状态不会发送统计请求。'] },
+      { title: '账号与支付', paragraphs: ['当前版本没有本站账号系统、支付功能或独立用户画像系统。若未来新增登录、提醒、支付或更广泛的数据处理，我们会在启用前更新本政策并在产品中明确说明。'] },
+      { title: '托管服务', paragraphs: ['网站托管在 GitHub Pages。托管商、DNS 服务商、统计服务商和浏览器可能按照各自政策处理必要的访问日志、IP 地址或安全信息，本站无法替代这些第三方政策。'] },
       { title: '联系与删除', paragraphs: ['当前公开反馈通过 GitHub Issue 处理。需要修改或删除自己提交的公开内容时，可在对应 Issue 中说明，或使用 GitHub 自带的编辑与关闭功能。'] },
     ]);
   }
