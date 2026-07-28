@@ -18,7 +18,7 @@ function emit(event) {
 const app = {
   innerHTML: '',
   querySelector() { return null; },
-  querySelectorAll() { return []; }
+  querySelectorAll() { return []; },
 };
 
 const noopElement = () => ({
@@ -35,7 +35,7 @@ const noopElement = () => ({
   addEventListener() {},
   querySelector() { return null; },
   querySelectorAll() { return []; },
-  matches() { return false; }
+  matches() { return false; },
 });
 
 global.window = global;
@@ -44,7 +44,7 @@ global.history = {
   replaceState(_state, _title, url) {
     const index = String(url).indexOf('#');
     location.hash = index >= 0 ? String(url).slice(index) : '';
-  }
+  },
 };
 global.document = {
   documentElement: noopElement(),
@@ -52,7 +52,7 @@ global.document = {
   getElementById(id) { return id === 'app' ? app : null; },
   querySelector() { return null; },
   querySelectorAll() { return []; },
-  createElement: noopElement
+  createElement: noopElement,
 };
 global.localStorage = { getItem() { return null; }, setItem() {} };
 global.navigator = { clipboard: { async writeText() {} } };
@@ -68,14 +68,8 @@ global.FormData = class { get() { return ''; } };
 const scripts = [
   'route-bootstrap.js',
   'data.js',
-  'real-competitions.js',
-  'expanded-competitions-1.js',
-  'expanded-competitions-2.js',
-  'expanded-competitions-3.js',
-  'expanded-competitions-4.js',
-  'expanded-competitions-devpost-v5.js',
-  'real-competition-config.js',
-  'commercial-app.js'
+  'competition-data.generated.js',
+  'commercial-app.js',
 ];
 
 for (const file of scripts) {
@@ -86,8 +80,12 @@ for (const file of scripts) {
 if (location.hash !== '#/') throw new Error(`Bare route was not normalized: ${location.hash}`);
 emit('DOMContentLoaded');
 
+const payload = JSON.parse(fs.readFileSync(path.join(root, 'data/competitions-v1.json'), 'utf8'));
 if (!window.AI_DATA || window.AI_DATA.competitions.length < 150) {
   throw new Error(`Expected at least 150 competitions, received ${window.AI_DATA?.competitions?.length ?? 0}`);
+}
+if (window.AI_DATA.competitions.length !== payload.count) {
+  throw new Error(`Runtime bundle count ${window.AI_DATA.competitions.length} does not match JSON count ${payload.count}`);
 }
 
 if (!app.innerHTML.includes('只参加真正值得的')) {
@@ -98,7 +96,7 @@ if (app.innerHTML.includes('演示数据') || app.innerHTML.includes('占位')) 
 }
 
 const current = window.AI_DATA.competitions
-  .filter((item) => item.collection !== 'practice' && item.collection !== 'archive' && item.status !== 'ended')
+  .filter((item) => item.collection === 'current' && item.status !== 'ended')
   .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
 
 location.hash = '#/competitions';
