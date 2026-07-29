@@ -1,6 +1,6 @@
 # Privacy-friendly analytics setup
 
-AI 赛场 uses a provider adapter for GoatCounter. The integration is committed but disabled until a real GoatCounter site code is configured.
+AI 赛场 uses a provider adapter for GoatCounter. The hosted site `aisaichang.goatcounter.com` is active for the production domains `aisaichang.cn` and `www.aisaichang.cn`.
 
 ## Why GoatCounter
 
@@ -9,24 +9,19 @@ AI 赛场 uses a provider adapter for GoatCounter. The integration is committed 
 - supports SPA pageviews and custom events
 - supports a free hosted service and self-hosting
 
-## Activation
-
-1. Create a GoatCounter site for `aisaichang.cn`.
-2. Choose a site code, for example `aisaichang` if available.
-3. Edit `analytics-config.js`:
+## Active configuration
 
 ```js
 window.AI_ANALYTICS_CONFIG = Object.freeze({
   provider: 'goatcounter',
   enabled: true,
-  siteCode: 'YOUR_SITE_CODE',
+  siteCode: 'aisaichang',
   allowedHostnames: ['aisaichang.cn', 'www.aisaichang.cn'],
   respectPrivacySignals: true,
 });
 ```
 
-4. Open a pull request and let the full Pages CI pass.
-5. Verify pageviews and custom events in the GoatCounter dashboard.
+The public dashboard account must remain email-verified and should never expose its password, recovery links, or API credentials in the repository.
 
 ## Recorded page categories
 
@@ -65,3 +60,13 @@ The tracker does not load when:
 - Do Not Track is enabled
 
 Development and Playwright runs therefore do not send analytics traffic.
+
+## Production verification
+
+After each analytics change:
+
+1. let the full Pages CI pass;
+2. deploy to `aisaichang.cn`;
+3. open the homepage with privacy signals disabled and without blocking `gc.zgo.at`;
+4. confirm `/home` appears in GoatCounter;
+5. trigger one predefined conversion event and confirm no free-text or form payload is present.
