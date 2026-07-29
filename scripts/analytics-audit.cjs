@@ -9,8 +9,8 @@ const setup = fs.readFileSync('docs/analytics-setup.md', 'utf8');
 
 for (const token of [
   "provider: 'goatcounter'",
-  'enabled: false',
-  "siteCode: ''",
+  'enabled: true',
+  "siteCode: 'aisaichang'",
   "'aisaichang.cn'",
   'respectPrivacySignals: true',
 ]) {
@@ -119,6 +119,20 @@ if (freeText.context.AIAnalytics.status().reason !== 'disabled') {
   throw new Error('disabled analytics config is not reported as disabled');
 }
 if (freeText.createdScripts.length !== 0) throw new Error('disabled analytics created a provider script');
+
+const production = evaluate('#/', {
+  enabled: true,
+  siteCode: 'aisaichang',
+});
+if (!production.context.AIAnalytics.status().active) {
+  throw new Error(`production analytics is not active: ${production.context.AIAnalytics.status().reason}`);
+}
+const domReady = production.listeners.get('DOMContentLoaded') || [];
+domReady.forEach((listener) => listener());
+if (production.createdScripts.length !== 1) throw new Error('production analytics did not create exactly one provider script');
+if (production.createdScripts[0].dataset.goatcounter !== 'https://aisaichang.goatcounter.com/count') {
+  throw new Error('production analytics endpoint is incorrect');
+}
 
 const detail = evaluate('#/competitions/IFLYTEK-SPARK-CUP-2026');
 if (detail.context.AIAnalytics.pagePath() !== '/competition/iflytek-spark-cup-2026') {
