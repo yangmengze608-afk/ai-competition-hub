@@ -54,6 +54,9 @@ jobs:
       - name: Verify competition decision experience
         run: node scripts/detail-decision-audit.cjs
 
+      - name: Verify participation workspace
+        run: node scripts/workspace-smoke-test.cjs
+
       - name: Verify public conversion entrypoints
         run: node scripts/conversion-audit.cjs
 
