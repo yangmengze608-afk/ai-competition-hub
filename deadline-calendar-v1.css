@@ -1,0 +1,42 @@
+.deadline-calendar-button {
+  white-space: nowrap;
+}
+
+.deadline-calendar-button[data-calendar-state="done"] {
+  border-color: #8bc8b9;
+  background: #edf9f5;
+  color: #267766;
+}
+
+.deadline-calendar-button[data-calendar-state="error"] {
+  border-color: #e3b0b6;
+  background: #fff4f5;
+  color: #9a5660;
+}
+
+.deadline-calendar-control {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.workspace-sidebar-actions .deadline-calendar-control,
+.workspace-sidebar-actions .deadline-calendar-control button {
+  width: 100%;
+}
+
+.deadline-calendar-control small {
+  display: block;
+  margin: 0;
+  color: #8a91a0;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .detail-actions .deadline-calendar-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
