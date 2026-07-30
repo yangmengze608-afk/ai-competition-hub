@@ -1,0 +1,93 @@
+.workspace-backup-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  margin: 0 0 26px;
+  padding: 26px 30px;
+  border: 1px solid #dfe4ee;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 10px 32px rgba(32, 37, 48, 0.045);
+}
+
+.workspace-backup-copy > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #72809a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.workspace-backup-copy h2 {
+  margin: 0;
+  color: #202530;
+  font-size: 21px;
+}
+
+.workspace-backup-copy p {
+  max-width: 680px;
+  margin: 8px 0 0;
+  color: #737c8c;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.workspace-backup-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  gap: 9px;
+  min-width: 330px;
+}
+
+.workspace-backup-actions button {
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.workspace-backup-actions button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.workspace-backup-actions small {
+  grid-column: 1 / -1;
+  color: #8a91a0;
+  font-size: 11px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.workspace-backup-actions small[data-tone="success"] {
+  color: #267766;
+}
+
+.workspace-backup-actions small[data-tone="error"] {
+  color: #9a5660;
+}
+
+@media (max-width: 820px) {
+  .workspace-backup-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-backup-actions {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .workspace-backup-panel {
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .workspace-backup-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-backup-actions small {
+    grid-column: auto;
+  }
+}

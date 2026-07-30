@@ -57,6 +57,9 @@ jobs:
       - name: Verify participation workspace
         run: node scripts/workspace-smoke-test.cjs
 
+      - name: Verify workspace backup and restore
+        run: node scripts/workspace-backup-smoke-test.cjs
+
       - name: Verify deadline calendar reminders
         run: node scripts/deadline-calendar-smoke-test.cjs
 
