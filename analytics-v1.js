@@ -12,6 +12,8 @@
     'favorite_toggle',
     'load_more',
     'segment_open',
+    'workspace_open',
+    'calendar_download',
   ]);
   const allowedSegments = new Map([
     ['高价值精选', 'high-value'],
@@ -82,6 +84,8 @@
     }
     if (path === '/playbooks') return '/playbooks';
     if (path.startsWith('/playbooks/')) return `/playbook/${stableId(path.split('/')[2]) || 'unknown'}`;
+    if (path === '/workspace') return '/workspace';
+    if (path.startsWith('/workspace/')) return `/workspace/${stableId(path.split('/')[2]) || 'unknown'}`;
     if (['/participate', '/quality', '/sources', '/about', '/data-policy', '/privacy', '/terms'].includes(path)) return path;
     return '/other';
   }
@@ -91,6 +95,7 @@
     if (path === '/home') return 'Home';
     if (path.startsWith('/competition/')) return 'Competition detail';
     if (path.startsWith('/playbook/')) return 'Playbook detail';
+    if (path.startsWith('/workspace/')) return 'Participation workspace';
     return path.slice(1).replaceAll('/', ' · ') || 'AI 赛场';
   }
 
@@ -120,13 +125,17 @@
   function eventContext(element) {
     const competitionDetail = location.hash.match(/^#\/competitions\/([^?]+)/);
     const playbookDetail = location.hash.match(/^#\/playbooks\/([^?]+)/);
+    const workspaceDetail = location.hash.match(/^#\/workspace\/([^?]+)/);
     if (competitionDetail) return stableId(decodeURIComponent(competitionDetail[1]));
     if (playbookDetail) return stableId(decodeURIComponent(playbookDetail[1]));
+    if (workspaceDetail) return stableId(decodeURIComponent(workspaceDetail[1]));
     const href = element?.closest?.('a')?.getAttribute('href') || '';
     const linkedCompetition = href.match(/^#\/competitions\/([^?]+)/);
     const linkedPlaybook = href.match(/^#\/playbooks\/([^?]+)/);
+    const linkedWorkspace = href.match(/^#\/workspace\/([^?]+)/);
     if (linkedCompetition) return stableId(decodeURIComponent(linkedCompetition[1]));
     if (linkedPlaybook) return stableId(decodeURIComponent(linkedPlaybook[1]));
+    if (linkedWorkspace) return stableId(decodeURIComponent(linkedWorkspace[1]));
     return '';
   }
 
@@ -168,6 +177,8 @@
         if (url.hostname !== location.hostname && link.target === '_blank') return 'official_link_click';
       } catch {}
     }
+    if (target.closest?.('[data-start-workspace]')) return 'workspace_open';
+    if (target.closest?.('[data-calendar-reminder]')) return 'calendar_download';
     if (target.closest?.('[data-favorite]')) return 'favorite_toggle';
     if (target.closest?.('[data-load-more]')) return 'load_more';
     return '';
