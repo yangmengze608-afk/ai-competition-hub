@@ -33,6 +33,10 @@ for (const token of [
   'beta_signup_click',
   'competition_submit_click',
   'correction_click',
+  'workspace_open',
+  'calendar_download',
+  '[data-start-workspace]',
+  '[data-calendar-reminder]',
 ]) {
   if (!analyticsSource.includes(token)) throw new Error(`analytics adapter missing: ${token}`);
 }
@@ -57,6 +61,9 @@ if (!privacy.includes('不会发送搜索词、表单内容、邮箱、手机号
 }
 if (!setup.includes('Free-text search queries are never included')) {
   throw new Error('analytics setup does not document search-query exclusion');
+}
+if (!setup.includes('workspace_open') || !setup.includes('calendar_download')) {
+  throw new Error('analytics setup does not document execution conversion events');
 }
 
 const configIndex = index.indexOf('analytics-config.js');
@@ -137,6 +144,11 @@ if (production.createdScripts[0].dataset.goatcounter !== 'https://aisaichang.goa
 const detail = evaluate('#/competitions/IFLYTEK-SPARK-CUP-2026');
 if (detail.context.AIAnalytics.pagePath() !== '/competition/iflytek-spark-cup-2026') {
   throw new Error('competition detail path is not reduced to a stable public id');
+}
+
+const workspace = evaluate('#/workspace/IFLYTEK-SPARK-CUP-2026');
+if (workspace.context.AIAnalytics.pagePath() !== '/workspace/iflytek-spark-cup-2026') {
+  throw new Error('workspace path is not reduced to a stable public competition id');
 }
 
 const privacySignal = evaluate('#/', {

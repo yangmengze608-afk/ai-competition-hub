@@ -29,6 +29,7 @@ The public dashboard account must remain email-verified and should never expose 
 - competition library segments and safe filters
 - competition detail by stable public competition ID
 - playbook list and detail by stable public playbook ID
+- participation workspace list and detail by stable public competition ID
 - public information pages
 
 Free-text search queries are never included in analytics paths.
@@ -46,6 +47,10 @@ Free-text search queries are never included in analytics paths.
 - `favorite_toggle`
 - `load_more`
 - `segment_open`
+- `workspace_open`
+- `calendar_download`
+
+`workspace_open` records a click that opens or creates a local participation workspace. `calendar_download` records a click on the portable deadline reminder button. Neither event reads whether a workspace already exists, the user's progress, tasks, notes, or the downloaded calendar contents.
 
 Event context may contain only a stable public competition or playbook ID. Form contents, selected answers, search terms, email addresses, phone numbers, GitHub usernames, full outbound URLs, and localStorage values are not sent.
 
