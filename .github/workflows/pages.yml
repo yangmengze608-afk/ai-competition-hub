@@ -57,6 +57,9 @@ jobs:
       - name: Verify participation workspace
         run: node scripts/workspace-smoke-test.cjs
 
+      - name: Verify deadline calendar reminders
+        run: node scripts/deadline-calendar-smoke-test.cjs
+
       - name: Verify public conversion entrypoints
         run: node scripts/conversion-audit.cjs
 
