@@ -1,6 +1,6 @@
 (() => {
   const DEFAULT_TITLE = 'AI 赛场｜只参加真正值得的比赛';
-  const EFFECTIVE_DATE = '2026 年 7 月 29 日';
+  const EFFECTIVE_DATE = '2026 年 7 月 31 日';
 
   function currentPath() {
     return location.hash.slice(1).split('?')[0] || '/';
@@ -12,7 +12,7 @@
     if (!active) {
       return '隐私友好的访问统计模块已经完成技术准备，但当前配置仍为关闭状态，因此本站不会主动发送页面访问或转化事件。正式启用前会配置公开统计站点并保持本政策同步。';
     }
-    return '本站使用 GoatCounter 进行不依赖 Cookie 的聚合访问统计。记录内容只包括经过归类的页面路径和预定义转化事件，例如打开赛事详情、进入参赛路线、点击官方页面或提交反馈。不会发送搜索词、表单内容、邮箱、手机号、GitHub 用户名、完整外链或浏览器本地收藏。';
+    return '本站使用 GoatCounter 进行不依赖 Cookie 的聚合访问统计。记录内容只包括经过归类的页面路径、预定义转化事件和公开赛事编号，例如打开赛事详情、创建或返回参赛计划、完成一项任务或下载截止提醒。不会发送搜索词、表单内容、邮箱、手机号、GitHub 用户名、任务标题、任务数量、进度比例、备注、完整外链或浏览器本地存储值。';
   }
 
   function injectFooter() {
@@ -25,16 +25,16 @@
   }
 
   function page(title, kicker, intro, sections) {
-    return `<div class="trust-page"><section class="trust-hero"><span>${kicker}</span><h1>${title}</h1><p>${intro}</p><small>当前版本：Commercial Beta · 生效日期 ${EFFECTIVE_DATE}</small></section><section class="trust-content">${sections.map((section) => `<article class="trust-block"><h2>${section.title}</h2>${(section.paragraphs || []).map((paragraph) => `<p>${paragraph}</p>`).join('')}${section.items ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join('')}</ul>` : ''}</article>`).join('')}</section></div>`;
+    return `<div class="trust-page"><section class="trust-hero"><span>${kicker}</span><h1>${title}</h1><p>${intro}</p><small>当前版本：Activation Beta v0.7 · 生效日期 ${EFFECTIVE_DATE}</small></section><section class="trust-content">${sections.map((section) => `<article class="trust-block"><h2>${section.title}</h2>${(section.paragraphs || []).map((paragraph) => `<p>${paragraph}</p>`).join('')}${section.items ? `<ul>${section.items.map((item) => `<li>${item}</li>`).join('')}</ul>` : ''}</article>`).join('')}</section></div>`;
   }
 
   function renderAbout(main) {
     document.title = '关于 AI 赛场';
     main.innerHTML = page('关于 AI 赛场', 'ABOUT AI SAICHANG', 'AI 赛场是面向大学生的竞赛决策与参赛执行平台。我们不只收集比赛入口，更希望帮助用户判断一场比赛是否值得投入，并把要求拆成可以执行的路线。', [
       { title: '我们正在解决什么', paragraphs: ['比赛信息分散、截止时间容易错过、赛事含金量难判断，而普通聚合页面通常只告诉用户“有什么比赛”，很少回答“为什么值得参加”和“接下来怎么做”。'] },
-      { title: '当前产品包含什么', items: ['真实赛事库与截止时间筛选', '赛事级审核、证据置信度与风险提示', '国内与国际赛事分类', '首批可执行参赛路线', '公开提交比赛、纠错与内测反馈入口'] },
+      { title: '当前产品包含什么', items: ['真实赛事库与截止时间筛选', '赛事级审核、证据置信度与风险提示', '国内与国际赛事分类', '可执行参赛路线与本地工作区', '首次行动引导、截止日历提醒和本地备份', '公开提交比赛、纠错与内测反馈入口'] },
       { title: '我们不会做什么', items: ['不会把付费推广包装成独立评级', '不会保证获奖、证书、保研或求职结果', '不会用聚合页单独证明赛事权威性', '不会在未核验时把比赛标成高价值推荐'] },
-      { title: '当前阶段', paragraphs: ['这是公开 Commercial Beta。产品、数据和规则仍会迭代，欢迎通过“参与内测与反馈”页面提交具体问题和官方证据。'] },
+      { title: '当前阶段', paragraphs: ['这是 Activation Beta v0.7。当前重点是验证用户是否能从发现比赛走到创建参赛计划并完成第一个真实动作，而不是继续堆叠功能。欢迎通过“参与内测与反馈”页面提交具体问题和官方证据。'] },
     ]);
   }
 
@@ -52,12 +52,12 @@
   function renderPrivacy(main) {
     document.title = '隐私政策｜AI 赛场';
     main.innerHTML = page('隐私政策', 'PRIVACY POLICY', '当前 Beta 坚持最少收集原则：没有必要的数据，不主动收集。', [
-      { title: '本站前端当前保存什么', paragraphs: ['收藏功能仅在你的浏览器 localStorage 中保存赛事编号，不会由本站上传到独立数据库。清除浏览器数据后，本地收藏可能消失。'] },
+      { title: '本站前端当前保存什么', paragraphs: ['收藏编号、参赛工作区、任务完成状态、用户主动填写的备注和备份恢复数据仅保存在当前浏览器 localStorage 或由用户主动导出的本地 JSON 文件中。本站不会把这些内容上传到独立数据库。清除浏览器数据后，本地内容可能消失，因此重要计划请自行导出备份。'] },
       { title: '公开表单', paragraphs: ['加入内测、提交比赛和纠错目前跳转到 GitHub Issue Forms。提交内容会公开显示，并由 GitHub 处理账号及技术数据。请不要填写手机号、私人邮箱、身份证号、住址、学号、支付信息或其他敏感信息。'] },
       { title: '访问统计', paragraphs: [analyticsDisclosure(), '统计模块只允许在 aisaichang.cn 正式域名运行，并尊重 Global Privacy Control 与 Do Not Track。开发环境、自动化测试和未配置状态不会发送统计请求。'] },
-      { title: '账号与支付', paragraphs: ['当前版本没有本站账号系统、支付功能或独立用户画像系统。若未来新增登录、提醒、支付或更广泛的数据处理，我们会在启用前更新本政策并在产品中明确说明。'] },
+      { title: '账号与支付', paragraphs: ['当前版本没有本站账号系统、支付功能或独立用户画像系统。若未来新增登录、云同步、提醒、支付或更广泛的数据处理，我们会在启用前更新本政策并在产品中明确说明。'] },
       { title: '托管服务', paragraphs: ['网站托管在 GitHub Pages。托管商、DNS 服务商、统计服务商和浏览器可能按照各自政策处理必要的访问日志、IP 地址或安全信息，本站无法替代这些第三方政策。'] },
-      { title: '联系与删除', paragraphs: ['当前公开反馈通过 GitHub Issue 处理。需要修改或删除自己提交的公开内容时，可在对应 Issue 中说明，或使用 GitHub 自带的编辑与关闭功能。'] },
+      { title: '联系与删除', paragraphs: ['当前公开反馈通过 GitHub Issue 处理。需要修改或删除自己提交的公开内容时，可在对应 Issue 中说明，或使用 GitHub 自带的编辑与关闭功能。本地工作区和备注可通过浏览器清理或产品内删除功能移除。'] },
     ]);
   }
 

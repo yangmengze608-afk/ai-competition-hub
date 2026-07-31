@@ -60,6 +60,9 @@ jobs:
       - name: Verify participation workspace
         run: node scripts/workspace-smoke-test.cjs
 
+      - name: Verify Activation Beta funnel
+        run: node scripts/activation-audit.cjs
+
       - name: Verify workspace backup and restore
         run: node scripts/workspace-backup-smoke-test.cjs
 
