@@ -16,10 +16,11 @@
   for (const item of competitions) {
     resetSystemTags(item);
     const deadline = new Date(item.deadline).getTime();
-    const daysLeft = Number.isFinite(deadline) ? Math.ceil((deadline - now) / day) : Infinity;
+    const deadlineValid = Number.isFinite(deadline);
+    const daysLeft = deadlineValid ? Math.ceil((deadline - now) / day) : Infinity;
     const current = item.collection === 'current' && item.status !== 'ended' && item.entryStatus !== 'closed';
     const reviewed = item.verificationStatus === 'reviewed';
-    const actionable = current && daysLeft >= 0 && item.entryStatus !== 'restricted';
+    const actionable = current && deadlineValid && deadline >= now && item.entryStatus !== 'restricted';
 
     if (actionable && daysLeft <= 7) addTag(item, '本周截止');
     if (actionable && reviewed && item.difficulty === '入门') addTag(item, '零基础友好');

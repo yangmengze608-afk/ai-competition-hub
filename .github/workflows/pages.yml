@@ -54,6 +54,9 @@ jobs:
       - name: Verify competition decision experience
         run: node scripts/detail-decision-audit.cjs
 
+      - name: Verify classic homepage composition
+        run: node scripts/classic-home-layering-audit.cjs
+
       - name: Verify participation workspace
         run: node scripts/workspace-smoke-test.cjs
 
