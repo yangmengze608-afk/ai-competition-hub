@@ -11,7 +11,8 @@ for (const token of [
   'ACTIVATED',
   '你已经真正启动这场比赛',
   '[data-workspace-task]:checked',
-  '[data-calendar-reminder]',
+  'data-calendar-reminder=',
+  'downloadCalendar?.(item)',
   '[data-start-workspace]',
 ]) {
   if (!guide.includes(token)) throw new Error(`activation guide missing: ${token}`);
