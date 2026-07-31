@@ -21,6 +21,8 @@ test('checking a workspace task does not visibly jump or rebuild the workspace',
   const firstRow = page.locator('.workspace-task').first();
   await firstRow.evaluate((row) => row.scrollIntoView({ block: 'center', behavior: 'auto' }));
   await page.waitForTimeout(80);
+  const clickBox = await firstRow.boundingBox();
+  expect(clickBox).not.toBeNull();
 
   await page.evaluate(() => {
     const checkbox = document.querySelector('[data-workspace-task]');
@@ -39,7 +41,7 @@ test('checking a workspace task does not visibly jump or rebuild the workspace',
     requestAnimationFrame(sample);
   });
 
-  await firstRow.click();
+  await page.mouse.click(clickBox.x + clickBox.width / 2, clickBox.y + clickBox.height / 2);
   await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
   await page.waitForTimeout(300);
 
