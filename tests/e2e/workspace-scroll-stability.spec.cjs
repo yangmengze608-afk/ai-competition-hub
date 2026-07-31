@@ -9,7 +9,7 @@ function watchErrors(page) {
   return errors;
 }
 
-test('checking a workspace task does not visibly jump the page', async ({ page }) => {
+test('checking a workspace task does not visibly jump or rebuild the workspace', async ({ page }) => {
   const errors = watchErrors(page);
   await page.addInitScript(() => localStorage.clear());
   await page.goto('/#/competitions/iflytek-spark-cup-2026');
@@ -24,6 +24,8 @@ test('checking a workspace task does not visibly jump the page', async ({ page }
 
   await page.evaluate(() => {
     const checkbox = document.querySelector('[data-workspace-task]');
+    window.__workspaceTasksNode = document.querySelector('.workspace-tasks');
+    window.__workspacePageNode = document.querySelector('[data-workspace-page]');
     window.__workspaceTaskId = checkbox?.dataset.workspaceTask || '';
     window.__workspaceTaskSamples = [];
     window.__workspaceTaskSampling = true;
@@ -49,12 +51,16 @@ test('checking a workspace task does not visibly jump the page', async ({ page }
     const checkbox = document.querySelector(`[data-workspace-task="${escaped}"]`);
     return {
       checked: Boolean(checkbox?.checked),
+      sameTasksNode: window.__workspaceTasksNode === document.querySelector('.workspace-tasks'),
+      samePageNode: window.__workspacePageNode === document.querySelector('[data-workspace-page]'),
       samples,
       range: samples.length ? Math.max(...samples) - Math.min(...samples) : Infinity,
     };
   });
 
   expect(result.checked).toBe(true);
+  expect(result.sameTasksNode).toBe(true);
+  expect(result.samePageNode).toBe(true);
   expect(result.samples.length).toBeGreaterThan(4);
   expect(result.range).toBeLessThan(6);
   expect(errors).toEqual([]);
