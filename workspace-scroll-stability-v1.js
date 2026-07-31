@@ -1,70 +1,48 @@
 (() => {
-  const STABILITY_WINDOW_MS = 240;
-  let stopActiveStabilizer = null;
+  function updateWorkspaceSummary(page, workspace) {
+    const stats = window.AI_WORKSPACE?.progress?.(workspace);
+    if (!stats) return;
 
-  function escapedAttribute(value) {
-    const text = String(value || '');
-    if (window.CSS?.escape) return window.CSS.escape(text);
-    return text.replace(/["\\]/g, '\\$&');
+    const progressValue = page.querySelector('.workspace-progress-card strong');
+    const progressBar = page.querySelector('.workspace-progress-track i');
+    const meta = page.querySelectorAll('.workspace-meta span');
+
+    if (progressValue) progressValue.textContent = `${stats.percent}%`;
+    if (progressBar) progressBar.style.width = `${stats.percent}%`;
+    if (meta[1]) meta[1].textContent = `${stats.completed}/${stats.total} 项完成`;
+    if (meta[2]) meta[2].textContent = '更新于 刚刚';
   }
 
-  function taskRow(taskId) {
-    const selector = `[data-workspace-task="${escapedAttribute(taskId)}"]`;
-    return document.querySelector(selector)?.closest('.workspace-task') || null;
-  }
-
-  function stabilizeTaskRow(taskId, expectedTop) {
-    stopActiveStabilizer?.();
-
-    const main = document.querySelector('main');
-    if (!main || !taskId || !Number.isFinite(expectedTop)) return;
-
-    const root = document.documentElement;
-    const previousOverflowAnchor = root.style.overflowAnchor;
-    root.style.overflowAnchor = 'none';
-
-    let stopped = false;
-    let frameId = 0;
-
-    const correctPosition = () => {
-      if (stopped) return;
-      const row = taskRow(taskId);
-      if (!row) return;
-      const currentTop = row.getBoundingClientRect().top;
-      const delta = currentTop - expectedTop;
-      if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
-    };
-
-    const observer = new MutationObserver(correctPosition);
-    observer.observe(main, { childList: true, subtree: true });
-
-    const followFrames = () => {
-      correctPosition();
-      if (!stopped) frameId = requestAnimationFrame(followFrames);
-    };
-    frameId = requestAnimationFrame(followFrames);
-
-    const stop = () => {
-      if (stopped) return;
-      correctPosition();
-      stopped = true;
-      observer.disconnect();
-      cancelAnimationFrame(frameId);
-      clearTimeout(timerId);
-      root.style.overflowAnchor = previousOverflowAnchor;
-      if (stopActiveStabilizer === stop) stopActiveStabilizer = null;
-    };
-
-    const timerId = setTimeout(stop, STABILITY_WINDOW_MS);
-    stopActiveStabilizer = stop;
+  function renderActivationWithoutMoving(row) {
+    const beforeTop = row.getBoundingClientRect().top;
+    window.AI_ACTIVATION?.renderGuide?.();
+    const afterTop = row.getBoundingClientRect().top;
+    const delta = afterTop - beforeTop;
+    if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
   }
 
   document.addEventListener('change', (event) => {
     const checkbox = event.target.closest?.('[data-workspace-task]');
+    const page = checkbox?.closest('[data-workspace-page]');
     const row = checkbox?.closest('.workspace-task');
-    if (!checkbox || !row) return;
-    stabilizeTaskRow(checkbox.dataset.workspaceTask, row.getBoundingClientRect().top);
-  }, { capture: true });
+    const workspaceApi = window.AI_WORKSPACE;
 
-  window.addEventListener('hashchange', () => stopActiveStabilizer?.());
+    if (!checkbox || !page || !row || !workspaceApi?.toggleTask) return;
+
+    // The original workspace listener rebuilds all of <main>. Stop the event
+    // before it reaches that listener and update only the affected UI instead.
+    event.stopPropagation();
+
+    const competitionId = page.dataset.workspacePage;
+    const workspace = workspaceApi.toggleTask(
+      competitionId,
+      checkbox.dataset.workspaceTask,
+      checkbox.checked,
+    );
+    if (!workspace) return;
+
+    row.classList.toggle('is-complete', checkbox.checked);
+    updateWorkspaceSummary(page, workspace);
+    renderActivationWithoutMoving(row);
+  }, { capture: true });
 })();
