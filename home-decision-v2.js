@@ -73,6 +73,12 @@
     const main = document.querySelector('main');
     if (!main) return;
 
+    // commercial-app-v3 renders the original white search-first homepage first.
+    // Detach that exact node before composing the decision sections so its
+    // appearance and already-bound search/hot-tag interactions remain intact.
+    const classicHero = main.querySelector('.hero-section');
+    if (classicHero) classicHero.remove();
+
     const actionable = competitions.filter(isActionable);
     const audited = competitions.filter((item) => item.verificationStatus === 'reviewed');
     const segments = Array.isArray(data.launchSegments) ? data.launchSegments : [];
@@ -137,6 +143,14 @@
         <div><span>03</span><h3>最后行动</h3><p>通过参赛路线把要求拆成阶段任务、交付物、停止条件和提交清单。</p></div>
       </section>
     </div>`;
+
+    if (classicHero) {
+      const classicStage = document.createElement('div');
+      classicStage.className = 'classic-home-stage';
+      classicStage.dataset.classicHome = '';
+      classicStage.appendChild(classicHero);
+      main.prepend(classicStage);
+    }
 
     main.querySelector('[data-decision-search]')?.addEventListener('submit', (event) => {
       event.preventDefault();
