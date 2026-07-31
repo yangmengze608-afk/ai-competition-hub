@@ -3,6 +3,7 @@ const vm = require('node:vm');
 
 const configSource = fs.readFileSync('analytics-config.js', 'utf8');
 const analyticsSource = fs.readFileSync('analytics-v1.js', 'utf8');
+const activationSource = fs.readFileSync('activation-guide-v1.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8');
 const privacy = fs.readFileSync('trust-pages.js', 'utf8');
 const setup = fs.readFileSync('docs/analytics-setup.md', 'utf8');
@@ -34,11 +35,21 @@ for (const token of [
   'competition_submit_click',
   'correction_click',
   'workspace_open',
+  'workspace_create',
+  'workspace_task_complete',
+  'workspace_first_task_complete',
   'calendar_download',
-  '[data-start-workspace]',
   '[data-calendar-reminder]',
 ]) {
   if (!analyticsSource.includes(token)) throw new Error(`analytics adapter missing: ${token}`);
+}
+
+for (const token of [
+  '[data-start-workspace]',
+  "track('workspace_task_complete', id)",
+  "track('workspace_first_task_complete', id)",
+]) {
+  if (!activationSource.includes(token)) throw new Error(`activation event adapter missing: ${token}`);
 }
 
 for (const forbidden of [
@@ -53,6 +64,17 @@ for (const forbidden of [
   if (analyticsSource.includes(forbidden)) throw new Error(`analytics adapter accesses forbidden data: ${forbidden}`);
 }
 
+for (const forbidden of [
+  'document.cookie',
+  'localStorage',
+  'sessionStorage',
+  'new FormData',
+  'data-workspace-notes',
+  'workspace-notes',
+]) {
+  if (activationSource.includes(forbidden)) throw new Error(`activation adapter accesses forbidden user data: ${forbidden}`);
+}
+
 if (!privacy.includes('Global Privacy Control') || !privacy.includes('Do Not Track')) {
   throw new Error('privacy policy does not disclose privacy signals');
 }
@@ -62,15 +84,17 @@ if (!privacy.includes('不会发送搜索词、表单内容、邮箱、手机号
 if (!setup.includes('Free-text search queries are never included')) {
   throw new Error('analytics setup does not document search-query exclusion');
 }
-if (!setup.includes('workspace_open') || !setup.includes('calendar_download')) {
-  throw new Error('analytics setup does not document execution conversion events');
+for (const eventName of ['workspace_open', 'workspace_create', 'workspace_first_task_complete', 'calendar_download']) {
+  if (!setup.includes(eventName)) throw new Error(`analytics setup does not document: ${eventName}`);
 }
 
 const configIndex = index.indexOf('analytics-config.js');
 const routeIndex = index.indexOf('route-bootstrap.js');
+const activationIndex = index.indexOf('activation-guide-v1.js');
 const adapterIndex = index.indexOf('analytics-v1.js');
-if (configIndex < 0 || adapterIndex < 0) throw new Error('analytics files are not loaded');
+if (configIndex < 0 || activationIndex < 0 || adapterIndex < 0) throw new Error('analytics files are not loaded');
 if (configIndex > routeIndex) throw new Error('analytics config must load before application scripts');
+if (activationIndex > adapterIndex) throw new Error('activation event adapter must load before analytics adapter');
 if (adapterIndex < index.indexOf('public-simplify.js')) throw new Error('analytics adapter must load after public UI scripts');
 
 function evaluate(hash, configOverrides = {}) {
