@@ -15,6 +15,8 @@ test('checking a workspace task does not visibly jump the page', async ({ page }
   await page.goto('/#/competitions/iflytek-spark-cup-2026');
   await page.locator('[data-start-workspace="iflytek-spark-cup-2026"]').click();
   await expect(page).toHaveURL(/#\/workspace\/iflytek-spark-cup-2026/);
+  await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '今天先完成一个真实动作' })).toBeVisible();
+  await page.waitForTimeout(100);
 
   const firstRow = page.locator('.workspace-task').first();
   await firstRow.evaluate((row) => row.scrollIntoView({ block: 'center', behavior: 'auto' }));
