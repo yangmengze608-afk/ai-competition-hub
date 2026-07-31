@@ -1,0 +1,82 @@
+const { test, expect } = require('@playwright/test');
+
+function watchErrors(page) {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  return errors;
+}
+
+test('checking a workspace task does not visibly jump or rebuild the workspace', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.addInitScript(() => localStorage.clear());
+  await page.goto('/#/competitions/iflytek-spark-cup-2026');
+  await page.locator('[data-start-workspace="iflytek-spark-cup-2026"]').click();
+  await expect(page).toHaveURL(/#\/workspace\/iflytek-spark-cup-2026/);
+  await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '今天先完成一个真实动作' })).toBeVisible();
+  await page.waitForTimeout(100);
+
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+    const row = document.querySelector('.workspace-task');
+    if (!row) return;
+    const absoluteTop = window.scrollY + row.getBoundingClientRect().top;
+    const target = Math.max(0, absoluteTop - ((window.innerHeight - row.getBoundingClientRect().height) / 2));
+    window.scrollTo({ top: target, behavior: 'instant' });
+  });
+  await page.waitForTimeout(350);
+
+  await page.evaluate(() => {
+    const checkbox = document.querySelector('[data-workspace-task]');
+    window.__workspaceTasksNode = document.querySelector('.workspace-tasks');
+    window.__workspacePageNode = document.querySelector('[data-workspace-page]');
+    window.__workspaceTaskId = checkbox?.dataset.workspaceTask || '';
+    window.__workspaceTaskSamples = [];
+    window.__workspaceTaskSampling = true;
+    const sample = () => {
+      const id = window.__workspaceTaskId;
+      const escaped = window.CSS?.escape ? window.CSS.escape(id) : id.replace(/["\\]/g, '\\$&');
+      const row = document.querySelector(`[data-workspace-task="${escaped}"]`)?.closest('.workspace-task');
+      if (row) window.__workspaceTaskSamples.push(row.getBoundingClientRect().top);
+      if (window.__workspaceTaskSampling) requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample);
+  });
+  await page.waitForTimeout(50);
+
+  await page.evaluate(() => {
+    const checkbox = document.querySelector('[data-workspace-task]');
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  const guide = page.locator('[data-activation-guide-panel]');
+  await expect(guide.getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
+  await expect(guide).toHaveAttribute('data-activation-mode', 'expanded');
+  await expect(guide.locator('.activation-guide-action')).toHaveCount(3);
+  await page.waitForTimeout(300);
+
+  const result = await page.evaluate(() => {
+    window.__workspaceTaskSampling = false;
+    const samples = window.__workspaceTaskSamples || [];
+    const id = window.__workspaceTaskId || '';
+    const escaped = window.CSS?.escape ? window.CSS.escape(id) : id.replace(/["\\]/g, '\\$&');
+    const checkbox = document.querySelector(`[data-workspace-task="${escaped}"]`);
+    return {
+      checked: Boolean(checkbox?.checked),
+      sameTasksNode: window.__workspaceTasksNode === document.querySelector('.workspace-tasks'),
+      samePageNode: window.__workspacePageNode === document.querySelector('[data-workspace-page]'),
+      samples,
+      range: samples.length ? Math.max(...samples) - Math.min(...samples) : Infinity,
+    };
+  });
+
+  expect(result.checked).toBe(true);
+  expect(result.sameTasksNode).toBe(true);
+  expect(result.samePageNode).toBe(true);
+  expect(result.samples.length).toBeGreaterThan(8);
+  expect(result.range, `sampled task positions: ${JSON.stringify(result.samples)}`).toBeLessThan(6);
+  expect(errors).toEqual([]);
+});
