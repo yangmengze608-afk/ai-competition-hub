@@ -12,8 +12,9 @@ for (const token of ['hero-section', 'capability-strip', 'home-competition-secti
 for (const token of [
   'Array.from(main.children)',
   "node.classList?.contains('hero-section')",
-  "main.querySelector('.classic-home-stage')?.remove()",
-  'decisionHome.before(node)',
+  "main?.querySelector('[data-classic-home]')",
+  'classicStage.appendChild(node)',
+  'decisionHome.before(classicStage)',
   "decisionHome.dataset.classicHomeBelow = 'true'",
 ]) {
   if (!preserver.includes(token)) throw new Error(`classic homepage preserver missing: ${token}`);
@@ -23,7 +24,7 @@ for (const forbidden of ['cloneNode', 'main.innerHTML', 'outerHTML']) {
   if (preserver.includes(forbidden)) throw new Error(`classic homepage preserver must move real nodes, not recreate them: ${forbidden}`);
 }
 
-if (!decision.includes("const classicHero = main.querySelector('.hero-section')")) {
+if (!decision.includes("const classicHero = main.querySelector('.hero-section')") || !decision.includes("classicStage.dataset.classicHome = ''")) {
   throw new Error('decision layer assumptions changed; review the homepage preserver integration');
 }
 
@@ -35,4 +36,4 @@ if (!(appIndex < preserverIndex && preserverIndex < decisionIndex)) {
   throw new Error('classic homepage preserver must load between the core app and decision layer');
 }
 
-console.log('Classic homepage remains first; decision experience is layered below it.');
+console.log('Complete classic homepage stage remains first; decision experience is layered below it.');
