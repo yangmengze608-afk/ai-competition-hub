@@ -52,13 +52,13 @@
       <div class="activation-guide-grid">
         ${official}
         <button class="activation-guide-action" type="button" data-activation-focus-task><span>02</span><strong>开始第一项任务</strong><small>定位到清单里最先需要完成的动作</small></button>
-        <button class="activation-guide-action ${calendarDisabled ? 'is-disabled' : ''}" type="button" data-activation-calendar ${calendarDisabled ? 'disabled' : ''}><span>03</span><strong>锁定截止时间</strong><small>${calendarDisabled ? '当前截止时间不可生成提醒' : '下载日历文件，避免错过提交'}</small></button>
+        <button class="activation-guide-action ${calendarDisabled ? 'is-disabled' : ''}" type="button" data-activation-calendar data-calendar-reminder="${e(item?.id || '')}" ${calendarDisabled ? 'disabled' : ''}><span>03</span><strong>锁定截止时间</strong><small>${calendarDisabled ? '当前截止时间不可生成提醒' : '下载日历文件，避免错过提交'}</small></button>
       </div>
       <small class="activation-guide-privacy">任务内容和备注只保存在当前浏览器；统计只记录预定义行为和公开赛事 ID。</small>
     </section>`;
   }
 
-  function bindGuide(page) {
+  function bindGuide(page, item) {
     page.querySelectorAll('[data-activation-focus-task]').forEach((button) => {
       button.addEventListener('click', () => {
         const next = page.querySelector('[data-workspace-task]:not(:checked)');
@@ -70,8 +70,13 @@
       });
     });
 
-    page.querySelector('[data-activation-calendar]')?.addEventListener('click', () => {
-      page.querySelector('[data-calendar-reminder]')?.click();
+    page.querySelector('[data-activation-calendar]')?.addEventListener('click', (event) => {
+      const button = event.currentTarget;
+      const downloaded = window.AI_CALENDAR?.downloadCalendar?.(item) === true;
+      if (!downloaded) return;
+      button.dataset.calendarState = 'done';
+      const strong = button.querySelector('strong');
+      if (strong) strong.textContent = '日历文件已生成';
     });
   }
 
@@ -86,7 +91,7 @@
     const item = competitions.find((competition) => competition.id === id);
     const state = workspaceState(page);
     layout.insertAdjacentHTML('beforebegin', guideMarkup(item, state));
-    bindGuide(page);
+    bindGuide(page, item);
   }
 
   function classifyWorkspaceStart(button) {
