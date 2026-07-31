@@ -22,13 +22,14 @@
     if (currentPath() !== '/' || !capturedNodes.length) return;
     const main = document.querySelector('main');
     const decisionHome = main?.querySelector('.decision-home');
-    if (!main || !decisionHome) return;
+    const classicStage = main?.querySelector('[data-classic-home]');
+    if (!main || !decisionHome || !classicStage) return;
 
-    // home-decision-v2 previously retained only the search hero in a wrapper.
-    // Remove that temporary wrapper, then restore every original homepage node
-    // in its exact original order before the decision experience.
-    main.querySelector('.classic-home-stage')?.remove();
-    capturedNodes.forEach((node) => decisionHome.before(node));
+    // home-decision-v2 creates the classic stage with the original hero only.
+    // Move every captured original homepage node into that same stage, preserving
+    // the exact original order and the real nodes with their bound interactions.
+    capturedNodes.forEach((node) => classicStage.appendChild(node));
+    decisionHome.before(classicStage);
     decisionHome.dataset.classicHomeBelow = 'true';
   }
 
