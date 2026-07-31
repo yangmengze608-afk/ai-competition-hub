@@ -13,6 +13,9 @@
     'load_more',
     'segment_open',
     'workspace_open',
+    'workspace_create',
+    'workspace_task_complete',
+    'workspace_first_task_complete',
     'calendar_download',
   ]);
   const allowedSegments = new Map([
@@ -171,13 +174,13 @@
       if (href.includes('template=submit-competition.yml')) return 'competition_submit_click';
       if (href.includes('template=report-competition.yml')) return 'correction_click';
       if (/^#\/playbooks\//.test(href)) return 'playbook_open';
+      if (/^#\/workspace(?:\/|$)/.test(href)) return 'workspace_open';
       if (link.matches('.decision-segment-card, .launch-segment-card')) return 'segment_open';
       try {
         const url = new URL(link.href, location.href);
         if (url.hostname !== location.hostname && link.target === '_blank') return 'official_link_click';
       } catch {}
     }
-    if (target.closest?.('[data-start-workspace]')) return 'workspace_open';
     if (target.closest?.('[data-calendar-reminder]')) return 'calendar_download';
     if (target.closest?.('[data-favorite]')) return 'favorite_toggle';
     if (target.closest?.('[data-load-more]')) return 'load_more';
