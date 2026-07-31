@@ -29,9 +29,9 @@
 
     if (!checkbox || !page || !row || !workspaceApi?.toggleTask) return;
 
-    // The original workspace listener rebuilds all of <main>. Stop the event
-    // before it reaches that listener and update only the affected UI instead.
-    event.stopPropagation();
+    // Own the task change completely. The legacy target listener rebuilds all
+    // of <main>; stopping the event immediately prevents that rerender path.
+    event.stopImmediatePropagation();
 
     const competitionId = page.dataset.workspacePage;
     const workspace = workspaceApi.toggleTask(
