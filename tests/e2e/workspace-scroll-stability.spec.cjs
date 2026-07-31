@@ -18,9 +18,16 @@ test('checking a workspace task does not visibly jump or rebuild the workspace',
   await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '今天先完成一个真实动作' })).toBeVisible();
   await page.waitForTimeout(100);
 
-  const firstRow = page.locator('.workspace-task').first();
-  await firstRow.evaluate((row) => row.scrollIntoView({ block: 'center', behavior: 'auto' }));
-  await page.waitForTimeout(80);
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.body.style.scrollBehavior = 'auto';
+    const row = document.querySelector('.workspace-task');
+    if (!row) return;
+    const absoluteTop = window.scrollY + row.getBoundingClientRect().top;
+    const target = Math.max(0, absoluteTop - ((window.innerHeight - row.getBoundingClientRect().height) / 2));
+    window.scrollTo({ top: target, behavior: 'instant' });
+  });
+  await page.waitForTimeout(350);
 
   await page.evaluate(() => {
     const checkbox = document.querySelector('[data-workspace-task]');
@@ -38,13 +45,17 @@ test('checking a workspace task does not visibly jump or rebuild the workspace',
     };
     requestAnimationFrame(sample);
   });
+  await page.waitForTimeout(50);
 
   await page.evaluate(() => {
     const checkbox = document.querySelector('[data-workspace-task]');
     checkbox.checked = true;
     checkbox.dispatchEvent(new Event('change', { bubbles: true }));
   });
-  await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
+  const guide = page.locator('[data-activation-guide-panel]');
+  await expect(guide.getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
+  await expect(guide).toHaveAttribute('data-activation-mode', 'expanded');
+  await expect(guide.locator('.activation-guide-action')).toHaveCount(3);
   await page.waitForTimeout(300);
 
   const result = await page.evaluate(() => {
@@ -65,7 +76,7 @@ test('checking a workspace task does not visibly jump or rebuild the workspace',
   expect(result.checked).toBe(true);
   expect(result.sameTasksNode).toBe(true);
   expect(result.samePageNode).toBe(true);
-  expect(result.samples.length).toBeGreaterThan(4);
-  expect(result.range).toBeLessThan(6);
+  expect(result.samples.length).toBeGreaterThan(8);
+  expect(result.range, `sampled task positions: ${JSON.stringify(result.samples)}`).toBeLessThan(6);
   expect(errors).toEqual([]);
 });
