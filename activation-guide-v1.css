@@ -114,6 +114,16 @@
   cursor: not-allowed;
 }
 
+.activation-guide-action-complete {
+  border-color: #c9dfd2;
+  background: rgba(247, 253, 249, 0.94);
+}
+
+.activation-guide-action-complete > span,
+.activation-guide-action-complete > strong {
+  color: #2f6c51;
+}
+
 .activation-guide-privacy {
   display: block;
   margin-top: 14px;
@@ -125,6 +135,16 @@
 .activation-guide-started {
   border-color: #cfe7db;
   background: linear-gradient(135deg, #f5fbf7 0%, #eef8f2 100%);
+}
+
+.activation-guide-started-expanded {
+  display: block;
+  overflow: hidden;
+}
+
+.activation-guide-started-expanded .activation-guide-heading > strong {
+  border-color: #c9dfd2;
+  color: #2f6c51;
 }
 
 .activation-next-task {
@@ -152,7 +172,7 @@
 
 @media (max-width: 780px) {
   .activation-guide-heading,
-  .activation-guide-started {
+  .activation-guide-started:not(.activation-guide-started-expanded) {
     align-items: flex-start;
     flex-direction: column;
   }
