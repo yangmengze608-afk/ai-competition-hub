@@ -30,8 +30,9 @@ test('workspace turns a chosen competition into a first real action', async ({ p
   await guide.locator('[data-activation-focus-task]').click();
   const firstTask = page.locator('[data-workspace-task]').first();
   await expect(firstTask).not.toBeChecked();
-  await firstTask.check();
+  await page.locator('.workspace-task').first().click();
 
+  await expect(page.locator('[data-workspace-task]').first()).toBeChecked();
   await expect(page.locator('[data-activation-guide-panel]').getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
   await expect(page.locator('.workspace-progress-card strong')).not.toHaveText('0%');
   expect(errors).toEqual([]);
