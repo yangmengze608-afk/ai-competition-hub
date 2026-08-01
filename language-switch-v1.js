@@ -467,9 +467,10 @@
 
   function updateSwitch(button) {
     const show = language === LANG_EN ? '中文' : 'EN';
-    button.textContent = show;
-    button.setAttribute('aria-label', language === LANG_EN ? '切换为中文' : 'Switch to English');
-    button.setAttribute('title', language === LANG_EN ? '切换为中文' : 'Switch to English');
+    const label = language === LANG_EN ? '切换为中文' : 'Switch to English';
+    if (button.textContent !== show) button.textContent = show;
+    if (button.getAttribute('aria-label') !== label) button.setAttribute('aria-label', label);
+    if (button.getAttribute('title') !== label) button.setAttribute('title', label);
   }
 
   function injectSwitches() {
@@ -490,28 +491,35 @@
 
   function updateUrl() {
     const url = new URL(location.href);
+    const before = `${url.pathname}${url.search}${url.hash}`;
     if (language === LANG_EN) url.searchParams.set(QUERY_KEY, LANG_EN);
     else url.searchParams.delete(QUERY_KEY);
-    history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+    const after = `${url.pathname}${url.search}${url.hash}`;
+    if (after !== before) history.replaceState(history.state, '', after);
   }
 
   function applyMetadata() {
-    document.documentElement.lang = language === LANG_EN ? 'en' : 'zh-CN';
-    if (language === LANG_EN) {
-      document.title = titleTranslations.get(document.title) || document.title.replaceAll('AI 赛场', 'AI Competition Hub');
-    } else {
-      document.title = reverseTitles.get(document.title) || document.title.replaceAll('AI Competition Hub', 'AI 赛场');
-    }
+    const htmlLang = language === LANG_EN ? 'en' : 'zh-CN';
+    if (document.documentElement.lang !== htmlLang) document.documentElement.lang = htmlLang;
+
+    const currentTitle = document.title;
+    const nextTitle = language === LANG_EN
+      ? (titleTranslations.get(currentTitle) || currentTitle.replaceAll('AI 赛场', 'AI Competition Hub'))
+      : (reverseTitles.get(currentTitle) || currentTitle.replaceAll('AI Competition Hub', 'AI 赛场'));
+    if (document.title !== nextTitle) document.title = nextTitle;
 
     const descriptions = {
       zh: 'AI 赛场帮助大学生找到真正值得参加的比赛，查看截止时间、官方来源、赛事价值和可执行参赛路线。',
       en: 'AI Competition Hub helps students find competitions worth entering, verify deadlines and official sources, assess value, and start an executable plan.'
     };
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', descriptions[language]);
+    if (meta && meta.getAttribute('content') !== descriptions[language]) {
+      meta.setAttribute('content', descriptions[language]);
+    }
 
     const ogLocale = document.querySelector('meta[property="og:locale"]');
-    if (ogLocale) ogLocale.setAttribute('content', language === LANG_EN ? 'en_US' : 'zh_CN');
+    const nextLocale = language === LANG_EN ? 'en_US' : 'zh_CN';
+    if (ogLocale && ogLocale.getAttribute('content') !== nextLocale) ogLocale.setAttribute('content', nextLocale);
   }
 
   function apply() {
