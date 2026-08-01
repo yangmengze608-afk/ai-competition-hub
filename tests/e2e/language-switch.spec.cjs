@@ -1,14 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
-test('language switch gives non-Chinese visitors an English core flow and restores Chinese', async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.clear();
-    Object.defineProperty(navigator, 'language', { configurable: true, get: () => 'en-US' });
-  });
+test('explicit English mode covers the core flow and restores Chinese without losing state', async ({ page }) => {
+  await page.addInitScript(() => localStorage.clear());
 
-  await page.goto('/#/');
+  await page.goto('/?lang=en#/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.locator('.brand')).toContainText('AI Competition Hub');
+  await expect(page.getByRole('banner').locator('.brand')).toContainText('AI Competition Hub');
   await expect(page.getByRole('heading', { name: /Stop bookmarking competitions/i })).toBeVisible();
   await expect(page.locator('[data-language-switch]').first()).toHaveText('中文');
   await expect(page).toHaveURL(/\?lang=en#\//);
@@ -36,12 +33,19 @@ test('language switch gives non-Chinese visitors an English core flow and restor
   await expect(page.locator('[data-language-switch]').first()).toHaveText('EN');
 });
 
-test('explicit Chinese query overrides an English browser', async ({ page }) => {
+test('Chinese remains default until the visitor explicitly switches to English', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.clear();
     Object.defineProperty(navigator, 'language', { configurable: true, get: () => 'en-US' });
   });
-  await page.goto('/?lang=zh#/');
+
+  await page.goto('/#/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
   await expect(page.getByRole('heading', { name: /别再收藏一堆比赛/ })).toBeVisible();
+  await expect(page.locator('[data-language-switch]').first()).toHaveText('EN');
+
+  await page.locator('[data-language-switch]').first().click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.getByRole('heading', { name: /Stop bookmarking competitions/i })).toBeVisible();
+  await expect(page).toHaveURL(/\?lang=en#\//);
 });
