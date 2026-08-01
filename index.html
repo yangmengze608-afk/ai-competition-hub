@@ -52,7 +52,8 @@
         try { language = localStorage.getItem('ai-language:v1'); } catch {}
       }
       if (language !== 'en' && language !== 'zh') {
-        language = /^zh(?:-|$)/i.test(navigator.language || '') ? 'zh' : 'en';
+        language = 'zh';
+        try { localStorage.setItem('ai-language:v1', language); } catch {}
       }
       document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
       document.documentElement.dataset.language = language;
