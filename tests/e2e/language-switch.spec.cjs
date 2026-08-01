@@ -21,10 +21,17 @@ test('language switch gives non-Chinese visitors an English core flow and restor
   await expect(page).toHaveURL(/#\/workspace\/iflytek-spark-cup-2026/);
   await expect(page.getByRole('heading', { name: 'Complete One Real Action Today' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Execution Tasks' })).toBeVisible();
+  await expect(page.locator('.workspace-progress-card strong')).toHaveText('0%');
+
+  await page.locator('.workspace-task').first().click();
+  await expect(page.getByRole('heading', { name: 'You Have Officially Started This Competition' })).toBeVisible();
+  await expect(page.locator('.workspace-progress-card strong')).not.toHaveText('0%');
+  await expect(page.locator('.workspace-meta')).toContainText('completed');
 
   await page.locator('[data-language-switch]').first().click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await expect(page.getByRole('heading', { name: '今天先完成一个真实动作' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '你已经真正启动这场比赛' })).toBeVisible();
+  await expect(page.locator('.workspace-meta')).toContainText('项完成');
   await expect(page).not.toHaveURL(/\?lang=en/);
   await expect(page.locator('[data-language-switch]').first()).toHaveText('EN');
 });
