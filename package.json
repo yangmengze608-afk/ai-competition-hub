@@ -6,6 +6,7 @@
   "scripts": {
     "generate:seo": "node scripts/generate-seo-pages.cjs --out .seo-build",
     "audit:seo": "node scripts/seo-pages-audit.cjs",
+    "check:indexnow": "node scripts/submit-indexnow.cjs --sitemap .seo-build/sitemap.xml --dry-run",
     "test:e2e": "playwright test"
   },
   "devDependencies": {
