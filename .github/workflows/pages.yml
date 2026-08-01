@@ -89,6 +89,7 @@ jobs:
           rm -rf .seo-build
           node scripts/generate-seo-pages.cjs --out .seo-build
           node scripts/seo-pages-audit.cjs
+          node scripts/submit-indexnow.cjs --sitemap .seo-build/sitemap.xml --dry-run
 
       - name: Smoke test competition library
         shell: bash
@@ -159,6 +160,7 @@ jobs:
             ./ _site/
           node scripts/generate-seo-pages.cjs --out _site
           SEO_BUILD_DIR=_site node scripts/seo-pages-audit.cjs
+          node scripts/submit-indexnow.cjs --sitemap _site/sitemap.xml --dry-run
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -171,3 +173,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Notify IndexNow about published URLs
+        run: node scripts/submit-indexnow.cjs --sitemap _site/sitemap.xml
