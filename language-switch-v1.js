@@ -303,8 +303,8 @@
     ['记录选题、队友、技术路线、卡点或下一步……', 'Record your idea, teammates, technical route, blockers, or next step…']
   ]);
 
-  const textOriginals = new WeakMap();
-  const attributeOriginals = new WeakMap();
+  const textRecords = new WeakMap();
+  const attributeRecords = new WeakMap();
   let language = resolveLanguage();
   let queued = false;
 
@@ -401,25 +401,41 @@
 
   function processTextNode(node) {
     if (shouldSkip(node)) return;
-    if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue || '');
-    const original = textOriginals.get(node) || '';
-    const next = language === LANG_EN ? translateValue(original) : original;
-    if (node.nodeValue !== next) node.nodeValue = next;
+    const current = node.nodeValue || '';
+    let record = textRecords.get(node);
+    if (!record) {
+      record = { source: current, rendered: current };
+      textRecords.set(node, record);
+    } else if (current !== record.rendered && current !== record.source) {
+      record.source = current;
+    }
+    const next = language === LANG_EN ? translateValue(record.source) : record.source;
+    record.rendered = next;
+    if (current !== next) node.nodeValue = next;
   }
 
   function processAttributes(element) {
     if (element.matches('[data-language-switch]')) return;
-    let originals = attributeOriginals.get(element);
-    if (!originals) {
-      originals = new Map();
-      attributeOriginals.set(element, originals);
+    let records = attributeRecords.get(element);
+    if (!records) {
+      records = new Map();
+      attributeRecords.set(element, records);
     }
     for (const name of ['placeholder', 'aria-label', 'title']) {
       if (!element.hasAttribute(name)) continue;
-      if (!originals.has(name)) originals.set(name, element.getAttribute(name) || '');
-      const original = originals.get(name) || '';
-      const next = language === LANG_EN ? (placeholderMap.get(original) || exact.get(original) || translatePattern(original)) : original;
-      if (element.getAttribute(name) !== next) element.setAttribute(name, next);
+      const current = element.getAttribute(name) || '';
+      let record = records.get(name);
+      if (!record) {
+        record = { source: current, rendered: current };
+        records.set(name, record);
+      } else if (current !== record.rendered && current !== record.source) {
+        record.source = current;
+      }
+      const next = language === LANG_EN
+        ? (placeholderMap.get(record.source) || exact.get(record.source) || translatePattern(record.source))
+        : record.source;
+      record.rendered = next;
+      if (current !== next) element.setAttribute(name, next);
     }
   }
 
@@ -503,6 +519,7 @@
     injectSwitches();
     walk(document.body);
     applyMetadata();
+    updateUrl();
     document.documentElement.dataset.language = language;
   }
 
