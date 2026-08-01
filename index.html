@@ -10,6 +10,8 @@
   <meta name="color-scheme" content="light" />
   <link rel="canonical" href="https://aisaichang.cn/" />
   <link rel="alternate" hreflang="zh-CN" href="https://aisaichang.cn/" />
+  <link rel="alternate" hreflang="en" href="https://aisaichang.cn/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://aisaichang.cn/" />
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="manifest" href="/site.webmanifest" />
 
@@ -39,8 +41,22 @@
     "alternateName": "AI Competition Hub",
     "url": "https://aisaichang.cn/",
     "description": "帮助大学生发现、判断并执行真正值得参加的比赛。",
-    "inLanguage": "zh-CN"
+    "inLanguage": ["zh-CN", "en"]
   }
+  </script>
+  <script>
+    (() => {
+      const requested = new URLSearchParams(location.search).get('lang');
+      let language = requested;
+      if (language !== 'en' && language !== 'zh') {
+        try { language = localStorage.getItem('ai-language:v1'); } catch {}
+      }
+      if (language !== 'en' && language !== 'zh') {
+        language = /^zh(?:-|$)/i.test(navigator.language || '') ? 'zh' : 'en';
+      }
+      document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
+      document.documentElement.dataset.language = language;
+    })();
   </script>
 
   <link rel="stylesheet" href="./styles.css" />
@@ -60,6 +76,7 @@
   <link rel="stylesheet" href="./trust-pages.css?v=1" />
   <link rel="stylesheet" href="./launch-entrypoints.css?v=1" />
   <link rel="stylesheet" href="./home-decision-v2.css?v=1" />
+  <link rel="stylesheet" href="./language-switch-v1.css?v=1" />
 </head>
 <body>
   <div id="app" class="app-shell"></div>
@@ -85,6 +102,7 @@
   <script src="./public-simplify.js?v=5"></script>
   <script src="./activation-guide-v1.js?v=1"></script>
   <script src="./workspace-scroll-stability-v1.js?v=1"></script>
+  <script src="./language-switch-v1.js?v=1"></script>
   <script src="./analytics-v1.js?v=1"></script>
 </body>
 </html>
