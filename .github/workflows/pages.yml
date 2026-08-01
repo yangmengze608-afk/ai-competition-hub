@@ -84,6 +84,12 @@ jobs:
       - name: Verify production domain SEO
         run: node scripts/seo-audit.cjs
 
+      - name: Generate and audit static competition search pages
+        run: |
+          rm -rf .seo-build
+          node scripts/generate-seo-pages.cjs --out .seo-build
+          node scripts/seo-pages-audit.cjs
+
       - name: Smoke test competition library
         shell: bash
         run: |
@@ -133,13 +139,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build deployable site and static search pages
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          rsync -a \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '.seo-build/' \
+            --exclude '_site/' \
+            --exclude 'node_modules/' \
+            --exclude 'tests/' \
+            --exclude 'scripts/' \
+            --exclude 'test-results/' \
+            --exclude 'playwright-report/' \
+            --exclude 'package.json' \
+            --exclude 'package-lock.json' \
+            --exclude 'playwright.config.cjs' \
+            ./ _site/
+          node scripts/generate-seo-pages.cjs --out _site
+          SEO_BUILD_DIR=_site node scripts/seo-pages-audit.cjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

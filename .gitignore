@@ -5,6 +5,8 @@ node_modules/
 playwright-report/
 test-results/
 launch-segments-report.json
+.seo-build/
+_site/
 .env
 .env.local
 .env.*.local
