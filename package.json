@@ -1,9 +1,11 @@
 {
   "name": "ai-competition-hub",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
-  "description": "AI 赛场 Activation Beta browser validation",
+  "description": "AI 赛场 search landing pages and Activation Beta validation",
   "scripts": {
+    "generate:seo": "node scripts/generate-seo-pages.cjs --out .seo-build",
+    "audit:seo": "node scripts/seo-pages-audit.cjs",
     "test:e2e": "playwright test"
   },
   "devDependencies": {
