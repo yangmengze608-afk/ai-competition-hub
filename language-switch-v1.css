@@ -1,0 +1,38 @@
+.language-switch {
+  min-width: 42px;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 1px solid #dfe1e6;
+  border-radius: 10px;
+  color: #4f5664;
+  background: rgba(255, 255, 255, 0.92);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 760;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.language-switch:hover {
+  transform: translateY(-1px);
+  border-color: #c5c9d2;
+  color: #202530;
+  background: #fff;
+}
+
+.language-switch-mobile {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+html[data-language="en"] .brand > span:not(.brand-mark) {
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 640px) {
+  .header-actions > .language-switch {
+    min-width: 40px;
+    padding: 0 9px;
+  }
+}
