@@ -84,11 +84,11 @@ jobs:
       - name: Verify production domain SEO
         run: node scripts/seo-audit.cjs
 
-      - name: Generate and audit static competition search pages
+      - name: Generate and audit all eligible competition search pages
         run: |
           rm -rf .seo-build
-          node scripts/generate-seo-pages.cjs --out .seo-build
-          node scripts/seo-pages-audit.cjs
+          node scripts/generate-scaled-seo-pages.cjs --out .seo-build
+          node scripts/scaled-seo-pages-audit.cjs
           node scripts/submit-indexnow.cjs --sitemap .seo-build/sitemap.xml --dry-run
 
       - name: Smoke test competition library
@@ -140,7 +140,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build deployable site and static search pages
+      - name: Build deployable site and scalable search pages
         run: |
           rm -rf _site
           mkdir -p _site
@@ -158,8 +158,8 @@ jobs:
             --exclude 'package-lock.json' \
             --exclude 'playwright.config.cjs' \
             ./ _site/
-          node scripts/generate-seo-pages.cjs --out _site
-          SEO_BUILD_DIR=_site node scripts/seo-pages-audit.cjs
+          node scripts/generate-scaled-seo-pages.cjs --out _site
+          SEO_BUILD_DIR=_site node scripts/scaled-seo-pages-audit.cjs
           node scripts/submit-indexnow.cjs --sitemap _site/sitemap.xml --dry-run
 
       - name: Setup Pages
