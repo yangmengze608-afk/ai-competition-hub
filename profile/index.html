@@ -1,121 +1,57 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="杨梦泽的个人主页：悉尼大学心理学本科生，辅修数据科学，关注用户研究、AI 产品与数据分析。">
-  <meta name="theme-color" content="#07111f">
-  <meta property="og:title" content="杨梦泽 · Yang Mengze">
-  <meta property="og:description" content="Psychology × Data Science × AI Product & Research">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="杨梦泽的个人主页：心理学、数据科学、AI 产品与研究。" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="杨梦泽 · Yang Mengze" />
+  <meta property="og:description" content="Psychology × Data Science × AI Product & Research" />
   <title>杨梦泽 · Yang Mengze</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Yang Mengze","alternateName":"杨梦泽","email":"mailto:yangmengze608@gmail.com","affiliation":{"@type":"CollegeOrUniversity","name":"The University of Sydney"},"sameAs":["https://github.com/yangmengze608-afk","https://aisaichang.cn/"]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { heading: ['Instrument Serif', 'serif'], body: ['Barlow', 'sans-serif'] }, borderRadius: { DEFAULT: '9999px' } } } };
+  </script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
+  <script>window.Motion = window.FramerMotion;</script>
+  <style>
+    html{scroll-behavior:smooth;background:#000}body{margin:0;background:#000;color:#fff;overflow-x:hidden}*{box-sizing:border-box}::selection{background:rgba(255,255,255,.9);color:#000}
+    .liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+    .liquid-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .liquid-glass-strong{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(50px);-webkit-backdrop-filter:blur(50px);border:none;box-shadow:4px 4px 4px rgba(0,0,0,.05),inset 0 1px 1px rgba(255,255,255,.15);position:relative;overflow:hidden}
+    .liquid-glass-strong::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.2) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.2) 80%,rgba(255,255,255,.5) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .video-layer{will-change:opacity}.text-shadow{text-shadow:0 2px 24px rgba(0,0,0,.32)}.safe-bottom{padding-bottom:max(2rem,env(safe-area-inset-bottom))}@media(max-width:767px){.hero-video{width:160%!important;height:125%!important}}
+  </style>
 </head>
-<body>
-<header class="nav-shell">
-  <nav class="nav wrap">
-    <a class="brand" href="#top"><b>YM</b><span>Yang Mengze</span></a>
-    <div class="nav-links">
-      <a href="#about" data-zh="关于" data-en="About">关于</a>
-      <a href="#projects" data-zh="项目" data-en="Projects">项目</a>
-      <a href="#experience" data-zh="经历" data-en="Experience">经历</a>
-      <a href="#skills" data-zh="能力" data-en="Skills">能力</a>
-      <a href="#contact" data-zh="联系" data-en="Contact">联系</a>
-      <button id="lang" type="button">EN</button>
-    </div>
-  </nav>
-</header>
-
-<main id="top">
-  <section class="hero wrap">
-    <div class="hero-copy reveal">
-      <p class="eyebrow" data-zh="跨学科探索者" data-en="INTERDISCIPLINARY BUILDER">跨学科探索者</p>
-      <h1>杨梦泽<small>Yang Mengze</small></h1>
-      <p class="lead"><span data-zh="心理学 × 数据科学 × " data-en="Psychology × Data Science × ">心理学 × 数据科学 × </span><em data-zh="AI 产品与研究" data-en="AI Product & Research">AI 产品与研究</em></p>
-      <p class="intro" data-zh="悉尼大学心理学本科生，辅修数据科学。我关注人如何思考、产品如何被使用，以及 AI 如何把研究与真实问题连接起来。" data-en="Psychology undergraduate at the University of Sydney, minoring in Data Science. I study how people think, how products are used, and how AI can connect research with real-world problems.">悉尼大学心理学本科生，辅修数据科学。我关注人如何思考、产品如何被使用，以及 AI 如何把研究与真实问题连接起来。</p>
-      <div class="actions">
-        <a class="button primary" href="#projects" data-zh="查看项目 ↗" data-en="View Projects ↗">查看项目 ↗</a>
-        <a class="button" href="mailto:yangmengze608@gmail.com" data-zh="联系我" data-en="Contact Me">联系我</a>
-        <a class="button" href="https://github.com/yangmengze608-afk" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </div>
-    <aside class="profile-card reveal">
-      <div class="monogram">YM</div>
-      <h2>Yang Mengze</h2>
-      <p>Bachelor of Psychology · Data Science Minor</p>
-      <ul>
-        <li><span data-zh="用户研究与行为理解" data-en="User Research & Behavior">用户研究与行为理解</span><b>01</b></li>
-        <li><span data-zh="数据分析与实验方法" data-en="Data & Experimental Methods">数据分析与实验方法</span><b>02</b></li>
-        <li><span data-zh="AI 产品与工作流" data-en="AI Products & Workflows">AI 产品与工作流</span><b>03</b></li>
-      </ul>
-      <div class="stats">
-        <div><strong>77</strong><span data-zh="当前 WAM" data-en="Current WAM">当前 WAM</span></div>
-        <div><strong>80.25</strong><span data-zh="上学期 WAM" data-en="Previous WAM">上学期 WAM</span></div>
-        <div><strong>2025</strong><span data-zh="入学年份" data-en="Started USYD">入学年份</span></div>
-      </div>
-    </aside>
-  </section>
-
-  <section id="about" class="wrap section">
-    <div class="section-head reveal">
-      <div><span>01 · ABOUT</span><h2 data-zh="我在研究人与技术之间的连接。" data-en="I explore the connection between people and technology.">我在研究人与技术之间的连接。</h2></div>
-      <p data-zh="我的背景横跨心理学研究、统计分析、用户洞察与 AI 产品实践。我希望先理解问题、验证假设，再把它做成真正能使用的产品。" data-en="My work spans psychological research, statistical analysis, user insight, and AI product practice. I aim to understand the problem, test assumptions, and build something people can actually use.">我的背景横跨心理学研究、统计分析、用户洞察与 AI 产品实践。我希望先理解问题、验证假设，再把它做成真正能使用的产品。</p>
-    </div>
-    <div class="about-grid">
-      <article class="card prose reveal">
-        <p data-zh="在悉尼大学，我系统学习心理研究方法、认知与社会心理学，并通过数据科学训练提升定量分析能力。" data-en="At the University of Sydney, I study psychological research methods, cognitive and social psychology, while strengthening my quantitative skills through Data Science.">在悉尼大学，我系统学习心理研究方法、认知与社会心理学，并通过数据科学训练提升定量分析能力。</p>
-        <p data-zh="在课外，我持续做 AI 产品、比赛信息平台、主动学习工具与量化研究，把文献、用户需求、数据和自动化工具连接成完整流程。" data-en="Outside class, I build AI products, a competition platform, an active-learning assistant, and quantitative research workflows that connect literature, user needs, data, and automation.">在课外，我持续做 AI 产品、比赛信息平台、主动学习工具与量化研究，把文献、用户需求、数据和自动化工具连接成完整流程。</p>
-        <p data-zh="目前重点寻找用户研究、AI 产品、心理与计算交叉研究相关机会。" data-en="I am currently interested in opportunities across user research, AI product, and interdisciplinary psychology-computing research.">目前重点寻找用户研究、AI 产品、心理与计算交叉研究相关机会。</p>
-      </article>
-      <div class="principles">
-        <article class="card reveal"><b data-zh="从真实问题出发" data-en="Start with the real problem">从真实问题出发</b><p data-zh="先判断用户真正需要解决什么，再选择技术路径。" data-en="Clarify what users actually need before choosing a technical path.">先判断用户真正需要解决什么，再选择技术路径。</p></article>
-        <article class="card reveal"><b data-zh="用证据更新判断" data-en="Update with evidence">用证据更新判断</b><p data-zh="通过研究、数据和反馈持续修正假设。" data-en="Continuously revise assumptions with research, data, and feedback.">通过研究、数据和反馈持续修正假设。</p></article>
-        <article class="card reveal"><b data-zh="把想法做到可用" data-en="Turn ideas into usable systems">把想法做到可用</b><p data-zh="重视从概念、原型、验证到发布的完整闭环。" data-en="Value the full loop from concept and prototype to validation and release.">重视从概念、原型、验证到发布的完整闭环。</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="wrap section">
-    <div class="section-head reveal">
-      <div><span>02 · PROJECTS</span><h2 data-zh="把兴趣变成可以被验证的项目。" data-en="Turning interests into testable projects.">把兴趣变成可以被验证的项目。</h2></div>
-      <p data-zh="这些项目覆盖信息产品、学习科学、数据分析和量化研究，也体现了我从问题定义到上线迭代的完整实践。" data-en="These projects span information products, learning science, data analysis, and quantitative research, showing my end-to-end practice from problem definition to launch and iteration.">这些项目覆盖信息产品、学习科学、数据分析和量化研究，也体现了我从问题定义到上线迭代的完整实践。</p>
-    </div>
-    <div class="project-grid">
-      <article class="project reveal"><div class="project-top"><span>PROJECT 01</span><a href="https://aisaichang.cn/" target="_blank" rel="noreferrer" data-zh="访问网站 ↗" data-en="Live Site ↗">访问网站 ↗</a></div><h3 data-zh="AI 赛场" data-en="AI Competition Hub">AI 赛场</h3><p data-zh="帮助大学生发现、判断并执行真正值得参加的 AI 赛事，整合官方来源、截止时间、赛事价值和可执行参赛路线。" data-en="A platform helping university students discover, evaluate, and act on worthwhile AI competitions through official sources, deadlines, value assessment, and practical participation routes.">帮助大学生发现、判断并执行真正值得参加的 AI 赛事，整合官方来源、截止时间、赛事价值和可执行参赛路线。</p><div class="tags"><i>Product Design</i><i>User Needs</i><i>GitHub Pages</i><i>Automation</i></div></article>
-      <article class="project reveal"><div class="project-top"><span>PROJECT 02</span><b data-zh="持续迭代" data-en="In Development">持续迭代</b></div><h3 data-zh="苏格拉底 × 费曼学习 AI" data-en="Socratic × Feynman Learning AI">苏格拉底 × 费曼学习 AI</h3><p data-zh="用生活情境唤起直觉，通过苏格拉底追问识别知识缺口，进行最小必要概念补桥，再邀请用户以费曼方法重新讲解。" data-en="An active-learning assistant that activates intuition, identifies knowledge gaps through Socratic questioning, bridges essential concepts, and invites Feynman-style explanation.">用生活情境唤起直觉，通过苏格拉底追问识别知识缺口，进行最小必要概念补桥，再邀请用户以费曼方法重新讲解。</p><div class="tags"><i>Learning Science</i><i>Prompt Design</i><i>AI Agent</i><i>UX Flow</i></div></article>
-      <article class="project reveal"><div class="project-top"><span>PROJECT 03</span><a href="https://github.com/yangmengze608-afk/etf-rotation-research-lab" target="_blank" rel="noreferrer">GitHub ↗</a></div><h3 data-zh="ETF 轮动与量化研究" data-en="ETF Rotation Research">ETF 轮动与量化研究</h3><p data-zh="使用 Python、pandas 与金融数据工具研究 ETF 轮动、策略迁移与回测框架，关注规则可复现、数据质量和样本外验证。" data-en="Research on ETF rotation, strategy transfer, and backtesting using Python and pandas, emphasizing reproducible rules, data quality, and out-of-sample validation.">使用 Python、pandas 与金融数据工具研究 ETF 轮动、策略迁移与回测框架，关注规则可复现、数据质量和样本外验证。</p><div class="tags"><i>Python</i><i>pandas</i><i>Backtesting</i><i>Research</i></div></article>
-      <article class="project reveal"><div class="project-top"><span>PROJECT 04</span><b data-zh="课程研究" data-en="Course Research">课程研究</b></div><h3 data-zh="CO₂ 数据分析" data-en="CO₂ Data Analysis">CO₂ 数据分析</h3><p data-zh="使用 R 完成数据清理、探索性分析、回归建模与可视化，并将统计结果转化为结构化研究报告。" data-en="Used R for data cleaning, exploratory analysis, regression modelling, and visualization, translating findings into a structured research report.">使用 R 完成数据清理、探索性分析、回归建模与可视化，并将统计结果转化为结构化研究报告。</p><div class="tags"><i>R</i><i>Regression</i><i>Visualization</i><i>Research Writing</i></div></article>
-    </div>
-  </section>
-
-  <section id="experience" class="wrap section">
-    <div class="section-head reveal"><div><span>03 · EXPERIENCE</span><h2 data-zh="研究、产品与内容实践。" data-en="Research, product, and content practice.">研究、产品与内容实践。</h2></div><p data-zh="我的主线很清楚：理解用户、分析数据、构建产品，并通过真实反馈迭代。" data-en="My direction is clear: understand users, analyze data, build products, and iterate through real feedback.">我的主线很清楚：理解用户、分析数据、构建产品，并通过真实反馈迭代。</p></div>
-    <div class="timeline">
-      <article class="card reveal"><time>2025.02 — PRESENT</time><h3 data-zh="心理学本科 · 数据科学辅修" data-en="Bachelor of Psychology · Data Science Minor">心理学本科 · 数据科学辅修</h3><b>The University of Sydney</b><p data-zh="学习心理研究方法、统计分析、认知心理学、发展心理学与社会心理学，并通过数据科学课程强化编程和定量能力。" data-en="Studying psychological research methods, statistics, cognitive, developmental, and social psychology while strengthening programming and quantitative skills through Data Science.">学习心理研究方法、统计分析、认知心理学、发展心理学与社会心理学，并通过数据科学课程强化编程和定量能力。</p></article>
-      <article class="card reveal"><time>2025.08 — 2025.11</time><h3 data-zh="AI 产品运营实习生" data-en="AI Product Operations Intern">AI 产品运营实习生</h3><b>Picwiz / Xuantu AI</b><p data-zh="参与 AI 产品内容运营和用户传播，覆盖小红书、抖音、快手与视频号；单篇内容点赞超过 1,000。" data-en="Worked on AI product content operations and user communication across major Chinese social platforms; one post exceeded 1,000 likes.">参与 AI 产品内容运营和用户传播，覆盖小红书、抖音、快手与视频号；单篇内容点赞超过 1,000。</p></article>
-      <article class="card reveal"><time>2025 — PRESENT</time><h3 data-zh="独立 AI 产品与研究项目" data-en="Independent AI Product & Research Projects">独立 AI 产品与研究项目</h3><b data-zh="个人项目 / GitHub" data-en="Independent / GitHub">个人项目 / GitHub</b><p data-zh="持续推进 AI 赛场、主动学习 Agent、量化研究与自动化文献工作流，积累需求分析、原型设计、数据处理、部署和迭代经验。" data-en="Building an AI competition platform, active-learning agent, quantitative research, and automated literature workflows, gaining experience in requirements, prototyping, data, deployment, and iteration.">持续推进 AI 赛场、主动学习 Agent、量化研究与自动化文献工作流，积累需求分析、原型设计、数据处理、部署和迭代经验。</p></article>
-    </div>
-  </section>
-
-  <section id="skills" class="wrap section">
-    <div class="section-head reveal"><div><span>04 · SKILLS</span><h2 data-zh="跨越研究与落地的能力组合。" data-en="A skill set spanning research and execution.">跨越研究与落地的能力组合。</h2></div><p data-zh="我的优势不是单一工具熟练度，而是能把研究方法、产品思维、数据分析和 AI 工具组合起来解决问题。" data-en="My advantage is not a single tool, but the ability to combine research methods, product thinking, data analysis, and AI tools to solve problems.">我的优势不是单一工具熟练度，而是能把研究方法、产品思维、数据分析和 AI 工具组合起来解决问题。</p></div>
-    <div class="skill-grid">
-      <article class="card reveal"><span>01</span><h3 data-zh="研究与用户洞察" data-en="Research & User Insight">研究与用户洞察</h3><p data-zh="文献综述、研究设计、实验材料、数据收集、用户旅程、需求分析与研究报告。" data-en="Literature review, research design, experimental materials, data collection, user journeys, requirements analysis, and reporting.">文献综述、研究设计、实验材料、数据收集、用户旅程、需求分析与研究报告。</p></article>
-      <article class="card reveal"><span>02</span><h3 data-zh="统计与数据" data-en="Statistics & Data">统计与数据</h3><p data-zh="R、SPSS、Excel、基础 Python、pandas、回归分析、数据可视化与结果解释。" data-en="R, SPSS, Excel, basic Python, pandas, regression analysis, data visualization, and interpretation.">R、SPSS、Excel、基础 Python、pandas、回归分析、数据可视化与结果解释。</p></article>
-      <article class="card reveal"><span>03</span><h3 data-zh="AI 与自动化" data-en="AI & Automation">AI 与自动化</h3><p data-zh="ChatGPT / OpenAI、Codex、Prompt Design、Agent 工作流、n8n 与文献自动化。" data-en="ChatGPT / OpenAI, Codex, prompt design, agent workflows, n8n, and literature automation.">ChatGPT / OpenAI、Codex、Prompt Design、Agent 工作流、n8n 与文献自动化。</p></article>
-      <article class="card reveal"><span>04</span><h3 data-zh="产品与传播" data-en="Product & Communication">产品与传播</h3><p data-zh="竞品分析、功能拆解、PRD、原型迭代、内容运营、跨平台表达与项目推进。" data-en="Competitive analysis, feature breakdown, PRDs, prototyping, content operations, cross-platform communication, and project execution.">竞品分析、功能拆解、PRD、原型迭代、内容运营、跨平台表达与项目推进。</p></article>
-    </div>
-  </section>
-
-  <section id="contact" class="wrap section">
-    <div class="contact reveal">
-      <div><span>05 · CONTACT</span><h2 data-zh="期待与研究、产品和 AI 交叉领域的人交流。" data-en="Open to conversations across research, product, and AI.">期待与研究、产品和 AI 交叉领域的人交流。</h2><p data-zh="欢迎围绕项目合作、科研助理、用户研究和 AI 产品实习进行联系。" data-en="Open to project collaboration, research assistant roles, user research, and AI product internships.">欢迎围绕项目合作、科研助理、用户研究和 AI 产品实习进行联系。</p></div>
-      <div class="contact-links"><a class="button primary" href="mailto:yangmengze608@gmail.com">yangmengze608@gmail.com</a><a class="button" href="https://github.com/yangmengze608-afk" target="_blank" rel="noreferrer">GitHub</a><a class="button" href="https://aisaichang.cn/" target="_blank" rel="noreferrer">aisaichang.cn</a></div>
-    </div>
-  </section>
-</main>
-
-<footer class="wrap"><span>© 2026 Yang Mengze.</span><span data-zh="以研究理解问题，以产品验证答案。" data-en="Understand with research. Validate through products.">以研究理解问题，以产品验证答案。</span></footer>
-<script src="./app.js"></script>
+<body class="bg-black font-body">
+<div id="root"></div>
+<script type="text/babel">
+const {useEffect,useRef,useState}=React;
+const {motion}=window.Motion;
+const originalConsoleError=console.error;console.error=(...args)=>{if(typeof args[0]==='string'&&args[0].includes('Each child in a list should have a unique'))return;originalConsoleError(...args)};
+function ArrowUpRight({className='h-5 w-5'}){return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>}
+function PlayIcon({className='h-4 w-4'}){return <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 4 20 12 6 20 6 4"/></svg>}
+function ClockIcon(){return <svg className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>}
+function GlobeIcon(){return <svg className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 4 5.5 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.5-4-9s1.4-6.5 4-9Z"/></svg>}
+const capabilityIcons={research:'M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21H5Zm1-4h12l-3.75-5-3 4L9 13l-3 4Z',product:'M4 6.47 5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.89-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4Z',data:'M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1Zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7Z'};
+function MaterialIcon({path}){return <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={path}/></svg>}
+function FadingVideo({src,className='',style={}}){const videoRef=useRef(null),rafRef=useRef(null),fadingOutRef=useRef(false);useEffect(()=>{const video=videoRef.current;if(!video)return;const FADE_MS=500,FADE_OUT_LEAD=.55;const fadeTo=(target,duration=FADE_MS)=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);const startOpacity=Number.parseFloat(video.style.opacity||'0'),startTime=performance.now();const frame=now=>{const progress=Math.min((now-startTime)/duration,1),eased=1-Math.pow(1-progress,3);video.style.opacity=String(startOpacity+(target-startOpacity)*eased);if(progress<1)rafRef.current=requestAnimationFrame(frame)};rafRef.current=requestAnimationFrame(frame)};const onLoadedData=async()=>{video.style.opacity='0';try{await video.play()}catch(_){}fadeTo(1)};const onTimeUpdate=()=>{const remaining=video.duration-video.currentTime;if(!fadingOutRef.current&&Number.isFinite(remaining)&&remaining<=FADE_OUT_LEAD&&remaining>0){fadingOutRef.current=true;fadeTo(0)}};const onEnded=()=>{video.style.opacity='0';window.setTimeout(async()=>{video.currentTime=0;fadingOutRef.current=false;try{await video.play()}catch(_){}fadeTo(1)},100)};video.addEventListener('loadeddata',onLoadedData);video.addEventListener('timeupdate',onTimeUpdate);video.addEventListener('ended',onEnded);return()=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);video.removeEventListener('loadeddata',onLoadedData);video.removeEventListener('timeupdate',onTimeUpdate);video.removeEventListener('ended',onEnded)}},[src]);return <video ref={videoRef} src={src} autoPlay muted playsInline preload="auto" className={`video-layer ${className}`} style={{...style,opacity:0}} aria-hidden="true"/>}
+function BlurText({text,className=''}){const [visible,setVisible]=useState(false),ref=useRef(null);useEffect(()=>{const node=ref.current;if(!node)return;const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){setVisible(true);observer.disconnect()}},{threshold:.1});observer.observe(node);return()=>observer.disconnect()},[]);return <p ref={ref} className={`${className} flex flex-wrap justify-center gap-y-[0.1em]`}>{text.split(' ').map((word,i)=><motion.span key={`${word}-${i}`} initial={{filter:'blur(10px)',opacity:0,y:50}} animate={visible?{filter:['blur(10px)','blur(5px)','blur(0px)'],opacity:[0,.5,1],y:[50,-5,0]}:{}} transition={{duration:.7,times:[0,.5,1],ease:'easeOut',delay:i*100/1000}} style={{display:'inline-block',marginRight:'.28em'}}>{word}</motion.span>)}</p>}
+const fadeUp={initial:{filter:'blur(10px)',opacity:0,y:20},animate:{filter:'blur(0px)',opacity:1,y:0}};
+function Navbar(){const scrollToWork=()=>document.getElementById('capabilities')?.scrollIntoView({behavior:'smooth'});return <header className="fixed left-0 right-0 top-4 z-50 px-8 lg:px-16"><nav className="mx-auto flex max-w-[1500px] items-center justify-between"><a href="#home" aria-label="返回首页" className="liquid-glass grid h-12 w-12 place-items-center rounded-full font-heading text-2xl italic text-white">ym</a><div className="liquid-glass hidden items-center rounded-full px-1.5 py-1.5 md:flex"><a href="#home" className="px-3 py-2 text-sm font-medium text-white/90">Home</a><a href="#capabilities" className="px-3 py-2 text-sm font-medium text-white/90">Focus</a><a href="https://aisaichang.cn/" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm font-medium text-white/90">AI Arena</a><a href="https://github.com/yangmengze608-afk" target="_blank" rel="noreferrer" className="px-3 py-2 text-sm font-medium text-white/90">Research</a><button onClick={()=>window.location.href='mailto:yangmengze608@gmail.com'} className="px-3 py-2 text-sm font-medium text-white/90">Contact</button><button onClick={scrollToWork} className="ml-1 flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 py-2 text-sm font-medium text-black">View My Work <ArrowUpRight className="h-4 w-4"/></button></div><div className="h-12 w-12" aria-hidden="true"></div></nav></header>}
+function StatCard({icon,number,label}){return <div className="liquid-glass flex w-[220px] flex-col justify-between rounded-[1.25rem] p-5 text-left"><div>{icon}</div><div className="mt-8"><div className="font-heading text-4xl italic leading-none tracking-[-1px] text-white">{number}</div><div className="mt-2 text-xs font-light text-white">{label}</div></div></div>}
+function Hero(){return <section id="home" className="relative flex min-h-screen overflow-hidden bg-black"><FadingVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4" className="hero-video absolute left-1/2 top-0 z-0 -translate-x-1/2 object-cover object-top" style={{width:'120%',height:'120%'}}/><div className="relative z-10 flex min-h-screen w-full flex-col"><Navbar/><div className="flex flex-1 flex-col items-center justify-center px-4 pt-24 text-center"><motion.div {...fadeUp} transition={{duration:.7,delay:.4,ease:'easeOut'}} className="liquid-glass flex items-center rounded-full py-1 pl-1 pr-3"><span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-black">USYD</span><span className="ml-2 text-sm text-white/90">Psychology × Data Science × AI</span></motion.div><BlurText text="Understand People Build Intelligent Systems" className="text-shadow mt-5 max-w-4xl font-heading text-6xl italic leading-[0.8] tracking-[-4px] text-white md:text-7xl lg:text-[5.5rem]"/><motion.p {...fadeUp} transition={{duration:.7,delay:.8,ease:'easeOut'}} className="text-shadow mt-5 max-w-2xl text-sm font-light leading-tight text-white md:text-base">I study how people think, how products are used, and how AI can connect research with real-world problems. My work spans user research, AI product building, and quantitative analysis.</motion.p><motion.div {...fadeUp} transition={{duration:.7,delay:1.1,ease:'easeOut'}} className="mt-6 flex items-center gap-6"><button onClick={()=>document.getElementById('capabilities')?.scrollIntoView({behavior:'smooth'})} className="liquid-glass-strong flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium text-white">Explore My Work <ArrowUpRight/></button><a href="https://github.com/yangmengze608-afk" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-white">View GitHub <PlayIcon/></a></motion.div><motion.div {...fadeUp} transition={{duration:.7,delay:1.3,ease:'easeOut'}} className="mt-8 flex flex-col items-stretch gap-4 sm:flex-row"><StatCard icon={<ClockIcon/>} number="4 Core" label="Active product and research projects"/><StatCard icon={<GlobeIcon/>} number="2 Fields" label="Psychology and Data Science"/></motion.div></div><motion.div {...fadeUp} transition={{duration:.7,delay:1.4,ease:'easeOut'}} className="safe-bottom flex flex-col items-center gap-4 px-4"><div className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white">Building at the intersection of people, data, and intelligent systems</div><div className="flex flex-wrap justify-center gap-x-10 gap-y-2 font-heading text-2xl italic tracking-tight text-white md:gap-x-16 md:text-3xl"><span>Psychology</span><span>Data</span><span>AI Product</span><span>Research</span><span>Automation</span></div></motion.div></div></section>}
+const capabilities=[{title:'Human Research',icon:capabilityIcons.research,tags:['User Insight','Behavior','Research Design','Evidence'],body:'I translate psychological theory and user behavior into testable questions, structured research, and decisions grounded in evidence.'},{title:'AI Product Building',icon:capabilityIcons.product,tags:['AI Arena','Agent Workflow','Rapid Prototype','Launch'],body:'I turn ambiguous needs into usable AI products—from problem framing and information architecture to prototyping, deployment, and iteration.'},{title:'Data & Quant',icon:capabilityIcons.data,tags:['Python','R','Regression','Backtesting'],body:'I use data analysis to challenge assumptions, test patterns, and build reproducible research workflows across behavioral and financial questions.'}];
+function CapabilityCard({item,index}){return <motion.article initial={{opacity:0,y:30,filter:'blur(8px)'}} whileInView={{opacity:1,y:0,filter:'blur(0px)'}} viewport={{once:true,amount:.2}} transition={{duration:.7,delay:index*.12,ease:'easeOut'}} className="liquid-glass flex min-h-[360px] flex-col rounded-[1.25rem] p-6"><div className="flex items-start justify-between gap-4"><div className="liquid-glass grid h-11 w-11 shrink-0 place-items-center rounded-[0.75rem]"><MaterialIcon path={item.icon}/></div><div className="flex max-w-[70%] flex-wrap justify-end gap-1.5">{item.tags.map(tag=><span key={tag} className="liquid-glass whitespace-nowrap rounded-full px-3 py-1 text-[11px] text-white/90">{tag}</span>)}</div></div><div className="flex-1"></div><div className="mt-6"><h3 className="font-heading text-3xl italic leading-none tracking-[-1px] text-white md:text-4xl">{item.title}</h3><p className="mt-3 max-w-[32ch] text-sm font-light leading-snug text-white/90">{item.body}</p></div></motion.article>}
+function Capabilities(){return <section id="capabilities" className="relative min-h-screen overflow-hidden bg-black"><FadingVideo src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4" className="absolute inset-0 z-0 h-full w-full object-cover"/><div className="relative z-10 flex min-h-screen flex-col px-8 pb-10 pt-24 md:px-16 lg:px-20"><motion.header initial={{opacity:0,y:20,filter:'blur(8px)'}} whileInView={{opacity:1,y:0,filter:'blur(0px)'}} viewport={{once:true,amount:.3}} transition={{duration:.7,ease:'easeOut'}} className="mb-auto"><p className="mb-6 text-sm text-white/80">// Capabilities</p><h2 className="font-heading text-6xl italic leading-[0.9] tracking-[-3px] text-white md:text-7xl lg:text-[6rem]">Research<br/>evolved</h2></motion.header><div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">{capabilities.map((item,index)=><CapabilityCard key={item.title} item={item} index={index}/>)}</div><div className="mt-8 flex flex-col items-start justify-between gap-4 text-xs text-white/75 md:flex-row md:items-center"><span>Yang Mengze · University of Sydney · 2026</span><div className="flex gap-5"><a href="https://aisaichang.cn/" target="_blank" rel="noreferrer">AI Arena ↗</a><a href="mailto:yangmengze608@gmail.com">Contact ↗</a></div></div></div></section>}
+function App(){return <><Hero/><Capabilities/></>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
 </body>
 </html>
