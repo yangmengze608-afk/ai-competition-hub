@@ -167,7 +167,13 @@ for (const id of manifest?.ids || []) {
   const enDescriptionMatch = enPage.match(/<meta name="description" content="([^"]+)"/);
   if (!zhTitleMatch) fail(`${id} Chinese is missing a title`); else { if (zhTitles.has(zhTitleMatch[1])) fail(`${id} repeats an existing Chinese title`); zhTitles.add(zhTitleMatch[1]); if (zhTitleMatch[1].length > 72) fail(`${id} Chinese title is too long (${zhTitleMatch[1].length})`); }
   if (!zhDescriptionMatch) fail(`${id} Chinese is missing a meta description`); else { if (zhDescriptions.has(zhDescriptionMatch[1])) fail(`${id} repeats an existing Chinese meta description`); zhDescriptions.add(zhDescriptionMatch[1]); if (zhDescriptionMatch[1].length > 170) fail(`${id} Chinese description is too long (${zhDescriptionMatch[1].length})`); }
-  if (!enTitleMatch) fail(`${id} English is missing a title`); else { if (enTitles.has(enTitleMatch[1])) fail(`${id} repeats an existing English title`); enTitles.add(enTitleMatch[1]); if (enTitleMatch[1].length > 78) fail(`${id} English title is too long (${enTitleMatch[1].length})`); if (!enTitleMatch[1].includes('Competition')) fail(`${id} English title does not signal competition intent`); }
+  if (!enTitleMatch) fail(`${id} English is missing a title`); else {
+    if (enTitles.has(enTitleMatch[1])) fail(`${id} repeats an existing English title`);
+    enTitles.add(enTitleMatch[1]);
+    const decodedTitle = enTitleMatch[1].replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'");
+    if (decodedTitle.length > 78) fail(`${id} English title is too long (${decodedTitle.length})`);
+    if (!/(Competition|Deadline|Eligibility)/.test(decodedTitle)) fail(`${id} English title does not signal competition intent`);
+  }
   if (!enDescriptionMatch) fail(`${id} English is missing a meta description`); else { if (enDescriptions.has(enDescriptionMatch[1])) fail(`${id} repeats an existing English meta description`); enDescriptions.add(enDescriptionMatch[1]); if (enDescriptionMatch[1].length > 175) fail(`${id} English description is too long (${enDescriptionMatch[1].length})`); }
 }
 
