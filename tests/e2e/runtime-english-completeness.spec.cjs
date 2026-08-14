@@ -18,16 +18,11 @@ test('English competition library localizes dynamic summaries, tracks, tags and 
   await expect(cards.first()).toBeVisible();
   expect(await cards.count()).toBeGreaterThanOrEqual(4);
 
-  const visibleCards = cards.locator('nth=0');
-  await expectNoCjk(page.locator('.competition-card .competition-summary').first(), 'card summary');
-  await expectNoCjk(page.locator('.competition-card .meta-grid').first(), 'card metadata');
-  await expectNoCjk(page.locator('.competition-card .tag-row').first(), 'card tags');
   await expectNoCjk(page.locator('.filter-field option'), 'filter options');
 
-  const firstFour = cards.locator(':scope').filter({ visible: true });
-  const count = Math.min(4, await firstFour.count());
+  const count = Math.min(4, await cards.count());
   for (let index = 0; index < count; index += 1) {
-    const card = firstFour.nth(index);
+    const card = cards.nth(index);
     await expectNoCjk(card.locator('.competition-summary'), `card ${index + 1} summary`);
     await expectNoCjk(card.locator('.meta-grid'), `card ${index + 1} metadata`);
     await expectNoCjk(card.locator('.tag-row'), `card ${index + 1} tags`);
