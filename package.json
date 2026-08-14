@@ -1,8 +1,8 @@
 {
   "name": "ai-competition-hub",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "private": true,
-  "description": "AI 赛场 scalable reviewed competition search pages and Activation Beta validation",
+  "description": "AI 赛场 bilingual reviewed competition search pages and Activation Beta validation",
   "scripts": {
     "generate:seo": "node scripts/generate-scaled-seo-pages.cjs --out .seo-build",
     "audit:seo": "node scripts/scaled-seo-pages-audit.cjs",
