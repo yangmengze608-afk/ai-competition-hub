@@ -79,6 +79,8 @@
     '反馈错误': 'Report an Error',
     '赛事': 'Competitions',
     '来源': 'Sources',
+    '赛事来源': 'Competition Sources',
+    '评级说明': 'Rating Guide',
     '高价值精选': 'High-Value Picks',
     '零基础友好': 'Beginner Friendly',
     '本周截止': 'Closing This Week',
