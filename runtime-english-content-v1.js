@@ -4,29 +4,53 @@
   let scheduled = false;
   let applying = false;
 
+  const SCOPE_SELECTOR = [
+    '.competition-card',
+    '.filter-panel',
+    '.results-head',
+    '.empty-state',
+    '.competition-detail-hero',
+    '.detail-main',
+    '.detail-sidebar',
+    '.breadcrumbs',
+    '.hot-tags'
+  ].join(',');
+
   const TRACK_EN = {
     'AI Agent': 'AI Agents',
     'AI 编程': 'AI Coding',
+    'AI 编程与开发': 'AI Coding & Development',
     'AI 视频与短剧': 'AI Video & Short Drama',
     'AI 绘画与设计': 'AI Art & Design',
+    'AI 教育': 'AI in Education',
     '具身智能与机器人': 'Embodied AI & Robotics',
     '数据科学': 'Data Science',
+    '数据分析': 'Data Analytics',
     '创新创业': 'Innovation & Entrepreneurship',
-    'AI 教育': 'AI in Education',
     '人机交互': 'Human-Computer Interaction',
     '大模型应用': 'LLM Applications',
     '网络安全': 'Cybersecurity',
     '科研与学术': 'Research & Academia',
+    '科研': 'Research',
     '人工智能': 'Artificial Intelligence',
     '机器学习': 'Machine Learning',
-    '数据分析': 'Data Analytics',
     '智能办公': 'AI Productivity',
     '计算机综合': 'Computer Science',
     '算法': 'Algorithms',
-    '科研': 'Research',
-    '数字创意': 'Digital Creativity',
     '程序设计': 'Programming',
-    'AI 编程与开发': 'AI Coding & Development',
+    '数字创意': 'Digital Creativity',
+    '健康科技': 'Health Technology',
+    '医疗健康': 'Healthcare',
+    '医疗 AI': 'Healthcare AI',
+    '金融科技': 'FinTech',
+    '教育科技': 'EdTech',
+    '计算机视觉': 'Computer Vision',
+    '自然语言处理': 'Natural Language Processing',
+    '推荐系统': 'Recommender Systems',
+    '时序预测': 'Time Series Forecasting',
+    '遥感': 'Remote Sensing',
+    '气候与环境': 'Climate & Environment',
+    '社会公益': 'Social Impact',
     '边缘 AI': 'Edge AI',
     '博弈': 'Game AI',
     '模型优化': 'Model Optimization'
@@ -36,9 +60,11 @@
     ...TRACK_EN,
     '大学生': 'Students',
     '高校学生': 'University Students',
+    '学生': 'Students',
     '奖金赛事': 'Prize Competition',
     '个人参赛': 'Solo Entry',
     '应用创新': 'Application Innovation',
+    '产品创新': 'Product Innovation',
     '零基础友好': 'Beginner Friendly',
     '具身智能': 'Embodied AI',
     '机器人': 'Robotics',
@@ -50,8 +76,18 @@
     'AI 视频': 'AI Video',
     '数据': 'Data',
     '评测': 'Evaluation',
+    '气候': 'Climate',
+    '健康': 'Health',
     '团队': 'Team',
     '个人': 'Individual',
+    '个人/团队': 'Individual / Team',
+    '线上': 'Online',
+    '线下': 'On-site',
+    '线上+线下': 'Hybrid',
+    '入门': 'Beginner',
+    '进阶': 'Intermediate',
+    '中等': 'Intermediate',
+    '专家': 'Advanced',
     '中文': 'Chinese',
     '英文': 'English',
     '中英文': 'Chinese / English',
@@ -64,7 +100,6 @@
   };
 
   const EXACT_EN = {
-    '场匹配比赛': 'matching competitions',
     '暂时没有匹配结果': 'No Matching Competitions Yet',
     '减少筛选条件，或换一个更宽泛的关键词。': 'Use fewer filters or try a broader search term.',
     '清除所有筛选': 'Clear All Filters',
@@ -102,7 +137,7 @@
     'open-source-license-required': 'An open-source license is required.',
     'phase-specific-rules': 'Rules differ between competition stages.',
     'adult-only': 'Participants must meet the legal adult-age requirement.',
-    'adult-only-for-prizes': 'Minors may be able to participate but are usually not eligible for prizes.',
+    'adult-only-for-prizes': 'Minors may participate in some cases but are usually not eligible for prizes.',
     'required-platform-stack': 'A specified technical stack is required.',
     'public-demo-and-documentation': 'A public demo and documentation are required.',
     'arm-platform-required': 'The solution must run on Arm architecture.',
@@ -164,43 +199,48 @@
     return match ? itemById(decodeURIComponent(match[1])) : null;
   }
 
-  function trackEn(value) {
-    const text = String(value || '').trim();
-    return TRACK_EN[text] || TOKEN_EN[text] || text;
+  function inScope(node) {
+    const parent = node.parentElement;
+    return Boolean(parent && parent.closest(SCOPE_SELECTOR) && !parent.closest('[data-language-switch]'));
   }
 
   function tokenEn(value) {
     const text = String(value || '').trim();
     if (!text) return text;
     if (TOKEN_EN[text]) return TOKEN_EN[text];
+
     let result = text;
     const replacements = [
       ['大模型', 'LLM'], ['智能体', 'AI Agent'], ['人工智能', 'Artificial Intelligence'],
       ['机器学习', 'Machine Learning'], ['数据科学', 'Data Science'], ['数据分析', 'Data Analytics'],
-      ['创新创业', 'Innovation & Entrepreneurship'], ['网络安全', 'Cybersecurity'], ['科研', 'Research'],
-      ['程序设计', 'Programming'], ['模型优化', 'Model Optimization'], ['边缘', 'Edge'],
-      ['大学生', 'Students'], ['高校', 'University'], ['奖金', 'Prize'], ['赛事', 'Competition'],
-      ['团队', 'Team'], ['个人', 'Individual'], ['应用', 'Application'], ['创新', 'Innovation'],
-      ['机器人', 'Robotics'], ['博弈', 'Game AI'], ['开源', 'Open Source'], ['学术', 'Academic']
+      ['创新创业', 'Innovation & Entrepreneurship'], ['网络安全', 'Cybersecurity'], ['健康科技', 'Health Technology'],
+      ['医疗健康', 'Healthcare'], ['科研', 'Research'], ['程序设计', 'Programming'], ['模型优化', 'Model Optimization'],
+      ['边缘 AI', 'Edge AI'], ['大学生', 'Students'], ['高校', 'University'], ['奖金', 'Prize'],
+      ['机器人', 'Robotics'], ['博弈', 'Game AI'], ['开源', 'Open Source'], ['学术', 'Academic'],
+      ['团队', 'Team'], ['个人', 'Individual'], ['应用', 'Application'], ['创新', 'Innovation']
     ];
     for (const [zh, en] of replacements) result = result.replaceAll(zh, en);
     return CJK.test(result) ? text : result.replace(/\s+/g, ' ').trim();
   }
 
+  function trackEn(value) {
+    const text = String(value || '').trim();
+    return TRACK_EN[text] || tokenEn(text) || 'AI / Technology';
+  }
+
   function englishCardSummary(item) {
-    const track = trackEn(item?.track || 'AI / technology');
-    const grade = item?.grade && item.grade !== 'U' ? `Grade ${item.grade}` : 'a currently tracked';
+    const track = trackEn(item?.track || 'AI / Technology');
     const review = item?.verificationStatus === 'reviewed' ? 'reviewed' : 'listed';
-    return `A ${review} ${track} competition with ${grade} status. Check the official task, eligibility, deadline, required deliverables and platform rules before committing time.`;
+    const grade = item?.grade && item.grade !== 'U' ? ` Grade ${item.grade}` : '';
+    return `A ${review} ${track} competition${grade}. Check the official task, eligibility, deadline, required deliverables and platform rules before committing time.`;
   }
 
   function englishHeroSummary(item) {
-    const track = trackEn(item?.track || 'AI / technology');
-    return `A ${item?.verificationStatus === 'reviewed' ? 'reviewed' : 'tracked'} ${track} competition. Use the official rules to confirm eligibility, deadlines, required platforms and final deliverables before entering.`;
+    return `A ${item?.verificationStatus === 'reviewed' ? 'reviewed' : 'tracked'} ${trackEn(item?.track || 'AI / Technology')} competition. Use the official rules to confirm eligibility, deadlines, required platforms and final deliverables before entering.`;
   }
 
   function englishOverview(item) {
-    const track = trackEn(item?.track || 'AI / technology');
+    const track = trackEn(item?.track || 'AI / Technology');
     const mode = tokenEn(item?.mode || '');
     const format = tokenEn(item?.format || '');
     return `This competition is tracked under ${track}${mode ? ` and is currently listed as ${mode}` : ''}${format ? ` for ${format.toLowerCase()} participation` : ''}. AI Competition Hub summarizes the decision factors, but the organizer's official rules remain the source of truth.`;
@@ -234,21 +274,24 @@
   }
 
   function residualPattern(source) {
-    const text = source.trim();
+    const text = String(source || '').trim();
+    if (!text) return text;
     if (EXACT_EN[text]) return EXACT_EN[text];
+
     let match = text.match(/^共?\s*(\d+)\s*场匹配比赛$/);
     if (match) return `${match[1]} matching competitions`;
     match = text.match(/^(\d+)\s*场匹配比赛$/);
     if (match) return `${match[1]} matching competitions`;
     match = text.match(/^奖池约\s*([\d.]+)\s*万元$/);
     if (match) return `Prize pool: about CNY ${Number(match[1]) * 10000}`;
+
     return tokenEn(text);
   }
 
   function preserveOfficialName(node) {
+    if (!CJK.test(node.nodeValue || '')) return false;
     const parent = node.parentElement;
-    if (!parent || !CJK.test(node.nodeValue || '')) return false;
-    const proper = parent.closest('.competition-title, .organizer, .breadcrumbs > span, .competition-detail-hero h1, .official-note strong');
+    const proper = parent?.closest('.competition-title, .organizer, .breadcrumbs > span, .competition-detail-hero h1, .official-note strong');
     if (!proper) return false;
     proper.setAttribute('lang', 'zh-CN');
     proper.dataset.runtimeOfficialName = 'true';
@@ -272,7 +315,7 @@
     if (auditFact && parent.matches('strong')) {
       const facts = [...auditFact.parentElement.children];
       const index = facts.indexOf(auditFact);
-      if (index === 0) return englishEligibility(item);
+      if (index === 0) return englishEligibility();
       if (index === 1) return englishFee(item);
       if (index === 2) return String(item?.deadlineTimezone || source).trim();
       if (index === 3) return ({ open: 'Entry Open', closing: 'Closing Soon', restricted: 'Eligibility Restricted', closed: 'Closed' })[item?.entryStatus] || 'Confirm on official site';
@@ -281,8 +324,7 @@
     const riskSpan = parent.closest('.audit-risk-list li span');
     if (riskSpan && item) {
       const li = riskSpan.closest('li');
-      const items = [...li.parentElement.children];
-      const index = items.indexOf(li);
+      const index = [...li.parentElement.children].indexOf(li);
       const flag = item.riskFlags?.[index];
       if (flag) return RISK_EN[flag] || 'Review this risk in the official competition rules.';
     }
@@ -290,27 +332,28 @@
     const sidebarValue = parent.closest('.detail-sidebar .info-row strong');
     if (sidebarValue && item) {
       const rows = [...sidebarValue.closest('.detail-sidebar').querySelectorAll('.info-row')];
-      const row = sidebarValue.closest('.info-row');
-      const index = rows.indexOf(row);
+      const index = rows.indexOf(sidebarValue.closest('.info-row'));
       if (index === 1) return trackEn(item.track);
       if (index === 2) return tokenEn(item.format);
       if (index === 3) return tokenEn(item.difficulty);
       if (index === 4) return tokenEn(item.mode);
       if (index === 5) return englishPrize(item);
-      if (index === 7) return tokenEn(({ high: 'High', medium: 'Medium', low: 'Low', unknown: 'Unknown' })[item.confidence] || source);
+      if (index === 7) return ({ high: 'High', medium: 'Medium', low: 'Low', unknown: 'Unknown' })[item.confidence] || 'Unknown';
       if (index === 8) return item.verificationStatus === 'reviewed' ? 'Full Competition Review' : 'Basic Listing';
     }
 
-    if (parent.matches('.tag-row em, .hot-tags button, option')) return residualPattern(source);
+    if (parent.matches('option, .tag-row em, .hot-tags button')) return residualPattern(source);
     if (parent.closest('.meta-grid') || parent.closest('.filter-field')) return residualPattern(source);
 
-    const footerSource = parent.closest('.competition-card-footer > span');
-    if (footerSource && item?.verificationStatus !== 'reviewed' && CJK.test(source)) return 'Public Source';
+    if (parent.closest('.competition-card-footer > span') && item?.verificationStatus !== 'reviewed' && CJK.test(source)) {
+      return 'Public Source';
+    }
 
     return residualPattern(source);
   }
 
   function processTextNode(node) {
+    if (!inScope(node)) return;
     const current = node.nodeValue || '';
     if (!current.trim()) return;
 
@@ -372,10 +415,13 @@
     requestAnimationFrame(() => requestAnimationFrame(apply));
   }
 
-  const observer = new MutationObserver(() => {
-    if (!applying) schedule();
-  });
-  observer.observe(document.documentElement, { subtree: true, childList: true, characterData: true });
+  const root = document.getElementById('app');
+  if (root) {
+    const observer = new MutationObserver(() => {
+      if (!applying) schedule();
+    });
+    observer.observe(root, { subtree: true, childList: true, characterData: true });
+  }
 
   window.addEventListener('ai-language-change', schedule);
   window.addEventListener('hashchange', schedule);
