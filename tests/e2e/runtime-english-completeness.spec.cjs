@@ -54,6 +54,6 @@ test('English competition detail replaces Chinese explanatory content and restor
 
   await page.locator('[data-language-switch]').first().click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
-  await expect(page.locator('.competition-detail-hero > div > p')).toContainText('围绕大模型应用');
+  await expect(page.locator('.competition-detail-hero > div > p').first()).toContainText('围绕大模型应用');
   await expect(page.locator('.tag-row.large-tags')).toContainText('大学生');
 });
