@@ -51,6 +51,16 @@
     '遥感': 'Remote Sensing',
     '气候与环境': 'Climate & Environment',
     '可持续发展': 'Sustainability',
+    '量子计算': 'Quantum Computing',
+    '智能制造': 'Smart Manufacturing',
+    '智慧城市': 'Smart Cities',
+    '农业科技': 'AgriTech',
+    '生物医药': 'Biomedicine',
+    '自动驾驶': 'Autonomous Driving',
+    '多模态': 'Multimodal AI',
+    '生成式 AI': 'Generative AI',
+    '运筹优化': 'Operations Research & Optimization',
+    '能源': 'Energy',
     '社会公益': 'Social Impact',
     '边缘 AI': 'Edge AI',
     '博弈': 'Game AI',
@@ -215,10 +225,13 @@
       ['大模型', 'LLM'], ['智能体', 'AI Agent'], ['人工智能', 'Artificial Intelligence'],
       ['机器学习', 'Machine Learning'], ['数据科学', 'Data Science'], ['数据分析', 'Data Analytics'],
       ['创新创业', 'Innovation & Entrepreneurship'], ['网络安全', 'Cybersecurity'], ['健康科技', 'Health Technology'],
-      ['医疗健康', 'Healthcare'], ['可持续发展', 'Sustainability'], ['科研', 'Research'], ['程序设计', 'Programming'],
-      ['模型优化', 'Model Optimization'], ['边缘 AI', 'Edge AI'], ['大学生', 'Students'], ['高校', 'University'],
-      ['奖金', 'Prize'], ['机器人', 'Robotics'], ['博弈', 'Game AI'], ['开源', 'Open Source'], ['学术', 'Academic'],
-      ['团队', 'Team'], ['个人', 'Individual'], ['应用', 'Application'], ['创新', 'Innovation']
+      ['医疗健康', 'Healthcare'], ['可持续发展', 'Sustainability'], ['量子计算', 'Quantum Computing'],
+      ['智能制造', 'Smart Manufacturing'], ['智慧城市', 'Smart Cities'], ['农业科技', 'AgriTech'],
+      ['生物医药', 'Biomedicine'], ['自动驾驶', 'Autonomous Driving'], ['科研', 'Research'],
+      ['程序设计', 'Programming'], ['模型优化', 'Model Optimization'], ['边缘 AI', 'Edge AI'],
+      ['大学生', 'Students'], ['高校', 'University'], ['奖金', 'Prize'], ['机器人', 'Robotics'],
+      ['博弈', 'Game AI'], ['开源', 'Open Source'], ['学术', 'Academic'], ['团队', 'Team'],
+      ['个人', 'Individual'], ['应用', 'Application'], ['创新', 'Innovation']
     ];
     for (const [zh, en] of replacements) result = result.replaceAll(zh, en);
     return CJK.test(result) ? text : result.replace(/\s+/g, ' ').trim();
