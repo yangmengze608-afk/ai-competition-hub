@@ -4,9 +4,8 @@ const CJK = /[\u3400-\u9fff]/u;
 
 async function expectNoCjk(locator, label) {
   const texts = await locator.allTextContents();
-  for (const text of texts) {
-    expect(CJK.test(text), `${label} still contains Chinese: ${text}`).toBe(false);
-  }
+  const remaining = [...new Set(texts.map((text) => text.trim()).filter((text) => text && CJK.test(text)))];
+  expect(remaining, `${label} still contains Chinese: ${remaining.join(' | ')}`).toEqual([]);
 }
 
 test('English competition library localizes dynamic summaries, tracks, tags and filters', async ({ page }) => {
