@@ -9,21 +9,40 @@ function watchErrors(page) {
   return errors;
 }
 
-test('workspace turns a chosen competition into a first real action', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/#/competitions/iflytek-spark-cup-2026');
+async function pickFutureReviewedCompetition(request) {
+  const response = await request.get('/data/competitions-v1.json');
+  expect(response.ok()).toBeTruthy();
+  const payload = await response.json();
+  const now = Date.now();
+  const candidate = (payload.competitions || [])
+    .filter((item) => item.verificationStatus === 'reviewed' && item.collection === 'current')
+    .filter((item) => Number.isFinite(Date.parse(item.deadline)) && Date.parse(item.deadline) > now + 24 * 60 * 60 * 1000)
+    .sort((a, b) => Date.parse(a.deadline) - Date.parse(b.deadline))[0];
 
-  const start = page.locator('[data-start-workspace="iflytek-spark-cup-2026"]');
+  expect(candidate, 'Activation test needs at least one reviewed current competition with a deadline more than 24 hours in the future').toBeTruthy();
+  return candidate;
+}
+
+test('workspace turns a chosen competition into a first real action', async ({ page, request }) => {
+  const errors = watchErrors(page);
+  const competition = await pickFutureReviewedCompetition(request);
+  const competitionId = competition.id;
+
+  await page.goto(`/#/competitions/${competitionId}`);
+
+  const start = page.locator(`[data-start-workspace="${competitionId}"]`);
   await expect(start).toContainText('加入我的参赛');
   await start.click();
-  await expect(page).toHaveURL(/#\/workspace\/iflytek-spark-cup-2026/);
+  await expect(page).toHaveURL(new RegExp(`#\\/workspace\\/${competitionId}`));
 
   const guide = page.locator('[data-activation-guide-panel]');
   await expect(guide.getByRole('heading', { name: '今天先完成一个真实动作' })).toBeVisible();
   await expect(guide.locator('.activation-guide-action')).toHaveCount(3);
 
+  const calendarButton = guide.locator('[data-activation-calendar]');
+  await expect(calendarButton).toBeEnabled();
   const downloadPromise = page.waitForEvent('download');
-  await guide.locator('[data-activation-calendar]').click();
+  await calendarButton.click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toContain('截止提醒.ics');
 
