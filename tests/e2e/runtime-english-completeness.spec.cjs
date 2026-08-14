@@ -1,0 +1,58 @@
+const { test, expect } = require('@playwright/test');
+
+const CJK = /[\u3400-\u9fff]/u;
+
+async function expectNoCjk(locator, label) {
+  const texts = await locator.allTextContents();
+  const remaining = [...new Set(texts.map((text) => text.trim()).filter((text) => text && CJK.test(text)))];
+  expect(remaining, `${label} still contains Chinese: ${remaining.join(' | ')}`).toEqual([]);
+}
+
+test('English competition library localizes dynamic summaries, tracks, tags and filters', async ({ page }) => {
+  await page.addInitScript(() => localStorage.clear());
+  await page.goto('/?lang=en#/competitions');
+
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  const cards = page.locator('.competition-card');
+  await expect(cards.first()).toBeVisible();
+  expect(await cards.count()).toBeGreaterThanOrEqual(4);
+
+  await expectNoCjk(page.locator('.filter-field option'), 'filter options');
+
+  const count = Math.min(4, await cards.count());
+  for (let index = 0; index < count; index += 1) {
+    const card = cards.nth(index);
+    await expectNoCjk(card.locator('.competition-summary'), `card ${index + 1} summary`);
+    await expectNoCjk(card.locator('.meta-grid'), `card ${index + 1} metadata`);
+    await expectNoCjk(card.locator('.tag-row'), `card ${index + 1} tags`);
+
+    const title = card.locator('.competition-title');
+    const titleText = await title.innerText();
+    if (CJK.test(titleText)) await expect(title).toHaveAttribute('lang', 'zh-CN');
+
+    const organizer = card.locator('.organizer');
+    const organizerText = await organizer.innerText();
+    if (CJK.test(organizerText)) await expect(organizer).toHaveAttribute('lang', 'zh-CN');
+  }
+});
+
+test('English competition detail replaces Chinese explanatory content and restores Chinese', async ({ page }) => {
+  await page.addInitScript(() => localStorage.clear());
+  await page.goto('/?lang=en#/competitions/iflytek-spark-cup-2026');
+
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expectNoCjk(page.locator('.competition-detail-hero > div > p'), 'detail hero summary');
+  await expectNoCjk(page.locator('.detail-main > .detail-block').first().locator('p'), 'overview copy');
+  await expectNoCjk(page.locator('.audit-summary'), 'audit summary');
+  await expectNoCjk(page.locator('.audit-facts strong'), 'audit facts');
+  await expectNoCjk(page.locator('.audit-risk-list li span'), 'risk labels');
+  await expectNoCjk(page.locator('.tag-row.large-tags'), 'detail tags');
+
+  const detailTitle = page.locator('.competition-detail-hero h1');
+  if (CJK.test(await detailTitle.innerText())) await expect(detailTitle).toHaveAttribute('lang', 'zh-CN');
+
+  await page.locator('[data-language-switch]').first().click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'zh-CN');
+  await expect(page.locator('.competition-detail-hero > div > p').first()).toContainText('围绕大模型应用');
+  await expect(page.locator('.tag-row.large-tags')).toContainText('大学生');
+});
