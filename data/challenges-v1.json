@@ -1,0 +1,110 @@
+{
+  "version": "0.9.0-beta",
+  "updatedAt": "2026-08-16",
+  "challenges": [
+    {
+      "id": "global-disaster-radar",
+      "originalLanguage": "zh-CN",
+      "creator": "AI 赛场发起",
+      "status": "open",
+      "openWorldwide": true,
+      "featured": true,
+      "title": {
+        "zh": "做一个全球实时灾难雷达",
+        "en": "Build a Global Disaster Radar"
+      },
+      "tagline": {
+        "zh": "把正在发生的自然灾害与人文灾害放到一张世界地图上，让危险程度一眼可见。",
+        "en": "Put ongoing natural and human-made disasters on one world map and make severity understandable at a glance."
+      },
+      "brief": {
+        "zh": "使用公开、可追溯的数据源，做一个真正能帮助普通人理解全球正在发生什么的灾难地图。你可以从热区、事件图标、风险评分、新闻摘要、历史趋势或任何你认为更有效的方向切入。",
+        "en": "Use public, traceable data sources to build a disaster map that helps ordinary people understand what is happening around the world. Explore heat zones, event icons, severity scoring, news summaries, historical trends, or a better approach of your own."
+      },
+      "submission": {
+        "zh": ["可访问的 Live Demo", "一句话说明你的核心思路", "至少一张截图", "使用的 AI / 开发工具"],
+        "en": ["A working live demo", "One sentence explaining your core approach", "At least one screenshot", "The AI / development tools you used"]
+      },
+      "tags": ["Maps", "Open Data", "AI", "Public Interest"],
+      "builds": []
+    },
+    {
+      "id": "book-to-agent-skill",
+      "originalLanguage": "zh-CN",
+      "creator": "AI 赛场发起",
+      "status": "open",
+      "openWorldwide": true,
+      "featured": true,
+      "title": {
+        "zh": "把一本书变成 Agent 真正能用的 Skill",
+        "en": "Turn a Book into a Skill an Agent Can Actually Use"
+      },
+      "tagline": {
+        "zh": "不要只总结一本书，而是把其中可复用的方法、判断规则和流程变成 Agent 能调用的能力。",
+        "en": "Do not merely summarize a book—turn its reusable methods, decision rules, and workflows into capabilities an agent can invoke."
+      },
+      "brief": {
+        "zh": "选择任意一本非受限内容的书，先判断它属于什么类型，再设计一种把核心知识转成结构化 Skill 的方法。重点不是压缩文本，而是证明这个 Skill 在真实任务里比普通摘要更有用。",
+        "en": "Choose any non-restricted book, classify what kind of knowledge it contains, and design a way to turn its core ideas into a structured Skill. The goal is not text compression; prove the Skill is more useful than a normal summary on real tasks."
+      },
+      "submission": {
+        "zh": ["可运行的 Skill / Agent Demo", "输入书籍与输出 Skill 的说明", "至少一个真实使用案例", "评测或对比结果"],
+        "en": ["A runnable Skill / agent demo", "An explanation of book input and Skill output", "At least one real usage example", "An evaluation or comparison result"]
+      },
+      "tags": ["Agents", "Knowledge", "Skills", "Evaluation"],
+      "builds": []
+    },
+    {
+      "id": "silent-two-person-ping",
+      "originalLanguage": "zh-CN",
+      "creator": "AI 赛场发起",
+      "status": "open",
+      "openWorldwide": true,
+      "featured": true,
+      "title": {
+        "zh": "做一个不能聊天、只能轻轻 Ping 对方的双人产品",
+        "en": "Build a Two-Person Product That Can Ping but Cannot Chat"
+      },
+      "tagline": {
+        "zh": "如果两个人不打开聊天框，也能表达“我在想你”“到家告诉我”“现在需要你”，会是什么体验？",
+        "en": "What if two people could say “thinking of you,” “tell me when you get home,” or “I need you” without opening a chat?"
+      },
+      "brief": {
+        "zh": "设计一个极轻量的双人沟通产品。它不能退化成普通聊天软件，必须用更少的动作、更低的打扰完成情绪或状态表达。网页、桌面组件、手表、小程序或你想到的任何载体都可以。",
+        "en": "Design an ultra-light two-person communication product. It must not collapse into ordinary messaging; use fewer actions and less interruption to communicate emotion or status. Web, desktop widgets, watches, mini apps, or any medium are welcome."
+      },
+      "submission": {
+        "zh": ["可体验的 Demo", "核心交互说明", "你刻意没有加入什么功能", "至少一个真实使用场景"],
+        "en": ["An interactive demo", "An explanation of the core interaction", "What you intentionally left out", "At least one real usage scenario"]
+      },
+      "tags": ["Consumer", "Communication", "UX", "Minimalism"],
+      "builds": []
+    },
+    {
+      "id": "ai-two-player-detective",
+      "originalLanguage": "zh-CN",
+      "creator": "AI 赛场发起",
+      "status": "open",
+      "openWorldwide": true,
+      "featured": false,
+      "title": {
+        "zh": "做一个两个人和 AI 一起玩的推理游戏",
+        "en": "Build a Two-Player Detective Game Powered by AI"
+      },
+      "tagline": {
+        "zh": "两名真人玩家不是和固定剧本对答案，而是与一个会回应、会隐藏信息、会推动故事的 AI 世界互动。",
+        "en": "Two human players should not solve a fixed script; they should interact with an AI world that responds, hides information, and advances the story."
+      },
+      "brief": {
+        "zh": "做一个能在网页上直接开始的双人推理体验。AI 可以扮演主持人、嫌疑人、世界规则或动态生成案件，但游戏必须有清晰的胜负或推理闭环，而不是无限聊天。",
+        "en": "Build a two-player detective experience that can start directly on the web. AI may act as host, suspect, world rules, or dynamic case generator, but the game needs a clear deduction loop or win condition rather than endless chat."
+      },
+      "submission": {
+        "zh": ["可双人体验的 Live Demo", "一局游戏的基本流程", "AI 在游戏中承担的角色", "防止无限聊天或失控的机制"],
+        "en": ["A live demo playable by two people", "The basic flow of one session", "The role AI plays in the game", "A mechanism that prevents endless or uncontrolled chat"]
+      },
+      "tags": ["Games", "Agents", "Multiplayer", "Storytelling"],
+      "builds": []
+    }
+  ]
+}
