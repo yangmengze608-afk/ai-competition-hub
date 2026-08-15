@@ -1,11 +1,11 @@
 {
   "name": "ai-competition-hub",
-  "version": "0.8.2",
+  "version": "0.9.0-beta.1",
   "private": true,
-  "description": "AI 赛场 bilingual reviewed competition search pages and Activation Beta validation",
+  "description": "AI 赛场 bilingual competition discovery and Idea Challenges beta",
   "scripts": {
-    "generate:seo": "node scripts/generate-scaled-seo-pages.cjs --out .seo-build",
-    "audit:seo": "node scripts/scaled-seo-pages-audit.cjs",
+    "generate:seo": "node scripts/generate-scaled-seo-pages.cjs --out .seo-build && node scripts/generate-challenge-pages.cjs --out .seo-build && node scripts/normalize-challenge-sitemap.cjs",
+    "audit:seo": "node scripts/scaled-seo-pages-audit.cjs && node scripts/challenge-pages-audit.cjs",
     "check:indexnow": "node scripts/submit-indexnow.cjs --sitemap .seo-build/sitemap.xml --dry-run",
     "test:e2e": "playwright test"
   },
