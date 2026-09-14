@@ -23,6 +23,8 @@
     'AI 视频与短剧': 'AI Video & Short Drama',
     'AI 绘画与设计': 'AI Art & Design',
     'AI 教育': 'AI in Education',
+    'AI 安全': 'AI Safety',
+    '真实赛事': 'Verified Competition',
     '具身智能与机器人': 'Embodied AI & Robotics',
     '数据科学': 'Data Science',
     '数据分析': 'Data Analytics',

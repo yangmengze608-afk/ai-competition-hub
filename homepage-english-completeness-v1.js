@@ -68,6 +68,7 @@
   };
 
   const EXACT_EN = {
+    '2026-10-25；精确时区需在提交前复核': '2026-10-25; exact timezone to be verified before submission',
     '参赛路线': 'Competition Playbooks',
     '参与内测': 'Join Beta',
     '参与内测与反馈': 'Beta & Feedback',
