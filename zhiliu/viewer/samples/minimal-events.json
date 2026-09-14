@@ -1,0 +1,30 @@
+[
+  {
+    "id": "x1",
+    "title": "一份不会消失的工作",
+    "timestamp": 1756000000000,
+    "concepts": [
+      {
+        "canonical": "稳定",
+        "confidence": 0.86
+      }
+    ],
+    "analysisStatus": "llm"
+  },
+  {
+    "id": "x2",
+    "title": "三十岁转行来得及吗",
+    "timestamp": 1756086400000,
+    "concepts": [
+      {
+        "canonical": "职业选择",
+        "confidence": 0.74
+      },
+      {
+        "canonical": "风险",
+        "confidence": 0.55
+      }
+    ],
+    "analysisStatus": "llm"
+  }
+]

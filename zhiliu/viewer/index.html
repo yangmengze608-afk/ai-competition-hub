@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知流 Web Viewer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>知流 Web Viewer<span class="tag">MVP · 查看端</span></h1>
+  <p class="positioning">
+    Web Viewer 是知流未来跨设备 Dashboard 的最小原型；当前 v1.2.0 的真实采集仍由浏览器扩展完成。
+  </p>
+</header>
+
+<section>
+  <div class="source">
+    <button id="btn-demo" class="primary">载入演示数据</button>
+    <label class="filebtn" for="file">导入本地 JSON 文件…</label>
+    <input type="file" id="file" accept="application/json,.json">
+    <button id="btn-sample">下载 JSON 示例</button>
+  </div>
+  <div class="drop" id="drop">把导出的 JSON 拖到这里 · 文件不会离开这台电脑，全部在浏览器里解析</div>
+  <div class="status" id="status"></div>
+</section>
+
+<div class="cols">
+  <div>
+    <p class="colhead">最近信息 · 概念分布与集中度</p>
+    <div class="panel" id="panel"></div>
+  </div>
+  <div>
+    <p class="colhead" id="list-head">最近阅读</p>
+    <div class="list" id="list"><div class="empty">还没有数据。点上面的「载入演示数据」，或导入一份 JSON。</div></div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    数据结构直接兼容扩展的 <code>chrome.storage.local["zhiliu.events.v2"]</code>。
+    导入的文件只在浏览器里解析 —— 没有登录、没有数据库、没有上传、没有后端。
+  </p>
+  <p>
+    集中度为 Simpson 指数（各概念占比的平方和），固定 20 篇窗口，不足 10 篇不出分。
+    颜色从靛青 <code>#1661AB</code> 走到鹅血石红 <code>#AB372F</code>，只表达「更分散 → 更集中」，不代表好坏。
+  </p>
+</footer>
+
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

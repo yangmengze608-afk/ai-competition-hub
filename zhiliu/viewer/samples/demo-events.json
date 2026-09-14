@@ -1,0 +1,900 @@
+{
+  "_note": "知流 Web Viewer 演示数据。合成内容，不是任何真人的阅读记录。结构与扩展 chrome.storage.local[\"zhiliu.events.v2\"] 一致。",
+  "zhiliu.events.v2": [
+    {
+      "id": "demo-01",
+      "contentId": "1900000000000000000",
+      "contentType": "answer",
+      "title": "考研到底值不值得",
+      "timestamp": 1786835520000,
+      "duration": 41000,
+      "concepts": [
+        {
+          "canonical": "学习方法",
+          "confidence": 0.72
+        },
+        {
+          "canonical": "考研",
+          "confidence": 0.52
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-02",
+      "contentId": "1900000000000007700",
+      "contentType": "answer",
+      "title": "二本学生还有机会吗",
+      "timestamp": 1786898420000,
+      "duration": 78123,
+      "concepts": [
+        {
+          "canonical": "自我认同",
+          "confidence": 0.75
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-03",
+      "contentId": "1900000000000015600",
+      "contentType": "answer",
+      "title": "留学回国还有优势吗",
+      "timestamp": 1786961320000,
+      "duration": 115246,
+      "concepts": [
+        {
+          "canonical": "留学",
+          "confidence": 0.77
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.58
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-04",
+      "contentId": "1900000000000023300",
+      "contentType": "answer",
+      "title": "墨尔本大学是不是回国直接能当985用",
+      "timestamp": 1787024220000,
+      "duration": 152369,
+      "concepts": [
+        {
+          "canonical": "留学",
+          "confidence": 0.8
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-05",
+      "contentId": "1900000000000031000",
+      "contentType": "article",
+      "title": "为什么小镇做题家这个词让人不舒服",
+      "timestamp": 1787080320000,
+      "duration": 189492,
+      "concepts": [
+        {
+          "canonical": "社会结构",
+          "confidence": 0.82
+        },
+        {
+          "canonical": "自我认同",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-pending",
+      "contentId": "1900000000000099999",
+      "contentType": "answer",
+      "title": "（这一篇刚读完，分析还没回填）",
+      "timestamp": 1787140920000,
+      "duration": 62000,
+      "concepts": [],
+      "analysisStatus": "ungrounded",
+      "analysisVersion": "pending"
+    },
+    {
+      "id": "demo-06",
+      "contentId": "1900000000000039000",
+      "contentType": "answer",
+      "title": "算法推荐把我们变成了什么",
+      "timestamp": 1787143220000,
+      "duration": 226615,
+      "concepts": [
+        {
+          "canonical": "算法推荐",
+          "confidence": 0.85
+        },
+        {
+          "canonical": "认知",
+          "confidence": 0.52
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-ambiguous",
+      "contentId": "1900000000000088888",
+      "contentType": "answer",
+      "title": "（这一篇模型判为无明确核心概念）",
+      "timestamp": 1787202720000,
+      "duration": 118000,
+      "concepts": [],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "ambiguous": true
+    },
+    {
+      "id": "demo-07",
+      "contentId": "1900000000000046600",
+      "contentType": "answer",
+      "title": "健身两年我学到的",
+      "timestamp": 1787206120000,
+      "duration": 263738,
+      "concepts": [
+        {
+          "canonical": "健身",
+          "confidence": 0.88
+        },
+        {
+          "canonical": "情绪调节",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-08",
+      "contentId": "1900000000000054300",
+      "contentType": "answer",
+      "title": "长期睡不好怎么办",
+      "timestamp": 1787269020000,
+      "duration": 300861,
+      "concepts": [
+        {
+          "canonical": "睡眠",
+          "confidence": 0.72
+        },
+        {
+          "canonical": "情绪调节",
+          "confidence": 0.58
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-09",
+      "contentId": "1900000000000062200",
+      "contentType": "answer",
+      "title": "异地恋还有必要坚持吗",
+      "timestamp": 1787325120000,
+      "duration": 337984,
+      "concepts": [
+        {
+          "canonical": "亲密关系",
+          "confidence": 0.75
+        },
+        {
+          "canonical": "情绪调节",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-10",
+      "contentId": "1900000000000070000",
+      "contentType": "answer",
+      "title": "和父母聊不下去",
+      "timestamp": 1787388020000,
+      "duration": 375107,
+      "concepts": [
+        {
+          "canonical": "原生家庭",
+          "confidence": 0.77
+        },
+        {
+          "canonical": "亲密关系",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-11",
+      "contentId": "1900000000000077800",
+      "contentType": "article",
+      "title": "大厂和体制内怎么选",
+      "timestamp": 1787450920000,
+      "duration": 412230,
+      "concepts": [
+        {
+          "canonical": "职业选择",
+          "confidence": 0.8
+        },
+        {
+          "canonical": "稳定",
+          "confidence": 0.52
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-12",
+      "contentId": "1900000000000085500",
+      "contentType": "answer",
+      "title": "应届生第一份工作该看什么",
+      "timestamp": 1787513820000,
+      "duration": 77353,
+      "concepts": [
+        {
+          "canonical": "职业选择",
+          "confidence": 0.82
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-13",
+      "contentId": "1900000000000093200",
+      "contentType": "answer",
+      "title": "三十岁转行来得及吗",
+      "timestamp": 1787569920000,
+      "duration": 114476,
+      "concepts": [
+        {
+          "canonical": "职业选择",
+          "confidence": 0.85
+        },
+        {
+          "canonical": "风险",
+          "confidence": 0.58
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-14",
+      "contentId": "1900000000000101000",
+      "contentType": "answer",
+      "title": "为什么大家都在讨论上岸",
+      "timestamp": 1787632820000,
+      "duration": 151599,
+      "concepts": [
+        {
+          "canonical": "考公考编",
+          "confidence": 0.88
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-15",
+      "contentId": "1900000000000108800",
+      "contentType": "answer",
+      "title": "AI 会替掉哪些岗位",
+      "timestamp": 1787695720000,
+      "duration": 188722,
+      "concepts": [
+        {
+          "canonical": "工作替代",
+          "confidence": 0.72
+        },
+        {
+          "canonical": "AI",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-16",
+      "contentId": "1900000000000116500",
+      "contentType": "answer",
+      "title": "收入天花板在哪里",
+      "timestamp": 1787758620000,
+      "duration": 225845,
+      "concepts": [
+        {
+          "canonical": "收入",
+          "confidence": 0.75
+        },
+        {
+          "canonical": "职业选择",
+          "confidence": 0.52
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-17",
+      "contentId": "1900000000000124400",
+      "contentType": "article",
+      "title": "要不要为了涨薪换城市",
+      "timestamp": 1787814720000,
+      "duration": 262968,
+      "concepts": [
+        {
+          "canonical": "收入",
+          "confidence": 0.77
+        },
+        {
+          "canonical": "风险",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-18",
+      "contentId": "1900000000000132000",
+      "contentType": "answer",
+      "title": "我在互联网的第六年",
+      "timestamp": 1787877620000,
+      "duration": 300091,
+      "concepts": [
+        {
+          "canonical": "职业选择",
+          "confidence": 0.8
+        },
+        {
+          "canonical": "就业",
+          "confidence": 0.58
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-19",
+      "contentId": "1900000000000139800",
+      "contentType": "answer",
+      "title": "考编值得脱产备考吗",
+      "timestamp": 1787940520000,
+      "duration": 337214,
+      "concepts": [
+        {
+          "canonical": "考公考编",
+          "confidence": 0.82
+        },
+        {
+          "canonical": "风险",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-20",
+      "contentId": "1900000000000147700",
+      "contentType": "answer",
+      "title": "大厂裁员之后",
+      "timestamp": 1788003420000,
+      "duration": 374337,
+      "concepts": [
+        {
+          "canonical": "就业",
+          "confidence": 0.85
+        },
+        {
+          "canonical": "风险",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-21",
+      "contentId": "1900000000000155400",
+      "contentType": "answer",
+      "title": "一份不会消失的工作",
+      "timestamp": 1788059520000,
+      "duration": 411460,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.88
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-22",
+      "contentId": "1900000000000163000",
+      "contentType": "answer",
+      "title": "我把跳槽的念头压下去的第三年",
+      "timestamp": 1788122420000,
+      "duration": 76583,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.72
+        },
+        {
+          "canonical": "职业选择",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-23",
+      "contentId": "1900000000000171000",
+      "contentType": "article",
+      "title": "在同一个岗位待满十年是什么体验",
+      "timestamp": 1788185320000,
+      "duration": 113706,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.75
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-24",
+      "contentId": "1900000000000178700",
+      "contentType": "answer",
+      "title": "父母眼里的好工作",
+      "timestamp": 1788248220000,
+      "duration": 150829,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.77
+        },
+        {
+          "canonical": "原生家庭",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-25",
+      "contentId": "1900000000000186600",
+      "contentType": "answer",
+      "title": "为什么年轻人开始考编",
+      "timestamp": 1788304320000,
+      "duration": 187952,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.8
+        },
+        {
+          "canonical": "考公考编",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-26",
+      "contentId": "1900000000000194300",
+      "contentType": "answer",
+      "title": "编制到底带来了什么",
+      "timestamp": 1788367220000,
+      "duration": 225075,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.82
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-27",
+      "contentId": "1900000000000202000",
+      "contentType": "answer",
+      "title": "稳定是不是一种幻觉",
+      "timestamp": 1788430120000,
+      "duration": 262198,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.85
+        },
+        {
+          "canonical": "风险",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-28",
+      "contentId": "1900000000000210000",
+      "contentType": "answer",
+      "title": "我在体制内的第五年",
+      "timestamp": 1788493020000,
+      "duration": 299321,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.88
+        },
+        {
+          "canonical": "考公考编",
+          "confidence": 0.58
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-29",
+      "contentId": "1900000000000217600",
+      "contentType": "article",
+      "title": "为什么我放弃了大厂 offer",
+      "timestamp": 1788549120000,
+      "duration": 336444,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.72
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-30",
+      "contentId": "1900000000000225300",
+      "contentType": "answer",
+      "title": "安稳的日子过久了",
+      "timestamp": 1788612020000,
+      "duration": 373567,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.75
+        },
+        {
+          "canonical": "自我认同",
+          "confidence": 0.64
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-31",
+      "contentId": "1900000000000233200",
+      "contentType": "answer",
+      "title": "把工作当成一份工作就好",
+      "timestamp": 1788674920000,
+      "duration": 410690,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.77
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-32",
+      "contentId": "1900000000000241000",
+      "contentType": "answer",
+      "title": "体制内的人每天在想什么",
+      "timestamp": 1788737820000,
+      "duration": 75813,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.8
+        },
+        {
+          "canonical": "考公考编",
+          "confidence": 0.55
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-33",
+      "contentId": "1900000000000248600",
+      "contentType": "answer",
+      "title": "我不再计算机会成本了",
+      "timestamp": 1788793920000,
+      "duration": 112936,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.82
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-34",
+      "contentId": "1900000000000256500",
+      "contentType": "answer",
+      "title": "安全感是怎么一点点长出来的",
+      "timestamp": 1788856820000,
+      "duration": 150059,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.85
+        },
+        {
+          "canonical": "情绪调节",
+          "confidence": 0.61
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-35",
+      "contentId": "1900000000000264200",
+      "contentType": "article",
+      "title": "那份工作我做到了第八年",
+      "timestamp": 1788919720000,
+      "duration": 187182,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.88
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    },
+    {
+      "id": "demo-36",
+      "contentId": "1900000000000272000",
+      "contentType": "answer",
+      "title": "不折腾的第二年",
+      "timestamp": 1788982620000,
+      "duration": 224305,
+      "concepts": [
+        {
+          "canonical": "稳定",
+          "confidence": 0.72
+        },
+        {
+          "canonical": "自我认同",
+          "confidence": 0.52
+        }
+      ],
+      "analysisStatus": "llm",
+      "analysisVersion": "llm-only-v1",
+      "analysis": {
+        "provider": "zhida",
+        "model": "zhida-fast-1p5",
+        "promptVersion": "v3-shape"
+      }
+    }
+  ]
+}

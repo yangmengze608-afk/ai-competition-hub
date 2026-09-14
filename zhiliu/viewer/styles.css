@@ -1,0 +1,119 @@
+/* 视觉语言沿用知流面板：深色面板、同一套字号与灰阶、同一套集中度色谱。
+   页面本身是浅色的 —— 面板在知乎上就是"嵌在浅色阅读页里的一块深色卡片"，
+   Viewer 保持这个关系，而不是做成一个整页深色的后台。 */
+:root {
+  --ink: #1a1a1a;
+  --muted: #6b7683;
+  --line: #e6e8ec;
+  --bg: #f6f7f9;
+  --panel-bg: rgba(22,24,29,0.94);
+  --panel-fg: #d8dee9;
+  --panel-dim: #8b939f;
+  --panel-strong: #eaf0f7;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.65 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 64px; }
+
+header h1 { font-size: 22px; margin: 0 0 6px; font-weight: 600; letter-spacing: -0.01em; }
+header .tag {
+  display: inline-block; font-size: 11px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; margin-left: 8px;
+  vertical-align: 3px; background: #fff;
+}
+.positioning {
+  margin: 10px 0 0; padding: 12px 14px; background: #fff;
+  border: 1px solid var(--line); border-left: 3px solid #1661AB; border-radius: 6px;
+  font-size: 13px; color: #3d444d; max-width: 78ch;
+}
+
+/* ── 数据入口 ── */
+.source { margin: 22px 0 8px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+button, .filebtn {
+  font: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+}
+button:hover, .filebtn:hover { border-color: #c9ced6; }
+button.primary { background: #1661AB; border-color: #1661AB; color: #fff; }
+button.primary:hover { background: #14568f; }
+input[type=file] { display: none; }
+.drop {
+  margin-top: 12px; border: 1.5px dashed #cfd5dd; border-radius: 8px; padding: 18px;
+  text-align: center; color: var(--muted); font-size: 13px; background: #fff;
+}
+.drop.over { border-color: #1661AB; background: #f0f6fc; color: #1661AB; }
+.status { margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+.status b { color: var(--ink); font-weight: 600; }
+.status.err { color: #AB372F; }
+.status ul { margin: 6px 0 0; padding-left: 18px; }
+
+/* ── 两栏 ── */
+.cols { display: grid; grid-template-columns: 268px 1fr; gap: 26px; margin-top: 26px; align-items: start; }
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+.colhead { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+
+/* ── 面板（复用知流 Dashboard 的样式语言）── */
+.panel {
+  background-color: var(--panel-bg);
+  background-image: linear-gradient(var(--tint, transparent), var(--tint, transparent));
+  border: 1px solid rgba(255,255,255,0.08);
+  /* 左侧竖轨 + 投影必须写在同一条 box-shadow 里 —— 分成两条的话后一条会把前一条整条覆盖。
+     竖轨用 inset 而不是 border-left：border 会改变盒宽。 */
+  box-shadow: inset var(--conc-rail-w, 0px) 0 0 0 var(--conc-rail, transparent),
+              0 4px 18px rgba(0,0,0,0.16);
+  border-radius: 8px; padding: 9px 12px 10px; color: var(--panel-fg);
+  font-size: 12px; line-height: 1.45; transition: background 400ms ease;
+}
+.panel .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+.panel .brand { color: var(--panel-strong); font-weight: 600; }
+.panel .badge {
+  font-size: 10px; padding: 1px 6px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.16); color: #b9c3d1;
+}
+.panel .badge.demo { border-color: rgba(214,160,80,0.5); color: #dcae6b; }
+.panel .caption { color: var(--panel-dim); font-size: 10.5px; margin-bottom: 6px; }
+.bar-row { display: flex; align-items: center; gap: 7px; margin-top: 5px; }
+.bar-row .label { width: 62px; flex: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar { flex: 1 1 auto; min-width: 22px; height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--conc-bar, #5b8ac9); border-radius: 3px; transition: width 320ms ease, background 320ms ease; }
+.pct { width: 34px; text-align: right; font-variant-numeric: tabular-nums; color: #c8cfdb; }
+.arrow { width: 12px; text-align: center; color: var(--panel-dim); }
+.score {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
+}
+.score b { color: var(--conc-score, var(--panel-strong)); font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.prelim { font-size: 9.5px; color: var(--panel-dim); border: 1px solid rgba(255,255,255,0.16); border-radius: 3px; padding: 0 3px; margin-left: 4px; }
+/* 连续量尺：把「偏左=分散、偏右=集中」这个映射直接画出来 */
+.conc-scale { display: block; position: relative; height: 5px; margin: 6px 0 2px; }
+.conc-scale .track { position: absolute; inset: 0; border-radius: 3px; opacity: .5; display: block; }
+.conc-scale .mark {
+  position: absolute; top: -2px; width: 3px; height: 9px; border-radius: 2px;
+  transform: translateX(-1.5px); display: block; box-shadow: 0 0 0 1.5px rgba(20,23,26,.85);
+  transition: left 320ms ease, background 320ms ease;
+}
+.conc-label { margin-top: 4px; color: #c8cfdb; font-size: 11px; line-height: 1.4; }
+.conc-label .eff { color: var(--panel-dim); font-size: 10px; }
+.score-note { margin-top: 3px; color: var(--panel-dim); font-size: 10px; line-height: 1.35; }
+.notice { margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--panel-dim); font-size: 11px; }
+
+/* ── 阅读列表 ── */
+.list { background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.item { padding: 11px 14px; border-top: 1px solid var(--line); display: flex; gap: 12px; align-items: baseline; }
+.item:first-child { border-top: none; }
+.item .when { flex: none; width: 92px; color: var(--muted); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.item .main { flex: 1 1 auto; min-width: 0; }
+.item .t { font-size: 13.5px; color: var(--ink); text-decoration: none; }
+.item .t:hover { text-decoration: underline; }
+.item .t.plain { color: #3d444d; }
+.chips { margin-top: 4px; display: flex; gap: 5px; flex-wrap: wrap; }
+.chip { font-size: 11px; padding: 1px 7px; border-radius: 999px; color: #fff; }
+.chip.none { background: #eef0f3; color: var(--muted); }
+.item .meta { flex: none; font-size: 11px; color: var(--muted); }
+.empty { padding: 28px; text-align: center; color: var(--muted); }
+
+footer { margin-top: 38px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+footer code { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 11.5px; }

@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="知流 · 一个嵌在知乎阅读场景里的信息流仪表盘。它不改变你的推荐，只让你看见自己最近接触了什么。">
+<title>知流 / Zhiflow · 让用户看见自己正在接触的信息</title>
+<link rel="icon" href="icon.png">
+<style>html,body{margin:0;padding:0}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#fbfbfa; --ground:#f2f2f1; --ink:#14171a; --body:#3b4148;
+    --muted:#6b7683; --line:#e4e5e7; --line-soft:#eceded;
+    --panel:#1f2328; --panel-line:#2f353c; --panel-text:#e6e9ec; --panel-dim:#98a1ab;
+    --accent:#2b7fe0; --accent-soft:#e8f0fb; --gold:#c8a45c;
+    --serif:"Noto Serif SC","Source Han Serif SC","Songti SC",STSong,SimSun,serif;
+    --sans:"PingFang SC","Noto Sans SC","Source Han Sans SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono","PingFang SC","Microsoft YaHei",monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#111417; --ground:#0d1013; --ink:#eef0f2; --body:#bcc3ca;
+      --muted:#8a939d; --line:#262b30; --line-soft:#1c2024;
+      --panel:#1a1e22; --panel-line:#2a3036; --panel-text:#e6e9ec; --panel-dim:#98a1ab;
+      --accent:#5aa4f0; --accent-soft:#182634;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#111417; --ground:#0d1013; --ink:#eef0f2; --body:#bcc3ca;
+    --muted:#8a939d; --line:#262b30; --line-soft:#1c2024;
+    --panel:#1a1e22; --panel-line:#2a3036; --panel-text:#e6e9ec; --panel-dim:#98a1ab;
+    --accent:#5aa4f0; --accent-soft:#182634;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--body);
+       font-family:var(--sans);font-size:16.5px;line-height:1.85;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .measure{max-width:640px}
+  h1,h2,h3{font-family:var(--serif);color:var(--ink);text-wrap:balance;margin:0}
+  a{color:var(--accent)}
+  section{border-top:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+           text-transform:uppercase;color:var(--muted);display:block;margin-bottom:18px}
+
+  /* ── 头部 ───────────────────────────────── */
+  header{padding:40px 0 0}
+  .nav{display:flex;align-items:center;gap:13px}
+  .nav img{width:38px;height:38px;border-radius:10px;display:block}
+  .nav .name{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--ink);letter-spacing:1px}
+  .nav .track{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.05em}
+
+  .hero{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:64px;
+        align-items:center;padding:76px 0 88px}
+  .hero h1{font-size:clamp(34px,4.3vw,54px);line-height:1.3;font-weight:600;letter-spacing:-.01em}
+  .hero h1 .q{color:var(--accent)}
+  .lede{font-size:18px;line-height:1.85;color:var(--body);margin:26px 0 0;max-width:30em}
+  .rule{width:64px;height:4px;background:var(--accent);border-radius:2px;margin:30px 0}
+
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:8px;
+       font-size:15px;font-weight:500;text-decoration:none;border:1px solid transparent;
+       font-family:var(--sans)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-ghost{border-color:var(--line);color:var(--ink);background:transparent}
+  .btn-pending{border:1px dashed var(--line);color:var(--muted);cursor:not-allowed;
+               background:transparent}
+  .btn-pending .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+                    color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:1px 5px}
+
+  /* ── 面板复刻（不是图片，是 HTML） ───────────── */
+  .panel{background:var(--panel);border-radius:12px;padding:15px 16px 13px;
+         box-shadow:0 18px 48px -22px rgba(12,18,26,.55),0 1px 0 rgba(255,255,255,.04) inset;
+         font-size:13px;color:var(--panel-text);line-height:1.6}
+  .panel-head{display:flex;align-items:center;gap:9px;margin-bottom:3px}
+  .panel-head .t{font-size:13px;letter-spacing:.3px}
+  .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--gold);
+         border:1px solid rgba(200,164,92,.5);border-radius:4px;padding:1px 6px;white-space:nowrap}
+  .panel-sub{font-size:11.5px;color:var(--panel-dim);margin-bottom:11px;line-height:1.5}
+  .rows{display:flex;flex-direction:column;gap:7px}
+  .row{display:grid;grid-template-columns:64px 1fr 42px 14px;align-items:center;gap:9px}
+  .row .lbl{font-size:12.5px;color:var(--panel-text);white-space:nowrap}
+  .track{height:7px;border-radius:4px;background:var(--panel-line);overflow:hidden}
+  .fill{height:100%;border-radius:4px;background:var(--accent)}
+  .fill.mute{background:#5b6470}
+  .fill.dim{background:#454c55}
+  .row .pct{font-family:var(--mono);font-size:12px;text-align:right;color:var(--panel-text);
+            font-variant-numeric:tabular-nums}
+  .row .dir{font-size:11px;color:var(--panel-dim);text-align:center}
+  .row .dir.up{color:#5aa4f0}
+  .conc{display:flex;align-items:baseline;justify-content:space-between;
+        border-top:1px solid var(--panel-line);margin-top:13px;padding-top:11px}
+  .conc .k{font-size:12.5px;color:var(--panel-text)}
+  .conc .v{font-family:var(--mono);font-size:25px;font-weight:500;color:#fff;
+           font-variant-numeric:tabular-nums;line-height:1}
+  .conc-note{font-size:11px;color:var(--panel-dim);line-height:1.5;margin-top:5px}
+  .panel-cap{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.65}
+
+  /* ── 通用段落 ──────────────────────────── */
+  .sec{padding:76px 0}
+  .sec h2{font-size:clamp(24px,2.7vw,32px);font-weight:600;line-height:1.45}
+  .sec p{margin:20px 0 0}
+  .sec p:first-of-type{margin-top:22px}
+
+  /* 阅读 → 概念 → 累计 的四步 */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:44px;
+        background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .step{background:var(--paper);padding:24px 22px 26px}
+  .step .n{font-family:var(--mono);font-size:11.5px;color:var(--accent);letter-spacing:.1em}
+  .step .h{font-family:var(--serif);font-size:16.5px;color:var(--ink);font-weight:500;margin:9px 0 7px}
+  .step .d{font-size:13.5px;line-height:1.7;color:var(--muted)}
+
+  /* 截图 */
+  figure{margin:44px 0 0}
+  figure img{width:100%;display:block;border-radius:10px;border:1px solid var(--line)}
+  figcaption{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.7;max-width:62ch}
+
+  /* 集中度曲线 */
+  .chart{margin-top:40px;border:1px solid var(--line);border-radius:10px;padding:24px 26px 18px;
+         background:var(--ground)}
+  .chart-hd{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+            flex-wrap:wrap;margin-bottom:6px}
+  .chart-hd .t{font-family:var(--serif);font-size:16px;color:var(--ink);font-weight:500}
+  .chart-hd .s{font-size:12.5px;color:var(--muted)}
+  .chart svg{width:100%;height:auto;display:block;overflow:visible}
+
+  /* 两栏事实块 */
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:40px}
+  .fact{border-left:2px solid var(--accent);padding-left:20px}
+  .fact .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;color:var(--muted);
+           text-transform:uppercase}
+  .fact .v{font-family:var(--serif);font-size:17px;color:var(--ink);margin:7px 0 6px;font-weight:500}
+  .fact .d{font-size:14px;line-height:1.75;color:var(--muted)}
+
+  /* 支持范围 */
+  .scope{margin-top:38px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .srow{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+        padding:15px 22px;border-bottom:1px solid var(--line-soft);font-size:15px}
+  .srow:last-child{border-bottom:0}
+  .srow .n{color:var(--ink)}
+  .srow .n code{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .pill{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;padding:3px 10px;
+        border-radius:99px;white-space:nowrap}
+  .pill.ok{color:var(--accent);background:var(--accent-soft)}
+  .pill.no{color:var(--muted);background:var(--line-soft)}
+
+  footer{border-top:1px solid var(--line);padding:44px 0 60px;font-size:13.5px;color:var(--muted)}
+  .foot-row{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center}
+  .foot-row .sp{margin-left:auto}
+
+  @media (max-width:880px){
+    /* 窄屏下赛道标签会挤到品牌名上，直接收掉 —— 那行字在手机上没有信息价值 */
+    .nav .track{display:none}
+    .hero{grid-template-columns:1fr;gap:46px;padding:56px 0 68px}
+    .flow{grid-template-columns:1fr 1fr}
+    .facts{grid-template-columns:1fr;gap:28px}
+    .wrap{padding:0 22px}
+  }
+  @media (max-width:520px){ .flow{grid-template-columns:1fr} }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="nav">
+      <img src="icon.png" alt="知流">
+      <span class="name">知流</span>
+      <span class="track">知乎黑客松 2026 · 灵魂匹配局</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>推荐系统知道你最近在看什么，<br><span class="q">但你自己知道吗？</span></h1>
+      <div class="rule"></div>
+      <p class="lede">
+        知流是一个嵌在知乎阅读场景里的信息流仪表盘。你照常刷知乎，
+        它把你真正读完的内容理解成一到三个核心概念，在本地累计成最近的主题分布、
+        趋势和信息集中度。<strong style="color:var(--ink);font-weight:500">它不改变你的推荐，只让你看见自己接触了什么。</strong>
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="zhiliu-production.zip" download>下载扩展 <span class="tag">v1.2.0</span></a>
+        <a class="btn" href="viewer/">打开 Web Viewer</a>
+        <a class="btn" href="#demo">看 Demo</a>
+        <a class="btn" href="https://github.com/yangmengze608-afk/zhiliu" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel" role="img" aria-label="知流面板：稳定 57%，考公考编 13%，亲密关系 5%，房产 5%，信息集中度 36">
+        <div class="panel-head">
+          <span class="t">知流 · 最近信息</span>
+          <span class="badge">演示数据</span>
+        </div>
+        <div class="panel-sub">最近 20 篇里，各核心概念出现的占比</div>
+        <div class="rows">
+          <div class="row"><span class="lbl">稳定</span><div class="track"><div class="fill" style="width:57%"></div></div><span class="pct">57%</span><span class="dir up">↑</span></div>
+          <div class="row"><span class="lbl">考公考编</span><div class="track"><div class="fill mute" style="width:13%"></div></div><span class="pct">13%</span><span class="dir">↓</span></div>
+          <div class="row"><span class="lbl">亲密关系</span><div class="track"><div class="fill dim" style="width:5%"></div></div><span class="pct">5%</span><span class="dir">—</span></div>
+          <div class="row"><span class="lbl">房产</span><div class="track"><div class="fill dim" style="width:5%"></div></div><span class="pct">5%</span><span class="dir">—</span></div>
+        </div>
+        <div class="conc"><span class="k">信息集中度</span><span class="v">36</span></div>
+        <div class="conc-note">不代表好坏，只描述最近读的内容是否集中在少数几个概念上</div>
+      </div>
+      <p class="panel-cap">
+        面板长这样。上面的数字是演示语料跑完整条链路后的真实输出 ——
+        所以它自己挂着「演示数据」标记。真实阅读时那里会写「AI 分析」。
+      </p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">怎么用</span>
+      <h2>正常刷知乎，就够了。</h2>
+      <p>
+        没有需要维护的清单，没有要打的标签，也没有"今天记录一下"的仪式。
+        知流只在你真正停留读完一篇回答或文章时才记一笔 —— 划过去的不算。
+      </p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="n">READ</div><div class="h">你读知乎</div>
+        <div class="d">停留够久才算一次有效阅读，正文由页面结构识别，列表页和首页一概不碰。</div></div>
+      <div class="step"><div class="n">EXTRACT</div><div class="h">理解成概念</div>
+        <div class="d">正文交给知乎官方直答，返回一到三个核心概念。读不出稳定主题就老实标 unknown。</div></div>
+      <div class="step"><div class="n">AGGREGATE</div><div class="h">在本地累计</div>
+        <div class="d">跨文章的合并、趋势和集中度全部在你的浏览器里算，不上传。</div></div>
+      <div class="step"><div class="n">SEE</div><div class="h">你看见自己</div>
+        <div class="d">面板停在正文左侧的空白里，克制、不遮挡，也不弹窗提醒你。</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">它在页面上的样子</span>
+      <h2>一块仪表盘，不是第二个推荐算法。</h2>
+      <p>
+        面板放在阅读列左边量出来的空白里。窗口变窄时它自己收成一个胶囊，
+        不会压到正文 —— 这条是拿真实知乎页面量过的。
+      </p>
+    </div>
+    <figure>
+      <img src="screenshot.png" alt="知流面板出现在知乎回答页左侧空白处">
+      <figcaption>
+        面板部分是扩展的真实构建产物，数字是演示语料跑完聚合链路的真实输出，
+        「演示数据」标记是面板自己打的。背景那一页是按知乎版式在本地还原的页面，
+        不是 zhihu.com 的抓图 —— 因为这张图是自动化流程生成的，而知乎不允许自动化抓取。
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">集中度是怎么动的</span>
+      <h2>连着读同一类东西，这条线会自己抬起来。</h2>
+      <p>
+        下面是演示剧本里 26 篇的真实轨迹。前 9 篇样本不够，不出分；
+        之后随着内容越来越集中在同一个主题上，集中度从 <span style="font-family:var(--mono)">10</span>
+        一路走到 <span style="font-family:var(--mono)">36</span>。
+      </p>
+      <p>
+        它不说这件事是好是坏。它只是把"我最近好像一直在看同一类东西"这个模糊的感觉，
+        变成一个你能看见的数。
+      </p>
+    </div>
+
+    <div class="chart">
+      <div class="chart-hd">
+        <span class="t">信息集中度 · 演示剧本 26 篇</span>
+        <span class="s">前 9 篇样本不足，不出分</span>
+      </div>
+      <svg viewBox="0 0 720 200" role="img" aria-label="信息集中度从第 10 篇的 10 分上升到第 26 篇的 36 分">
+        <!-- 网格与刻度 -->
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">
+          <line x1="46" y1="20"  x2="700" y2="20"  stroke="var(--line)" stroke-width="1"/>
+          <line x1="46" y1="65"  x2="700" y2="65"  stroke="var(--line)" stroke-width="1"/>
+          <line x1="46" y1="110" x2="700" y2="110" stroke="var(--line)" stroke-width="1"/>
+          <line x1="46" y1="155" x2="700" y2="155" stroke="var(--line)" stroke-width="1"/>
+          <text x="38" y="24"  text-anchor="end">40</text>
+          <text x="38" y="69"  text-anchor="end">30</text>
+          <text x="38" y="114" text-anchor="end">20</text>
+          <text x="38" y="159" text-anchor="end">10</text>
+        </g>
+        <!-- 不出分区间 -->
+        <rect x="46" y="20" width="196" height="135" fill="var(--line-soft)"/>
+        <text x="144" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace"
+              font-size="10.5" fill="var(--muted)">样本不足</text>
+        <!-- 真实序列：第 10–26 篇 = 10,10,8,8,8,8,9,9,10,12,14,16,20,22,26,31,36 -->
+        <polyline fill="none" stroke="var(--accent)" stroke-width="2.5"
+          stroke-linejoin="round" stroke-linecap="round"
+          points="242,155 270,155 299,164 327,164 356,164 384,164 413,159.5 441,159.5 470,155 498,146 527,137 555,128 584,110 612,101 641,83 669,60.5 698,38"/>
+        <circle cx="698" cy="38" r="4.5" fill="var(--accent)"/>
+        <text x="690" y="30" text-anchor="end" font-family="IBM Plex Mono, monospace"
+              font-size="12" font-weight="500" fill="var(--ink)">36</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--muted)">
+          <text x="46"  y="180">第 1 篇</text>
+          <text x="242" y="180" text-anchor="middle">10</text>
+          <text x="470" y="180" text-anchor="middle">18</text>
+          <text x="700" y="180" text-anchor="end">26</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">为什么不是关键词统计</span>
+      <h2>数词频，数到的是措辞，不是问题意识。</h2>
+      <p>
+        一篇讲"我把跳槽的念头压下去的第三年"的回答，通篇可能一次"稳定"都没出现。
+        按词频它会被归到别处；按它在追问什么，它就是关于稳定。
+      </p>
+    </div>
+    <div class="facts">
+      <div class="fact">
+        <div class="k">Concept extraction</div>
+        <div class="v">正文交给知乎官方直答</div>
+        <div class="d">
+          production 默认用知乎官方直答（Zhida）。
+          选它不是因为它比别的模型更准 —— 在我们这套 29 条验收集上，
+          它和本地 14B 的质量差别<strong>测不出来</strong>：同一份输出换三个判官打分，
+          分数摆动比两个模型之间的差距还大。选它是因为延迟和资源占用更适合线上跑。
+        </div>
+      </div>
+      <div class="fact">
+        <div class="k">Aggregation</div>
+        <div class="v">跨文章的合并在你机器上</div>
+        <div class="d">
+          同义说法归到同一个概念，再按最近 20 篇算分布、趋势和集中度。
+          这一步完全在扩展本地完成，服务端看不到、也不参与。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">隐私</span>
+      <h2>长期画像留在本地，服务端只看当前这一篇。</h2>
+      <p>
+        你的阅读历史、主题分布、趋势和集中度都存在浏览器本地，从不上传。
+        服务端每次只收到当前这一篇的标题和正文，外加一个公开内容 ID ——
+        请求体是白名单强制的，多一个字段直接拒绝。
+      </p>
+      <p style="color:var(--muted);font-size:15px">
+        我们不宣称"服务器技术上绝对无法关联请求"。逐篇请求终究会到达服务端，
+        同一来源的请求序列在网络层理论上仍可被重建 —— 代码层面阻止不了这件事，
+        所以这里不做那个承诺。
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap sec">
+    <div class="measure">
+      <span class="eyebrow">怎么装</span>
+      <h2>解压，加载，然后照常刷知乎。</h2>
+      <p>
+        知流还没上架 Chrome 应用商店，所以是开发者模式安装 —— 四步，不到一分钟。
+        扩展包从这里下载：下面四步。
+      </p>
+    </div>
+    <div class="scope" style="margin-top:34px">
+      <div class="srow"><span class="n">1 · 下载 <a href="zhiliu-production.zip"><code>zhiliu-production.zip</code></a> 并解压</span><span class="pill ok">87 KB</span></div>
+      <div class="srow"><span class="n">2 · 打开 <code>chrome://extensions</code>，右上角开启「开发者模式」</span><span class="pill no">一次性</span></div>
+      <div class="srow"><span class="n">3 · 点「加载已解压的扩展程序」，选刚解压出来的目录</span><span class="pill no">一次性</span></div>
+      <div class="srow"><span class="n">4 · 打开一个<strong>独立回答页</strong>（<code>/question/…/answer/…</code>）或专栏文章，读够 8 秒</span><span class="pill ok">面板出现</span></div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:20px;max-width:62ch;line-height:1.75">
+      包里有两个版本。<code style="font-family:var(--mono)">zhiliu-production.zip</code>
+      连着公网分析服务，面板显示「AI 分析」；
+      <code style="font-family:var(--mono)">zhiliu-demo.zip</code> 不连任何服务，走本地预置数据，
+      面板会明确挂上「演示数据」标记 —— 那个标记是故意留着的，不要把它当成实时分析。
+    </p>
+
+    <div class="measure" style="margin-top:72px">
+      <span class="eyebrow">当前支持范围</span>
+      <h2>只在验证过的页面上工作，其余一概不碰。</h2>
+      <p>
+        没有被真人验证过的页面类型，知流不抽取、不分析、也不入库 ——
+        宁可什么都不显示，也不显示一个可能是错的。
+      </p>
+      <p>
+        最容易被误会的是<strong>问题页</strong>：<code>/question/&lt;qid&gt;</code> 这一页上同时挂着
+        很多个回答，没有办法确定你读的是哪一篇。硬抽的话，记进历史里的正文很可能
+        根本不是你看的那个人写的 —— 所以这里也是 fail closed。
+        点进某一个回答（URL 里出现 <code>/answer/&lt;id&gt;</code>）之后面板才会工作。
+      </p>
+    </div>
+    <div class="scope">
+      <div class="srow"><span class="n">知乎回答页 <code>/question/…/answer/…</code></span><span class="pill ok">真人验证通过</span></div>
+      <div class="srow"><span class="n">知乎专栏文章 <code>zhuanlan.zhihu.com/p/…</code></span><span class="pill ok">真人验证通过</span></div>
+      <div class="srow"><span class="n"><strong>问题页</strong> <code>/question/…</code>（没点进具体回答）</span><span class="pill no">不分析</span></div>
+      <div class="srow"><span class="n">首页 / 热榜 / 搜索 / 个人页 / 专栏广场</span><span class="pill no">不分析</span></div>
+      <div class="srow"><span class="n">展开折叠、万字长答、视频回答、付费墙</span><span class="pill no">尚未验证</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="measure">
+      <span class="eyebrow">最终 Demo</span>
+      <h2>一分钟看完它到底做什么。</h2>
+      <p>
+        录的是真实扩展在真实知乎页面上的运行过程，不是动效演示。
+      </p>
+    </div>
+    <div style="margin-top:28px;max-width:900px">
+      <video controls preload="metadata" playsinline poster="screenshot.png"
+             style="width:100%;border-radius:10px;border:1px solid var(--line);background:#000">
+        <source src="zhiliu-demo-v1.2.0.mp4" type="video/mp4">
+        你的浏览器不支持内嵌视频，<a href="zhiliu-demo-v1.2.0.mp4">点这里直接下载</a>。
+      </video>
+      <p style="font-size:13.5px;color:var(--muted);margin-top:12px">
+        视频托管在本站，无需访问境外服务。
+        <a href="zhiliu-demo-v1.2.0.mp4" download>下载原文件</a>（7.2 MB）
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="viewer">
+  <div class="wrap">
+    <div class="measure">
+      <span class="eyebrow">配套查看端</span>
+      <h2>不装扩展，也能先看见它长什么样。</h2>
+      <p>
+        Web Viewer 是知流的配套查看端，用同一套聚合口径和同一套视觉编码，
+        把扩展在本地记录的数据在网页上打开。它<strong>只读</strong> ——
+        不采集、不登录、不上传，导入的 JSON 只在你自己的浏览器里解析。
+      </p>
+      <p>
+        想快速看效果就点「演示数据」；已经装了扩展的，可以把本地记录导出成 JSON 拖进去。
+      </p>
+    </div>
+    <div class="cta" style="margin-top:26px">
+      <a class="btn btn-primary" href="viewer/">打开 Web Viewer</a>
+      <a class="btn" href="viewer/#demo">直接看演示数据</a>
+    </div>
+  </div>
+</section>
+
+<section id="source">
+  <div class="wrap">
+    <div class="measure">
+      <span class="eyebrow">源码与发布</span>
+      <h2>能验证的都放出来了。</h2>
+    </div>
+    <div class="scope" style="margin-top:28px">
+      <div class="srow">
+        <span class="n">源码仓库 <a href="https://github.com/yangmengze608-afk/zhiliu" target="_blank" rel="noopener">github.com/yangmengze608-afk/zhiliu</a></span>
+        <span class="pill ok">MIT</span>
+      </div>
+      <div class="srow">
+        <span class="n">正式发布 <a href="https://github.com/yangmengze608-afk/zhiliu/releases/tag/v1.2.0" target="_blank" rel="noopener">Release v1.2.0</a></span>
+        <span class="pill ok">v1.2.0</span>
+      </div>
+      <div class="srow">
+        <span class="n">扩展包校验 <code style="font-family:var(--mono);font-size:11.5px;word-break:break-all">795bca22eb12f7581b8abdd8ca4378ca6bdaf4f2e301beff0f635b03db261996</code></span>
+        <span class="pill ok">SHA-256</span>
+      </div>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:16px;max-width:66ch;line-height:1.75">
+      本站提供的 <code style="font-family:var(--mono)">zhiliu-production.zip</code>
+      与 Release 上那一份是同一个文件，可以用上面的 SHA-256 自行核对。
+      GitHub 打不开不影响使用 —— 扩展、Viewer、Demo 本站都有。
+    </p>
+  </div>
+</section>
+
+<section id="boundary">
+  <div class="wrap">
+    <div class="measure">
+      <span class="eyebrow">运行说明 / 当前边界</span>
+      <h2>现在能做什么，还不能做什么。</h2>
+    </div>
+    <div class="scope" style="margin-top:28px">
+      <div class="srow"><span class="n">作品主页 · 扩展下载 · Web Viewer · Demo 视频</span><span class="pill ok">本站直接可用</span></div>
+      <div class="srow"><span class="n">扩展安装后的实时 AI 分析</span><span class="pill no">由既有公网服务提供</span></div>
+      <div class="srow"><span class="n">跨设备同步 · 账号 · 云端数据库 · 手机端采集</span><span class="pill no">Future</span></div>
+      <div class="srow"><span class="n">首页 feed / 热榜 / 搜索页的采集</span><span class="pill no">Future</span></div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:18px;max-width:66ch;line-height:1.75">
+      当前 v1.2.0 的 AI 分析服务仍由既有公网服务提供；本镜像用于作品展示、扩展下载、
+      Web Viewer 与 Demo。Web Viewer 是知流的配套查看端，不是另一个产品 ——
+      真实的阅读采集仍然只发生在浏览器扩展里。
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>知流 / Zhiflow · Zhihu Information Observability · v1.2.0</span>
+    <span class="sp">知乎黑客松 2026 校园新锐季 · 灵魂匹配局</span>
+  </div>
+</footer>
+
+</body>
+</html>

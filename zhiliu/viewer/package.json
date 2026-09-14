@@ -1,0 +1,6 @@
+{
+  "name": "zhiliu-web-viewer-static",
+  "private": true,
+  "type": "module",
+  "_why": "只为让仓库 CI 的 `node --check *.js` 把这里的文件按 ES module 解析。Node 22.7+ 能自己探测，更老的版本不能 —— 而那一步跑在 setup-node 之前，用的是 runner 自带的 Node。这个文件不参与运行，部署时也会被 rsync 的 package.json 排除规则滤掉。"
+}
